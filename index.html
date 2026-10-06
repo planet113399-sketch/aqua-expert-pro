@@ -2,47 +2,46 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AquaExpert Pro v2.0</title>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 12px; background-color: #f4f6f8; color: #333; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 12px; background-color: #f4f6f8; color: #333; font-size: 16px; }
         
-        /* Верхняя панель управления */
-        header { background-color: #2e7d32; color: white; padding: 12px; border-radius: 12px; margin-bottom: 12px; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+        /* Панель управления */
+        header { background-color: #2e7d32; color: white; padding: 14px; border-radius: 12px; margin-bottom: 12px; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
         
-        .mode-toggle { display: flex; background: rgba(0,0,0,0.2); border-radius: 20px; padding: 2px; cursor: pointer; }
-        .mode-option { padding: 5px 10px; border-radius: 15px; font-size: 13px; }
-        .mode-option.active { background: white; color: #2e7d32; font-weight: bold; }
+        .mode-toggle { display: flex; background: rgba(0,0,0,0.25); border-radius: 20px; padding: 3px; cursor: pointer; }
+        .mode-option { padding: 8px 14px; border-radius: 17px; font-size: 14px; font-weight: bold; }
+        .mode-option.active { background: white; color: #2e7d32; }
 
-        .btn-header { background: rgba(255,255,255,0.2); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; }
-        .btn-bluetooth { background: #d32f2f; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .btn-header { background: rgba(255,255,255,0.25); color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .btn-bluetooth { background: #d32f2f; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
 
-        /* Мультимодальный ввод (Кнопки ввода) */
-        .input-tools { display: flex; gap: 8px; margin-top: 10px; }
-        .tool-btn { flex: 1; padding: 12px; border: 1px solid #ccc; background: white; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .tool-btn:active { background: #e8f5e9; }
+        /* Мультимодальный ввод */
+        .input-tools { display: flex; gap: 10px; margin-bottom: 12px; }
+        .tool-btn { flex: 1; padding: 14px; border: 1px solid #ccc; background: white; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
         /* Поисковая строка */
-        .search-container { display: flex; gap: 8px; margin-top: 10px; }
-        .search-input { flex: 1; padding: 14px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
-        .search-btn { background: #2e7d32; color: white; border: none; padding: 0 18px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .search-container { display: flex; gap: 8px; }
+        .search-input { flex: 1; padding: 16px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
+        .search-btn { background: #2e7d32; color: white; border: none; padding: 0 20px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
-        /* Белое окно ответов */
-        .chat-display { background: white; border-radius: 12px; min-height: 220px; padding: 15px; margin-top: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border: 1px solid #e0e0e0; }
-        .chat-placeholder { color: #888; text-align: center; margin-top: 70px; font-size: 15px; }
+        /* Большое белое окно ответов */
+        .chat-display { background: white; border-radius: 12px; min-height: 300px; padding: 18px; margin-top: 12px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e0e0e0; }
+        .chat-placeholder { color: #888; text-align: center; margin-top: 100px; font-size: 16px; line-height: 1.5; }
 
-        /* Кнопка перехода во 2-е окно (База знаний) */
-        .nav-base-btn { width: 100%; padding: 16px; background: #1b5e20; color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: bold; margin-top: 15px; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        /* Кнопка перехода в Базу знаний (В самом низу) */
+        .nav-base-btn { width: 100%; padding: 16px; background: #1b5e20; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-top: 10px; }
 
         /* Второе окно (Офлайн База) */
         #baseScreen { display: none; }
-        .back-btn { background: #555; color: white; padding: 10px 16px; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; margin-bottom: 12px; cursor: pointer; }
+        .back-btn { background: #555; color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; cursor: pointer; }
         
-        .category-card { background: white; padding: 16px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); border-left: 6px solid #2e7d32; cursor: pointer; }
-        .category-card h4 { margin: 0 0 5px 0; color: #2e7d32; font-size: 16px; }
-        .category-card p { margin: 0; font-size: 13px; color: #666; }
+        .category-card { background: white; padding: 18px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 6px solid #2e7d32; cursor: pointer; }
+        .category-card h4 { margin: 0 0 6px 0; color: #2e7d32; font-size: 18px; }
+        .category-card p { margin: 0; font-size: 14px; color: #666; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -72,14 +71,14 @@
             </div>
         </header>
 
-        <!-- Белое пространство для ответов -->
+        <!-- Большое свободное поле для ответов -->
         <div class="chat-display" id="responseArea">
             <div class="chat-placeholder">
                 🌱 Задайте вопрос голосом, загрузите фото или введите текст...
             </div>
         </div>
 
-        <!-- Переход во второе окно -->
+        <!-- Кнопка перехода во второе окно (Снизу) -->
         <button class="nav-base-btn" onclick="openBaseScreen()">
             📚 ОТКРЫТЬ ОФЛАЙН БАЗУ ЗНАНИЙ (5 НИШ)
         </button>
@@ -88,7 +87,7 @@
     <!-- ОКНО 2: ОФЛАЙН БАЗА ЗНАНИЙ (5 НИШ) -->
     <div id="baseScreen">
         <button class="back-btn" onclick="openMainScreen()">⬅️ Назад в Главное меню</button>
-        <h3 style="color:#2e7d32; margin-top:0;">База знаний (5 Основных Ниш)</h3>
+        <h3 style="color:#2e7d32; margin-top:0; font-size: 20px;">База знаний (5 Основных Ниш)</h3>
 
         <div class="category-card" onclick="openNiche('Умное капельное орошение')">
             <h4>💧 Умное капельное орошение (Датчики & ИИ)</h4>
