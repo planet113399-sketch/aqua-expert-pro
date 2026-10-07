@@ -8,9 +8,9 @@
         * { box-sizing: border-box; }
         html, body { height: 100%; margin: 0; padding: 12px; background-color: #f8f9fa; color: #111; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         
-        #mainScreen { display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; position: relative; padding-bottom: 120px; }
+        #mainScreen { display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; position: relative; padding-bottom: 130px; }
 
-        /* ОЧЕНЬ КРУПНАЯ ВЕРХНЯЯ ШАПКА */
+        /* ВЕРХНЯЯ ШАПКА */
         header { background: #2e7d32; color: white; padding: 18px; border-radius: 22px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
         .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
         
@@ -39,21 +39,8 @@
         }
         .circle-btn:active { background: #e8f5e9; transform: scale(0.93); }
 
-        /* ОГРОМНЫЙ ОФИЦИАЛЬНЫЙ БЕЛЫЙ ИИ-ТЕРМИНАЛ НА ВЕСЬ ЦЕНТР */
-        .chat-terminal { 
-            flex: 1; 
-            background: #ffffff; 
-            border-radius: 24px; 
-            padding: 24px; 
-            margin-bottom: 16px; 
-            border: 3px solid #2e7d32; 
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06); 
-            min-height: 280px;
-        }
-        .terminal-text { color: #666; font-size: 22px; text-align: center; margin-top: 90px; font-weight: 500; line-height: 1.5; }
-
-        /* ВЫСОКАЯ СТРОКА ВВОДА И БОЛЬШАЯ КНОПКА ОТПРАВИТЬ */
-        .input-bar { display: flex; gap: 12px; margin-bottom: 14px; }
+        /* СТРОКА ВВОДА И КНОПКА ОТПРАВИТЬ СВЕРХУ (ПОД КНОПКАМИ ВВОДА) */
+        .input-bar { display: flex; gap: 12px; margin-bottom: 16px; }
         .term-input { 
             flex: 1; 
             padding: 22px; 
@@ -77,24 +64,37 @@
             box-shadow: 0 5px 14px rgba(46,125,50,0.35); 
         }
 
-        /* ОДНА БОЛЬШАЯ КРУГЛАЯ КНОПКА БАЗЫ ЗНАНИЙ ВНИЗУ */
+        /* ОГРОМНЫЙ БЕЛЫЙ ИИ-ТЕРМИНАЛ НИЖЕ СТРОКИ ВВОДА */
+        .chat-terminal { 
+            flex: 1; 
+            background: #ffffff; 
+            border-radius: 24px; 
+            padding: 24px; 
+            margin-bottom: 16px; 
+            border: 3px solid #2e7d32; 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06); 
+            min-height: 320px;
+        }
+        .terminal-text { color: #666; font-size: 22px; text-align: center; margin-top: 100px; font-weight: 500; line-height: 1.5; }
+
+        /* УВЕЛИЧЕННАЯ КРУГЛАЯ КНОПКА БАЗЫ ЗНАНИЙ ВНИЗУ */
         .floating-base-container { display: flex; justify-content: center; position: fixed; bottom: 15px; left: 0; right: 0; z-index: 999; }
         .floating-base-btn { 
-            width: 95px; 
-            height: 95px; 
+            width: 110px; 
+            height: 110px; 
             border-radius: 50%; 
             background: #1b5e20; 
             color: #fff; 
             border: 4px solid #ffffff; 
-            font-size: 38px; 
+            font-size: 44px; 
             display: flex; 
             flex-direction: column;
             align-items: center; 
             justify-content: center; 
-            box-shadow: 0 10px 28px rgba(0,0,0,0.4); 
+            box-shadow: 0 12px 30px rgba(0,0,0,0.45); 
             cursor: pointer; 
         }
-        .floating-base-btn span { font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px; }
+        .floating-base-btn span { font-size: 13px; font-weight: bold; text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px; }
         .floating-base-btn:active { transform: scale(0.92); background: #2e7d32; }
 
         /* ЭКРАН 2: ОФЛАЙН БАЗА */
@@ -126,7 +126,13 @@
             <button class="circle-btn" onclick="triggerCamera()">📷</button>
         </div>
 
-        <!-- Огромный чистый ИИ-Терминал -->
+        <!-- Высокая строка ввода + Кнопка Отправить (ТЕПЕРЬ НАВЕРХУ) -->
+        <div class="input-bar">
+            <input type="text" id="userQuery" class="term-input" placeholder="Введите вопрос...">
+            <button class="send-btn" onclick="sendQuery()">Отправить</button>
+        </div>
+
+        <!-- Огромный чистый ИИ-Терминал (ТЕПЕРЬ СНИЗУ ПОД СТРОКОЙ) -->
         <div class="chat-terminal" id="responseArea">
             <div class="terminal-text">
                 🌱 ИИ-Терминал AquaExpert готов к работе.<br><br>
@@ -134,13 +140,7 @@
             </div>
         </div>
 
-        <!-- Высокая строка ввода + Кнопка Отправить -->
-        <div class="input-bar">
-            <input type="text" id="userQuery" class="term-input" placeholder="Введите вопрос...">
-            <button class="send-btn" onclick="sendQuery()">Отправить</button>
-        </div>
-
-        <!-- Круглая кнопка Базы Знаний внизу по центру -->
+        <!-- Увеличенная круглая кнопка Базы Знаний внизу по центру -->
         <div class="floating-base-container">
             <button class="floating-base-btn" onclick="openBaseScreen()">
                 📚
