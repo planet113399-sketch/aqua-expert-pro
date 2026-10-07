@@ -6,42 +6,43 @@
     <title>AquaExpert Pro v2.0</title>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 12px; background-color: #f4f6f8; color: #333; font-size: 16px; }
+        body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; margin: 0; padding: 10px; background-color: #f0f2f5; color: #222; font-size: 16px; }
         
-        /* Панель управления */
-        header { background-color: #2e7d32; color: white; padding: 14px; border-radius: 12px; margin-bottom: 12px; }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+        /* Верхняя шапка */
+        header { background: linear-gradient(135deg, #2e7d32, #1b5e20); color: white; padding: 12px; border-radius: 14px; margin-bottom: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
         
         .mode-toggle { display: flex; background: rgba(0,0,0,0.25); border-radius: 20px; padding: 3px; cursor: pointer; }
-        .mode-option { padding: 8px 14px; border-radius: 17px; font-size: 14px; font-weight: bold; }
-        .mode-option.active { background: white; color: #2e7d32; }
+        .mode-option { padding: 6px 14px; border-radius: 17px; font-size: 14px; font-weight: bold; }
+        .mode-option.active { background: white; color: #1b5e20; }
 
-        .btn-header { background: rgba(255,255,255,0.25); color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
-        .btn-bluetooth { background: #d32f2f; color: white; border: none; padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .btn-header { background: rgba(255,255,255,0.25); color: white; border: none; padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .btn-bluetooth { background: #d32f2f; color: white; border: none; padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: 0 2px 6px rgba(211,47,47,0.4); }
 
-        /* Мультимодальный ввод */
-        .input-tools { display: flex; gap: 10px; margin-bottom: 12px; }
-        .tool-btn { flex: 1; padding: 14px; border: 1px solid #ccc; background: white; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        /* Крупные плотные кнопки ввода */
+        .input-tools { display: flex; gap: 10px; margin-bottom: 10px; }
+        .tool-btn { flex: 1; padding: 15px; border: none; background: #ffffff; color: #2e7d32; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.1); }
+        .tool-btn:active { background: #e8f5e9; transform: scale(0.98); }
 
-        /* Поисковая строка */
-        .search-container { display: flex; gap: 8px; }
-        .search-input { flex: 1; padding: 16px; border: 1px solid #ccc; border-radius: 10px; font-size: 16px; }
-        .search-btn { background: #2e7d32; color: white; border: none; padding: 0 20px; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        /* Поле ввода + Кнопка Отправить */
+        .search-container { display: flex; gap: 8px; margin-bottom: 10px; }
+        .search-input { flex: 1; padding: 14px; border: 1px solid #ccc; border-radius: 12px; font-size: 16px; background: white; outline: none; }
+        .search-btn { background: #2e7d32; color: white; border: none; padding: 0 18px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.15); }
 
-        /* Большое белое окно ответов */
-        .chat-display { background: white; border-radius: 12px; min-height: 300px; padding: 18px; margin-top: 12px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e0e0e0; }
-        .chat-placeholder { color: #888; text-align: center; margin-top: 100px; font-size: 16px; line-height: 1.5; }
+        /* Большое чистое поле для ответов */
+        .chat-display { background: white; border-radius: 14px; min-height: 280px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e0e0e0; }
+        .chat-placeholder { color: #888; text-align: center; margin-top: 90px; font-size: 15px; line-height: 1.5; }
 
-        /* Кнопка перехода в Базу знаний (В самом низу) */
-        .nav-base-btn { width: 100%; padding: 16px; background: #1b5e20; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-top: 10px; }
+        /* Компактная кнопка переключения в базу знаний внизу */
+        .nav-base-btn { width: 100%; padding: 14px; background: #333; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
 
         /* Второе окно (Офлайн База) */
         #baseScreen { display: none; }
-        .back-btn { background: #555; color: white; padding: 12px 18px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; cursor: pointer; }
+        .back-btn { background: #2e7d32; color: white; padding: 12px 18px; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; margin-bottom: 15px; cursor: pointer; }
         
-        .category-card { background: white; padding: 18px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 6px solid #2e7d32; cursor: pointer; }
-        .category-card h4 { margin: 0 0 6px 0; color: #2e7d32; font-size: 18px; }
-        .category-card p { margin: 0; font-size: 14px; color: #666; line-height: 1.4; }
+        .category-card { background: white; padding: 16px; border-radius: 12px; margin-bottom: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border-left: 6px solid #2e7d32; cursor: pointer; }
+        .category-card h4 { margin: 0 0 5px 0; color: #2e7d32; font-size: 17px; }
+        .category-card p { margin: 0; font-size: 13px; color: #666; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -55,43 +56,43 @@
                     <span class="mode-option active" id="modeOnline">Онлайн</span>
                 </div>
                 <button class="btn-header" onclick="changeLang()">🌐 RU</button>
-                <button class="btn-bluetooth" onclick="connectBT()">🎧 Bluetooth</button>
-            </div>
-
-            <!-- Инструменты ввода -->
-            <div class="input-tools">
-                <button class="tool-btn" onclick="triggerVoice()">🎙️ Голос</button>
-                <button class="tool-btn" onclick="triggerCamera()">📷 Фото</button>
-            </div>
-
-            <!-- Поисковая строка -->
-            <div class="search-container">
-                <input type="text" id="userQuery" class="search-input" placeholder="Задайте вопрос агроному...">
-                <button class="search-btn" onclick="sendQuery()">Искать</button>
+                <button class="btn-bluetooth" onclick="connectBT()">🎧 BT</button>
             </div>
         </header>
 
-        <!-- Большое свободное поле для ответов -->
+        <!-- Крупные плотные кнопки ввода -->
+        <div class="input-tools">
+            <button class="tool-btn" onclick="triggerVoice()">🎙️ Голос</button>
+            <button class="tool-btn" onclick="triggerCamera()">📷 Фото</button>
+        </div>
+
+        <!-- Поисковая строка и кнопка Отправить -->
+        <div class="search-container">
+            <input type="text" id="userQuery" class="search-input" placeholder="Введите ваш вопрос...">
+            <button class="search-btn" onclick="sendQuery()">Отправить</button>
+        </div>
+
+        <!-- Большое чистое поле для ответов ИИ -->
         <div class="chat-display" id="responseArea">
             <div class="chat-placeholder">
-                🌱 Задайте вопрос голосом, загрузите фото или введите текст...
+                🌱 Здесь будут появляться ответы агро-помощника...
             </div>
         </div>
 
-        <!-- Кнопка перехода во второе окно (Снизу) -->
+        <!-- Переход во 2-е окно (Офлайн база) -->
         <button class="nav-base-btn" onclick="openBaseScreen()">
-            📚 ОТКРЫТЬ ОФЛАЙН БАЗУ ЗНАНИЙ (5 НИШ)
+            📚 База знаний (5 ниш)
         </button>
     </div>
 
     <!-- ОКНО 2: ОФЛАЙН БАЗА ЗНАНИЙ (5 НИШ) -->
     <div id="baseScreen">
-        <button class="back-btn" onclick="openMainScreen()">⬅️ Назад в Главное меню</button>
-        <h3 style="color:#2e7d32; margin-top:0; font-size: 20px;">База знаний (5 Основных Ниш)</h3>
+        <button class="back-btn" onclick="openMainScreen()">⬅️ Назад на Главный экран</button>
+        <h3 style="color:#2e7d32; margin-top:0;">Агрономическая База Знаний</h3>
 
         <div class="category-card" onclick="openNiche('Умное капельное орошение')">
             <h4>💧 Умное капельное орошение (Датчики & ИИ)</h4>
-            <p>Засушливые регионы, проект Солнечный сад, автоматика полива.</p>
+            <p>Засушливые регионы, проект Солнечный сад, автополив.</p>
         </div>
 
         <div class="category-card" onclick="openNiche('Гидропоника и Аэропоника')">
@@ -122,23 +123,23 @@
             if (on.classList.contains('active')) {
                 on.classList.remove('active');
                 off.classList.add('active');
-                alert("Переключено в ОФЛАЙН (Работа из встроенной базы)");
+                alert("Переключено в ОФЛАЙН режим (База данных)");
             } else {
                 off.classList.remove('active');
                 on.classList.add('active');
-                alert("Переключено в ОНЛАЙН (Подключение к серверу)");
+                alert("Переключено в ОНЛАЙН режим (ИИ-сервер)");
             }
         }
 
-        function changeLang() { alert("Смена языка (RU / EN / KK)"); }
-        function connectBT() { alert("Поиск и подключение Bluetooth-гарнитуры..."); }
+        function changeLang() { alert("Выбор языка: RU / EN / KK"); }
+        function connectBT() { alert("Поиск Bluetooth-гарнитуры..."); }
         function triggerVoice() { alert("Включен микрофон. Говорите вопрос..."); }
-        function triggerCamera() { alert("Открытие камеры для снимка листа/растения..."); }
+        function triggerCamera() { alert("Открытие камеры для снимка..."); }
 
         function sendQuery() {
             let q = document.getElementById('userQuery').value;
             if(!q) return;
-            document.getElementById('responseArea').innerHTML = '<b>Ваш вопрос:</b> ' + q + '<br><br><b>Ответ Агро-Эксперта:</b> Расчёт выполнен успешно. Обработка завершена.';
+            document.getElementById('responseArea').innerHTML = '<b>Ваш запрос:</b> ' + q + '<br><br><b>Ответ Агро-Эксперта:</b> Запрос принят. Обработка данных завершена.';
         }
 
         function openBaseScreen() {
@@ -152,7 +153,7 @@
         }
 
         function openNiche(name) {
-            alert("Загрузка офлайн-материалов ниши: " + name);
+            alert("Раздел: " + name + "\nЗагрузка материалов...");
         }
     </script>
 
