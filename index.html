@@ -13,39 +13,34 @@
     }
 
     body {
-      background-color: #121212;
+      background-color: #f4f6f4;
       color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      padding: 10px;
+      display: flex;
+      flex-direction: column;
     }
 
     .app-container {
       width: 100%;
-      max-width: 500px;
-      min-height: 90vh;
-      background-color: #f4f6f4;
-      border-radius: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 16px;
-      gap: 14px;
-      position: relative;
+      padding: 12px;
+      gap: 12px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .screen {
       display: flex;
       flex-direction: column;
       flex: 1;
-      gap: 14px;
+      gap: 12px;
     }
 
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ СТРОКА С КНОПКОЙ ОЧИСТКИ КЭША */
+    /* 1. ВЕРХНЯЯ СТРОКА */
     .top-bar {
       background-color: #1b5e20;
       padding: 10px 14px;
@@ -103,13 +98,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 5px 0;
+      padding: 4px 0;
     }
 
     .round-btn {
       border-radius: 50%;
       border: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -120,16 +115,16 @@
 
     .round-btn:active { transform: scale(0.95); }
 
-    .btn-mic { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
-    .btn-send { width: 100px; height: 100px; background-color: #1b5e20; font-size: 16px; font-weight: 900; }
-    .btn-cam { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
+    .btn-mic { width: 70px; height: 70px; background-color: #2e7d32; font-size: 28px; }
+    .btn-send { width: 90px; height: 90px; background-color: #1b5e20; font-size: 15px; font-weight: 900; }
+    .btn-cam { width: 70px; height: 70px; background-color: #2e7d32; font-size: 28px; }
 
-    /* 3. ЧИСТЫЙ ТЕРМИНАЛ НА ВЕСЬ ЭКРАН */
+    /* 3. ТЕРМИНАЛ НА ВЕСЬ ЭКРАН */
     .terminal-card {
       flex: 1;
-      min-height: 320px;
+      min-height: 250px;
       background: white;
-      border: 3px solid #2e7d32;
+      border: 2px solid #2e7d32;
       border-radius: 18px;
       display: flex;
       flex-direction: column;
@@ -142,7 +137,7 @@
       padding: 10px 14px;
       display: flex;
       justify-content: space-between;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       color: #1b5e20;
       border-bottom: 2px solid #c8e6c9;
@@ -150,7 +145,7 @@
 
     .terminal-body {
       flex: 1;
-      padding: 20px;
+      padding: 18px;
       overflow-y: auto;
       text-align: center;
       color: #333;
@@ -162,25 +157,25 @@
       align-items: center;
     }
 
-    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ (БЕЗ ЛИШНИХ СТРОК) */
+    /* 4. КНОПКА БАЗЫ ЗНАНИЙ */
     .btn-base {
       width: 100%;
-      padding: 18px;
+      padding: 16px;
       background-color: #1b5e20;
       color: white;
       border: none;
-      border-radius: 18px;
-      font-size: 18px;
+      border-radius: 16px;
+      font-size: 17px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
+      box-shadow: 0 4px 10px rgba(27, 94, 32, 0.25);
     }
 
     /* СТРАНИЦА БАЗЫ */
     .base-header {
       background-color: #1b5e20;
       color: white;
-      padding: 16px;
+      padding: 14px;
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -191,9 +186,9 @@
       background: rgba(255,255,255,0.25);
       border: none;
       color: white;
-      padding: 10px 16px;
+      padding: 8px 14px;
       border-radius: 12px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -201,28 +196,28 @@
     .niche-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       overflow-y: auto;
       flex: 1;
     }
 
     .niche-card {
       background: white;
-      padding: 18px;
+      padding: 16px;
       border-radius: 16px;
       border-left: 6px solid #2e7d32;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
       cursor: pointer;
     }
 
     .niche-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: bold;
       color: #1b5e20;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    .niche-desc { font-size: 14px; color: #555; }
+    .niche-desc { font-size: 13px; color: #555; }
   </style>
 </head>
 <body>
@@ -237,21 +232,21 @@
           <button class="toggle-btn active" id="onlineBtn" onclick="setMode('online')">Онлайн</button>
         </div>
         <div class="hdr-actions">
-          <button class="btn-hdr btn-clean" onclick="clearCache()" title="Очистить кэш/историю">🧹</button>
-          <button class="btn-hdr btn-lang">🌐 RU</button>
+          <button class="btn-hdr btn-clean" onclick="clearCache()" title="Очистить кэш">🧹</button>
+          <button class="btn-hdr btn-lang" id="langBtn" onclick="toggleLanguage()">🌐 RU</button>
           <button class="btn-hdr btn-bt">🎧 BT</button>
         </div>
       </div>
 
       <div class="action-row">
         <button class="round-btn btn-mic" onclick="alert('Голосовой ввод активирован')">🎙️</button>
-        <button class="round-btn btn-send" onclick="alert('Запрос отправлен из Терминала')">ОТПРАВИТЬ</button>
+        <button class="round-btn btn-send" id="sendBtnText" onclick="alert('Запрос отправлен из Терминала')">ОТПРАВИТЬ</button>
         <button class="round-btn btn-cam" onclick="alert('Камера открыта')">📷</button>
       </div>
 
       <div class="terminal-card" onclick="typeInTerminal()">
         <div class="terminal-header">
-          <span>🟢 ТЕРМИНАЛ АГРО-ИИ</span>
+          <span id="termTitle">🟢 ТЕРМИНАЛ АГРО-ИИ</span>
           <span>AquaExpert v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
@@ -260,7 +255,7 @@
         </div>
       </div>
 
-      <button class="btn-base" onclick="showScreen('baseScreen')">
+      <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">
         📚 БАЗА ЗНАНИЙ (ОФЛАЙН)
       </button>
     </div>
@@ -268,35 +263,35 @@
     <!-- ЭКРАН 2: ОФЛАЙН БАЗА ЗНАНИЙ -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
-        <button class="back-btn" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3>📚 Офлайн-База</h3>
+        <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
+        <h3 id="baseTitleText">📚 Офлайн-База</h3>
         <div></div>
       </div>
 
       <div class="niche-list">
         <div class="niche-card" onclick="alert('Раздел: Гидропоника')">
-          <div class="niche-title">💧 1. Гидропоника и Капельный полив</div>
-          <div class="niche-desc">Расчет растворов, датчики, насосы, автоматика.</div>
+          <div class="niche-title" id="n1Title">💧 1. Гидропоника и Капельный полив</div>
+          <div class="niche-desc" id="n1Desc">Расчет растворов, датчики, насосы, автоматика.</div>
         </div>
 
         <div class="niche-card" onclick="alert('Раздел: Дроны')">
-          <div class="niche-title">🛸 2. Дроны и Агро-Мониторинг</div>
-          <div class="niche-desc">Карты полей, NDVI индексы, облет садов.</div>
+          <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
+          <div class="niche-desc" id="n2Desc">Карты полей, NDVI индексы, облет садов.</div>
         </div>
 
         <div class="niche-card" onclick="alert('Раздел: Агрохимия')">
-          <div class="niche-title">🌿 3. Экологическая Агрохимия</div>
-          <div class="niche-desc">Безмедевые препараты, биозащита, биоудобрения.</div>
+          <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
+          <div class="niche-desc" id="n3Desc">Безмедевые препараты, биозащита, биоудобрения.</div>
         </div>
 
         <div class="niche-card" onclick="alert('Раздел: Болезни')">
-          <div class="niche-title">🔬 4. Определитель Болезней</div>
-          <div class="niche-desc">Атлас симптомов фисташек, садов и культур.</div>
+          <div class="niche-title" id="n4Title">🔬 4. Определитель Болезней</div>
+          <div class="niche-desc" id="n4Desc">Атлас симптомов фисташек, садов и культур.</div>
         </div>
 
         <div class="niche-card" onclick="alert('Раздел: Почвоведение')">
-          <div class="niche-title">🌳 5. Почвоведение и Садоводство</div>
-          <div class="niche-desc">pH почвы, мелиорация, азотный баланс, уход.</div>
+          <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
+          <div class="niche-desc" id="n5Desc">pH почвы, мелиорация, азотный баланс, уход.</div>
         </div>
       </div>
     </div>
@@ -304,6 +299,8 @@
   </div>
 
   <script>
+    let currentLang = 'RU';
+
     function showScreen(screenId) {
       document.getElementById('mainScreen').classList.add('hidden');
       document.getElementById('baseScreen').classList.add('hidden');
@@ -311,15 +308,14 @@
     }
 
     function typeInTerminal() {
-      const text = prompt("Введите ваш вопрос для Агро-Терминала:");
+      const text = prompt(currentLang === 'RU' ? "Введите ваш вопрос:" : "Enter your question:");
       if (text && text.trim() !== "") {
-        document.getElementById('terminalOutput').innerHTML = '<b>Ваш вопрос:</b> ' + text + '<br><br>⏳ <i>Анализирую данные...</i>';
+        document.getElementById('terminalOutput').innerHTML = '<b>' + (currentLang === 'RU' ? 'Ваш вопрос:' : 'Your question:') + '</b> ' + text + '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'Анализирую данные...' : 'Analyzing data...') + '</i>';
       }
     }
 
     function clearCache() {
-      document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Память и кэш очищены!';
-      alert('Кэш и история приложения успешно очищены!');
+      document.getElementById('terminalOutput').innerHTML = '🌱 <b>' + (currentLang === 'RU' ? 'ИИ-Терминал готов к работе.' : 'AI Terminal is ready.') + '</b><br><br>' + (currentLang === 'RU' ? 'Кэш очищен!' : 'Cache cleared!');
     }
 
     function setMode(mode) {
@@ -327,6 +323,58 @@
       btns.forEach(b => b.classList.remove('active'));
       if(mode === 'online') btns[1].classList.add('active');
       else btns[0].classList.add('active');
+    }
+
+    function toggleLanguage() {
+      if(currentLang === 'RU') {
+        currentLang = 'EN';
+        document.getElementById('langBtn').innerText = '🌐 EN';
+        document.getElementById('sendBtnText').innerText = 'SEND';
+        document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
+        document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal is ready to work.</b><br><br>Ask a question by voice 🎙️, take a photo 📷 or click here to type.';
+        document.getElementById('baseTitleText').innerText = '📚 Offline Base';
+        document.getElementById('backBtnText').innerText = '⬅ Back';
+        
+        document.getElementById('n1Title').innerText = '💧 1. Hydroponics & Drip Irrigation';
+        document.getElementById('n1Desc').innerText = 'Nutrient solutions, sensors, pumps, automation.';
+        
+        document.getElementById('n2Title').innerText = '🛸 2. Drones & Agro-Monitoring';
+        document.getElementById('n2Desc').innerText = 'Field maps, NDVI indices, orchard flyovers.';
+        
+        document.getElementById('n3Title').innerText = '🌿 3. Eco Agrochemistry';
+        document.getElementById('n3Desc').innerText = 'Copper-free preparations, bioprotection, biofertilizers.';
+        
+        document.getElementById('n4Title').innerText = '🔬 4. Disease Identifier';
+        document.getElementById('n4Desc').innerText = 'Symptom atlas for pistachios, orchards, crops.';
+        
+        document.getElementById('n5Title').innerText = '🌳 5. Soil Science & Gardening';
+        document.getElementById('n5Desc').innerText = 'Soil pH, reclamation, nitrogen balance, care.';
+      } else {
+        currentLang = 'RU';
+        document.getElementById('langBtn').innerText = '🌐 RU';
+        document.getElementById('sendBtnText').innerText = 'ОТПРАВИТЬ';
+        document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
+        document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Задайте вопрос голосом 🎙️, сфотографируйте растение 📷 или кликните по Терминалу для ввода текста.';
+        document.getElementById('baseTitleText').innerText = '📚 Офлайн-База';
+        document.getElementById('backBtnText').innerText = '⬅ Назад';
+        
+        document.getElementById('n1Title').innerText = '💧 1. Гидропоника и Капельный полив';
+        document.getElementById('n1Desc').innerText = 'Расчет растворов, датчики, насосы, автоматика.';
+        
+        document.getElementById('n2Title').innerText = '🛸 2. Дроны и Агро-Мониторинг';
+        document.getElementById('n2Desc').innerText = 'Карты полей, NDVI индексы, облет садов.';
+        
+        document.getElementById('n3Title').innerText = '🌿 3. Экологическая Агрохимия';
+        document.getElementById('n3Desc').innerText = 'Безмедевые препараты, биозащита, биоудобрения.';
+        
+        document.getElementById('n4Title').innerText = '🔬 4. Определитель Болезней';
+        document.getElementById('n4Desc').innerText = 'Атлас симптомов фисташек, садов и культур.';
+        
+        document.getElementById('n5Title').innerText = '🌳 5. Почвоведение и Садоводство';
+        document.getElementById('n5Desc').innerText = 'pH почвы, мелиорация, азотный баланс, уход.';
+      }
     }
   </script>
 </body>
