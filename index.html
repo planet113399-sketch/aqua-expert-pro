@@ -2,18 +2,19 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AquaExpert Pro - Агро Терминал</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>АгроЭксперт - ИИ Терминал</title>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
     body {
       background-color: #121212;
+      color: #333;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,59 +22,53 @@
       padding: 10px;
     }
 
-    /* РАМКА СИМУЛЯТОРА ТЕЛЕФОНА */
-    .phone-container {
+    /* АДАПТИВНЫЙ КОНТЕЙНЕР (РАСТЯГИВАЕТСЯ НА ВЕСЬ ЭКРАН) */
+    .app-container {
       width: 100%;
-      max-width: 400px;
-      height: 820px;
+      max-width: 500px;
+      min-height: 90vh;
       background-color: #f4f6f4;
-      border-radius: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      border: 8px solid #222;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      padding: 15px;
-      gap: 12px;
+      padding: 16px;
+      gap: 14px;
       position: relative;
-      overflow: hidden;
     }
 
-    /* ЭКРАНЫ */
     .screen {
       display: flex;
       flex-direction: column;
-      height: 100%;
-      gap: 12px;
+      flex: 1;
+      gap: 14px;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ШАПКА */
+    /* 1. ВЕРХНЯЯ СТРОКА */
     .top-bar {
       background-color: #1b5e20;
-      padding: 10px 14px;
+      padding: 12px 16px;
       border-radius: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
     }
 
     .toggle-container {
       display: flex;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.3);
       border-radius: 20px;
       padding: 3px;
     }
 
     .toggle-btn {
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 16px;
       border: none;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
       color: white;
       background: transparent;
@@ -86,11 +81,11 @@
     }
 
     .btn-hdr {
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 16px;
       border: none;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 14px;
       color: white;
       cursor: pointer;
     }
@@ -98,10 +93,10 @@
     .btn-lang { background-color: rgba(255, 255, 255, 0.2); }
     .btn-bt { background-color: #c62828; }
 
-    /* 2. ТРИ КРУПНЫЕ КРУГЛЫЕ КНОПКИ В РЯД */
+    /* 2. ТРИ КРУПНЫЕ КНОПКИ В РЯД */
     .action-row {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       padding: 5px 0;
     }
@@ -109,32 +104,31 @@
     .round-btn {
       border-radius: 50%;
       border: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: bold;
       cursor: pointer;
       color: white;
-      transition: transform 0.1s;
     }
 
-    .round-btn:active { transform: scale(0.92); }
+    .round-btn:active { transform: scale(0.95); }
 
-    .btn-mic { width: 70px; height: 70px; background-color: #2e7d32; font-size: 28px; }
-    .btn-send { width: 90px; height: 90px; background-color: #1b5e20; font-size: 14px; letter-spacing: 0.5px; }
-    .btn-cam { width: 70px; height: 70px; background-color: #2e7d32; font-size: 28px; }
+    .btn-mic { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
+    .btn-send { width: 100px; height: 100px; background-color: #1b5e20; font-size: 16px; font-weight: 900; }
+    .btn-cam { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
 
-    /* 3. ТЕРМИНАЛ (ЧАТ) */
+    /* 3. ТЕРМИНАЛ */
     .terminal-card {
       flex: 1;
+      min-height: 250px;
       background: white;
-      border: 2px solid #2e7d32;
-      border-radius: 16px;
+      border: 3px solid #2e7d32;
+      border-radius: 18px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     .terminal-header {
@@ -142,61 +136,57 @@
       padding: 10px 14px;
       display: flex;
       justify-content: space-between;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
       color: #1b5e20;
-      border-bottom: 1px solid #c8e6c9;
+      border-bottom: 2px solid #c8e6c9;
     }
 
     .terminal-body {
       flex: 1;
-      padding: 16px;
+      padding: 18px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      color: #444;
-      font-size: 15px;
+      color: #333;
+      font-size: 17px;
       line-height: 1.5;
     }
 
-    /* 4. НИЖНЯЯ ПАНЕЛЬ И КНОПКА БАЗЫ */
+    /* 4. НИЖНЯЯ ЧАСТЬ */
     .bottom-section {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
 
     .input-box {
       width: 100%;
-      padding: 14px 18px;
+      padding: 16px 20px;
       border: 2px solid #a5d6a7;
-      border-radius: 25px;
-      font-size: 15px;
+      border-radius: 30px;
+      font-size: 16px;
       outline: none;
       background: white;
     }
 
     .btn-base {
       width: 100%;
-      padding: 16px;
+      padding: 18px;
       background-color: #1b5e20;
       color: white;
       border: none;
-      border-radius: 16px;
-      font-size: 17px;
+      border-radius: 18px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(27, 94, 32, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
 
-    /* СТРАНИЦА БАЗЫ ЗНАНИЙ */
+    /* ОФЛАЙН БАЗА СТРАНИЦА */
     .base-header {
       background-color: #1b5e20;
       color: white;
@@ -208,11 +198,12 @@
     }
 
     .back-btn {
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.25);
       border: none;
       color: white;
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: 12px;
+      font-size: 15px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -230,26 +221,26 @@
       padding: 18px;
       border-radius: 16px;
       border-left: 6px solid #2e7d32;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       cursor: pointer;
     }
 
     .niche-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: bold;
       color: #1b5e20;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .niche-desc {
-      font-size: 13px;
-      color: #666;
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
 <body>
 
-  <div class="phone-container">
+  <div class="app-container">
     
     <!-- ЭКРАН 1: ГЛАВНЫЙ ТЕРМИНАЛ -->
     <div id="mainScreen" class="screen">
@@ -296,12 +287,12 @@
       </div>
 
       <div class="niche-list">
-        <div class="niche-card" onclick="alert('Раздел: Гидропоника и полив')">
+        <div class="niche-card" onclick="alert('Раздел: Гидропоника и капельный полив')">
           <div class="niche-title">💧 1. Гидропоника и Капельный полив</div>
           <div class="niche-desc">Расчет растворов, датчики, насосы, автоматика.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Дроны и Мониторинг')">
+        <div class="niche-card" onclick="alert('Раздел: Дроны и Агро-Мониторинг')">
           <div class="niche-title">🛸 2. Дроны и Агро-Мониторинг</div>
           <div class="niche-desc">Карты полей, NDVI индексы, облет садов.</div>
         </div>
@@ -311,7 +302,7 @@
           <div class="niche-desc">Безмедевые препараты, биозащита, биоудобрения.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Болезни и Вредители')">
+        <div class="niche-card" onclick="alert('Раздел: Определитель Болезней')">
           <div class="niche-title">🔬 4. Определитель Болезней</div>
           <div class="niche-desc">Атлас симптомов фисташек, садов и культур.</div>
         </div>
