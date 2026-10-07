@@ -22,7 +22,6 @@
       padding: 10px;
     }
 
-    /* АДАПТИВНЫЙ КОНТЕЙНЕР (РАСТЯГИВАЕТСЯ НА ВЕСЬ ЭКРАН) */
     .app-container {
       width: 100%;
       max-width: 500px;
@@ -46,10 +45,10 @@
 
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ СТРОКА */
+    /* 1. ВЕРХНЯЯ СТРОКА С КНОПКОЙ ОЧИСТКИ КЭША */
     .top-bar {
       background-color: #1b5e20;
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-radius: 16px;
       display: flex;
       justify-content: space-between;
@@ -65,10 +64,10 @@
     }
 
     .toggle-btn {
-      padding: 8px 14px;
+      padding: 6px 12px;
       border-radius: 16px;
       border: none;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
       color: white;
       background: transparent;
@@ -80,20 +79,26 @@
       color: #1b5e20;
     }
 
+    .hdr-actions {
+      display: flex;
+      gap: 6px;
+    }
+
     .btn-hdr {
-      padding: 8px 14px;
-      border-radius: 16px;
+      padding: 6px 10px;
+      border-radius: 14px;
       border: none;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 13px;
       color: white;
       cursor: pointer;
     }
 
     .btn-lang { background-color: rgba(255, 255, 255, 0.2); }
     .btn-bt { background-color: #c62828; }
+    .btn-clean { background-color: rgba(255, 255, 255, 0.25); font-size: 14px; }
 
-    /* 2. ТРИ КРУПНЫЕ КНОПКИ В РЯД */
+    /* 2. ТРИ КРУПНЫЕ КНОПКИ */
     .action-row {
       display: flex;
       justify-content: space-between;
@@ -119,16 +124,17 @@
     .btn-send { width: 100px; height: 100px; background-color: #1b5e20; font-size: 16px; font-weight: 900; }
     .btn-cam { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
 
-    /* 3. ТЕРМИНАЛ */
+    /* 3. ЧИСТЫЙ ТЕРМИНАЛ НА ВЕСЬ ЭКРАН */
     .terminal-card {
       flex: 1;
-      min-height: 250px;
+      min-height: 320px;
       background: white;
       border: 3px solid #2e7d32;
       border-radius: 18px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .terminal-header {
@@ -144,35 +150,19 @@
 
     .terminal-body {
       flex: 1;
-      padding: 18px;
+      padding: 20px;
       overflow-y: auto;
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+      line-height: 1.5;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      color: #333;
-      font-size: 17px;
-      line-height: 1.5;
     }
 
-    /* 4. НИЖНЯЯ ЧАСТЬ */
-    .bottom-section {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .input-box {
-      width: 100%;
-      padding: 16px 20px;
-      border: 2px solid #a5d6a7;
-      border-radius: 30px;
-      font-size: 16px;
-      outline: none;
-      background: white;
-    }
-
+    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ (БЕЗ ЛИШНИХ СТРОК) */
     .btn-base {
       width: 100%;
       padding: 18px;
@@ -186,7 +176,7 @@
       box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
 
-    /* ОФЛАЙН БАЗА СТРАНИЦА */
+    /* СТРАНИЦА БАЗЫ */
     .base-header {
       background-color: #1b5e20;
       color: white;
@@ -232,10 +222,7 @@
       margin-bottom: 6px;
     }
 
-    .niche-desc {
-      font-size: 14px;
-      color: #555;
-    }
+    .niche-desc { font-size: 14px; color: #555; }
   </style>
 </head>
 <body>
@@ -249,36 +236,36 @@
           <button class="toggle-btn" onclick="setMode('offline')">Офлайн</button>
           <button class="toggle-btn active" id="onlineBtn" onclick="setMode('online')">Онлайн</button>
         </div>
-        <button class="btn-hdr btn-lang">🌐 RU</button>
-        <button class="btn-hdr btn-bt">🎧 BT</button>
+        <div class="hdr-actions">
+          <button class="btn-hdr btn-clean" onclick="clearCache()" title="Очистить кэш/историю">🧹</button>
+          <button class="btn-hdr btn-lang">🌐 RU</button>
+          <button class="btn-hdr btn-bt">🎧 BT</button>
+        </div>
       </div>
 
       <div class="action-row">
         <button class="round-btn btn-mic" onclick="alert('Голосовой ввод активирован')">🎙️</button>
-        <button class="round-btn btn-send" onclick="sendQuery()">ОТПРАВИТЬ</button>
+        <button class="round-btn btn-send" onclick="alert('Запрос отправлен из Терминала')">ОТПРАВИТЬ</button>
         <button class="round-btn btn-cam" onclick="alert('Камера открыта')">📷</button>
       </div>
 
-      <div class="terminal-card">
+      <div class="terminal-card" onclick="typeInTerminal()">
         <div class="terminal-header">
           <span>🟢 ТЕРМИНАЛ АГРО-ИИ</span>
           <span>AquaExpert v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Задайте вопрос голосом 🎙️, сфотографируйте растение 📷 или введите текст ниже...
+          Задайте вопрос голосом 🎙️, сфотографируйте растение 📷 или кликните по Терминалу для ввода текста.
         </div>
       </div>
 
-      <div class="bottom-section">
-        <input type="text" id="userInput" class="input-box" placeholder="Введите вопрос вручную...">
-        <button class="btn-base" onclick="showScreen('baseScreen')">
-          📚 БАЗА ЗНАНИЙ (ОФЛАЙН)
-        </button>
-      </div>
+      <button class="btn-base" onclick="showScreen('baseScreen')">
+        📚 БАЗА ЗНАНИЙ (ОФЛАЙН)
+      </button>
     </div>
 
-    <!-- ЭКРАН 2: ОФЛАЙН БАЗА ЗНАНИЙ (5 НИШ) -->
+    <!-- ЭКРАН 2: ОФЛАЙН БАЗА ЗНАНИЙ -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" onclick="showScreen('mainScreen')">⬅ Назад</button>
@@ -287,27 +274,27 @@
       </div>
 
       <div class="niche-list">
-        <div class="niche-card" onclick="alert('Раздел: Гидропоника и капельный полив')">
+        <div class="niche-card" onclick="alert('Раздел: Гидропоника')">
           <div class="niche-title">💧 1. Гидропоника и Капельный полив</div>
           <div class="niche-desc">Расчет растворов, датчики, насосы, автоматика.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Дроны и Агро-Мониторинг')">
+        <div class="niche-card" onclick="alert('Раздел: Дроны')">
           <div class="niche-title">🛸 2. Дроны и Агро-Мониторинг</div>
           <div class="niche-desc">Карты полей, NDVI индексы, облет садов.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Экологическая Агрохимия')">
+        <div class="niche-card" onclick="alert('Раздел: Агрохимия')">
           <div class="niche-title">🌿 3. Экологическая Агрохимия</div>
           <div class="niche-desc">Безмедевые препараты, биозащита, биоудобрения.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Определитель Болезней')">
+        <div class="niche-card" onclick="alert('Раздел: Болезни')">
           <div class="niche-title">🔬 4. Определитель Болезней</div>
           <div class="niche-desc">Атлас симптомов фисташек, садов и культур.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Почвоведение и Садоводство')">
+        <div class="niche-card" onclick="alert('Раздел: Почвоведение')">
           <div class="niche-title">🌳 5. Почвоведение и Садоводство</div>
           <div class="niche-desc">pH почвы, мелиорация, азотный баланс, уход.</div>
         </div>
@@ -323,13 +310,16 @@
       document.getElementById(screenId).classList.remove('hidden');
     }
 
-    function sendQuery() {
-      const input = document.getElementById('userInput');
-      const output = document.getElementById('terminalOutput');
-      if (input.value.trim() !== '') {
-        output.innerHTML = '<b>Ваш вопрос:</b> ' + input.value + '<br><br>⏳ <i>Анализирую данные по почве и растениям...</i>';
-        input.value = '';
+    function typeInTerminal() {
+      const text = prompt("Введите ваш вопрос для Агро-Терминала:");
+      if (text && text.trim() !== "") {
+        document.getElementById('terminalOutput').innerHTML = '<b>Ваш вопрос:</b> ' + text + '<br><br>⏳ <i>Анализирую данные...</i>';
       }
+    }
+
+    function clearCache() {
+      document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Память и кэш очищены!';
+      alert('Кэш и история приложения успешно очищены!');
     }
 
     function setMode(mode) {
