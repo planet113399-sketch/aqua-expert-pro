@@ -21,7 +21,6 @@
       padding: 10px;
     }
 
-    /* ТОТ САМЫЙ КРАСИВЫЙ МОБИЛЬНЫЙ МАКЕТ */
     .phone-mockup {
       width: 100%;
       max-width: 410px;
@@ -236,19 +235,19 @@
     <div id="mainScreen" class="screen">
       <div class="top-bar">
         <div class="toggle-container">
-          <button class="toggle-btn" onclick="setMode('offline')">Офлайн</button>
+          <button class="toggle-btn" id="offlineBtn" onclick="setMode('offline')">Офлайн</button>
           <button class="toggle-btn active" id="onlineBtn" onclick="setMode('online')">Онлайн</button>
         </div>
         <div class="hdr-actions">
           <button class="btn-hdr btn-lang" id="langBtn" onclick="toggleLanguage()">🌐 RU</button>
-          <button class="btn-hdr btn-bt">🎧 BT</button>
+          <button class="btn-hdr btn-bt" id="btBtn" onclick="toggleBT()">🎧 BT</button>
         </div>
       </div>
 
       <div class="action-row">
-        <button class="round-btn btn-mic" onclick="alert('Голосовой ввод активирован')">🎙️</button>
-        <button class="round-btn btn-send" id="sendBtnText" onclick="alert('Запрос отправлен из Терминала')">ОТПРАВИТЬ</button>
-        <button class="round-btn btn-cam" onclick="alert('Камера открыта')">📷</button>
+        <button class="round-btn btn-mic" onclick="startVoiceInput()">🎙️</button>
+        <button class="round-btn btn-send" id="sendBtnText" onclick="typeInTerminal()">ОТПРАВИТЬ</button>
+        <button class="round-btn btn-cam" onclick="startCameraInput()">📷</button>
       </div>
 
       <div class="terminal-card" onclick="typeInTerminal()">
@@ -276,27 +275,27 @@
       </div>
 
       <div class="niche-list">
-        <div class="niche-card" onclick="alert('Раздел: Гидропоника')">
+        <div class="niche-card" onclick="openNiche(1)">
           <div class="niche-title" id="n1Title">💧 1. Гидропоника и Капельный полив</div>
           <div class="niche-desc" id="n1Desc">Расчет растворов, датчики, насосы, автоматика.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Дроны')">
+        <div class="niche-card" onclick="openNiche(2)">
           <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
           <div class="niche-desc" id="n2Desc">Карты полей, NDVI индексы, облет садов.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Агрохимия')">
+        <div class="niche-card" onclick="openNiche(3)">
           <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
           <div class="niche-desc" id="n3Desc">Безмедевые препараты, биозащита, биоудобрения.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Болезни')">
+        <div class="niche-card" onclick="openNiche(4)">
           <div class="niche-title" id="n4Title">🔬 4. Определитель Болезней</div>
           <div class="niche-desc" id="n4Desc">Атлас симптомов фисташек, садов и культур.</div>
         </div>
 
-        <div class="niche-card" onclick="alert('Раздел: Почвоведение')">
+        <div class="niche-card" onclick="openNiche(5)">
           <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
           <div class="niche-desc" id="n5Desc">pH почвы, мелиорация, азотный баланс, уход.</div>
         </div>
@@ -307,27 +306,104 @@
 
   <script>
     let currentLang = 'RU';
+    let currentMode = 'online';
+    let isBTActive = false;
 
+    // Переключение экранов
     function showScreen(screenId) {
       document.getElementById('mainScreen').classList.add('hidden');
       document.getElementById('baseScreen').classList.add('hidden');
       document.getElementById(screenId).classList.remove('hidden');
     }
 
-    function typeInTerminal() {
-      const text = prompt(currentLang === 'RU' ? "Введите ваш вопрос:" : "Enter your question:");
-      if (text && text.trim() !== "") {
-        document.getElementById('terminalOutput').innerHTML = '<b>' + (currentLang === 'RU' ? 'Ваш вопрос:' : 'Your question:') + '</b> ' + text + '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'Анализирую данные...' : 'Analyzing data...') + '</i>';
+    // Логика режима Онлайн / Офлайн
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('offlineBtn').classList.remove('active');
+      document.getElementById('onlineBtn').classList.remove('active');
+
+      const output = document.getElementById('terminalOutput');
+
+      if(mode === 'online') {
+        document.getElementById('onlineBtn').classList.add('active');
+        output.innerHTML = currentLang === 'RU' 
+          ? '🌐 <b>Переключено в режим ОНЛАЙН.</b><br><br>Подключен облачный ИИ-сервер. Готов к сложным запросам!'
+          : '🌐 <b>Switched to ONLINE mode.</b><br><br>Cloud AI server connected. Ready for complex queries!';
+      } else {
+        document.getElementById('offlineBtn').classList.add('active');
+        output.innerHTML = currentLang === 'RU'
+          ? '💾 <b>Переключено в режим ОФЛАЙН.</b><br><br>Используется локальная База Знаний. Работает без интернета!'
+          : '💾 <b>Switched to OFFLINE mode.</b><br><br>Using local Knowledge Base. Works without internet!';
       }
     }
 
-    function setMode(mode) {
-      const btns = document.querySelectorAll('.toggle-btn');
-      btns.forEach(b => b.classList.remove('active'));
-      if(mode === 'online') btns[1].classList.add('active');
-      else btns[0].classList.add('active');
+    // Логика ввода текста в Терминал
+    function typeInTerminal() {
+      const promptMsg = currentLang === 'RU' ? "Задайте агро-вопрос для Терминала:" : "Enter your agro question:";
+      const text = prompt(promptMsg);
+
+      if (text && text.trim() !== "") {
+        const output = document.getElementById('terminalOutput');
+        
+        output.innerHTML = '<b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + text + 
+                           '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'ИИ анализирует...' : 'AI analyzing...') + '</i>';
+
+        // Симуляция ответа ИИ через 1.5 секунды
+        setTimeout(() => {
+          if (currentMode === 'online') {
+            output.innerHTML = '<b>' + (currentLang === 'RU' ? 'Ответ ИИ (Онлайн):' : 'AI Response (Online):') + '</b><br><br>' +
+                               (currentLang === 'RU' ? 'Данные обработаны. Рекомендуется проверить уровень pH и внести азотные удобрения.' : 'Data processed. It is recommended to check pH level and apply nitrogen fertilizers.');
+          } else {
+            output.innerHTML = '<b>' + (currentLang === 'RU' ? 'База знаний (Офлайн):' : 'Knowledge Base (Offline):') + '</b><br><br>' +
+                               (currentLang === 'RU' ? 'Найдено совпадение в локальном справочнике: Норма pH для садов 6.0 - 6.8.' : 'Match found in local database: Optimal pH range for orchards is 6.0 - 6.8.');
+          }
+        }, 1500);
+      }
     }
 
+    // Голосовой ввод
+    function startVoiceInput() {
+      const output = document.getElementById('terminalOutput');
+      output.innerHTML = '🎙️ <b>' + (currentLang === 'RU' ? 'Слушаю ваш голос...' : 'Listening to your voice...') + '</b><br><br>' +
+                         '<i>' + (currentLang === 'RU' ? 'Говорите вопрос в микрофон' : 'Speak your question now') + '</i>';
+      
+      setTimeout(() => {
+        output.innerHTML = '<b>' + (currentLang === 'RU' ? 'Распознано:' : 'Recognized:') + '</b> "Какая норма полива для фисташки?"<br><br>⏳ <i>' + 
+                           (currentLang === 'RU' ? 'Ищет ответ...' : 'Searching answer...') + '</i>';
+      }, 2500);
+    }
+
+    // Ввод через Камеру
+    function startCameraInput() {
+      const output = document.getElementById('terminalOutput');
+      output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Сканирование листа/почвы...' : 'Scanning leaf/soil...') + '</b><br><br>' +
+                         '<i>' + (currentLang === 'RU' ? 'Анализ симптомов болезней по фото' : 'Analyzing disease symptoms from photo') + '</i>';
+      
+      setTimeout(() => {
+        output.innerHTML = '🔍 <b>' + (currentLang === 'RU' ? 'Результат анализа фото:' : 'Photo Analysis Result:') + '</b><br><br>' +
+                           (currentLang === 'RU' ? 'Признаков ранковых болезней не обнаружено. Лист здоров.' : 'No disease symptoms detected. Leaf is healthy.');
+      }, 2500);
+    }
+
+    // Переключатель гарнитуры BT
+    function toggleBT() {
+      isBTActive = !isBTActive;
+      const btBtn = document.getElementById('btBtn');
+      if(isBTActive) {
+        btBtn.style.backgroundColor = '#2e7d32';
+        alert(currentLang === 'RU' ? 'Bluetooth-гарнитура подключена' : 'Bluetooth headset connected');
+      } else {
+        btBtn.style.backgroundColor = '#d32f2f';
+        alert(currentLang === 'RU' ? 'Bluetooth отключен' : 'Bluetooth disconnected');
+      }
+    }
+
+    // Клик по нишам в Офлайн-Базе
+    function openNiche(number) {
+      alert((currentLang === 'RU' ? 'Открываем раздел #' : 'Opening section #') + number);
+    }
+
+    // Смена языков (RU / EN)
     function toggleLanguage() {
       if(currentLang === 'RU') {
         currentLang = 'EN';
