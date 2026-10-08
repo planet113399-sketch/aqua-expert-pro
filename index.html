@@ -125,7 +125,7 @@
     .btn-send { width: 100px; height: 100px; background-color: #1b5e20; font-size: 16px; font-weight: 900; letter-spacing: 0.5px; }
     .btn-cam { width: 80px; height: 80px; background-color: #2e7d32; font-size: 36px; }
 
-    /* 3. ОКТНО ТЕРМИНАЛА */
+    /* 3. ОКНО ТЕРМИНАЛА */
     .terminal-card {
       flex: 1;
       background: white;
@@ -153,14 +153,10 @@
       flex: 1;
       padding: 18px;
       overflow-y: auto;
-      text-align: center;
+      text-align: left;
       color: #111;
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
     }
 
     /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ВНИЗУ */
@@ -257,7 +253,7 @@
         </div>
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Задайте вопрос голосом 🎙️, сфотографируйте растение 📷 или кликните по Терминалу для ввода текста.
+          Нажмите на Терминал или на кнопку <b>ОТПРАВИТЬ</b>, чтобы задать агрономический вопрос онлайн-ИИ!
         </div>
       </div>
 
@@ -309,14 +305,12 @@
     let currentMode = 'online';
     let isBTActive = false;
 
-    // Переключение экранов
     function showScreen(screenId) {
       document.getElementById('mainScreen').classList.add('hidden');
       document.getElementById('baseScreen').classList.add('hidden');
       document.getElementById(screenId).classList.remove('hidden');
     }
 
-    // Логика режима Онлайн / Офлайн
     function setMode(mode) {
       currentMode = mode;
       document.getElementById('offlineBtn').classList.remove('active');
@@ -327,65 +321,76 @@
       if(mode === 'online') {
         document.getElementById('onlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU' 
-          ? '🌐 <b>Переключено в режим ОНЛАЙН.</b><br><br>Подключен облачный ИИ-сервер. Готов к сложным запросам!'
-          : '🌐 <b>Switched to ONLINE mode.</b><br><br>Cloud AI server connected. Ready for complex queries!';
+          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>Задайте любой вопрос — запрос будет отправлен настоящей ИИ-модели!'
+          : '🌐 <b>ONLINE mode activated.</b><br><br>Ask any question — query will be sent to live AI model!';
       } else {
         document.getElementById('offlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU'
-          ? '💾 <b>Переключено в режим ОФЛАЙН.</b><br><br>Используется локальная База Знаний. Работает без интернета!'
-          : '💾 <b>Switched to OFFLINE mode.</b><br><br>Using local Knowledge Base. Works without internet!';
+          ? '💾 <b>Режим ОФЛАЙН активирован.</b><br><br>Используется локальный справочник без доступа к интернету.'
+          : '💾 <b>OFFLINE mode activated.</b><br><br>Using local offline handbook.';
       }
     }
 
-    // Логика ввода текста в Терминал
+    // НАСТОЯЩИЙ ЗАПРОС К ИИ
+    async function askAI(userQuery) {
+      const output = document.getElementById('terminalOutput');
+      output.innerHTML = '❓ <b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + userQuery + 
+                         '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'ИИ AquaExpert формулирует ответ...' : 'AquaExpert AI generating answer...') + '</i>';
+
+      if (currentMode === 'offline') {
+        setTimeout(() => {
+          output.innerHTML = '💾 <b>' + (currentLang === 'RU' ? 'Офлайн Справочник:' : 'Offline Handbook:') + '</b><br><br>' +
+            (currentLang === 'RU' 
+              ? 'Запрос сохранен. В локальной базе данных найдена статья: "Регламент полива и подкормок садов". Перейдите в раздел Офлайн-Базы для деталей.' 
+              : 'Query saved. Local DB match: "Orchard Irrigation & Feeding Regulations". Check Offline Base for details.');
+        }, 1000);
+        return;
+      }
+
+      // Отправка запроса к открытому ИИ через сервер
+      try {
+        const systemPrompt = currentLang === 'RU'
+          ? "Ты — профессиональный ИИ-агроном AquaExpert. Отвечай кратко, емко, экспертно и по делу на русском языке."
+          : "You are a professional AI agronomist AquaExpert. Reply concisely, accurately, and professionally in English.";
+        
+        const fullPrompt = encodeURIComponent(systemPrompt + " Вопрос: " + userQuery);
+        const response = await fetch(`https://text.pollinations.ai/${fullPrompt}`);
+        
+        if (response.ok) {
+          const aiText = await response.text();
+          output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Ответ ИИ-Агронома:' : 'AI Agronomist Reply:') + '</b><br><br>' + aiText.replace(/\n/g, '<br>');
+        } else {
+          throw new Error("Ошибка сети");
+        }
+      } catch (error) {
+        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка связи с ИИ.' : 'AI Connection Error.') + '</b><br><br>' +
+                           (currentLang === 'RU' ? 'Проверьте подключение к интернету или переключитесь в режим Офлайн.' : 'Check internet connection or switch to Offline mode.');
+      }
+    }
+
     function typeInTerminal() {
-      const promptMsg = currentLang === 'RU' ? "Задайте агро-вопрос для Терминала:" : "Enter your agro question:";
+      const promptMsg = currentLang === 'RU' ? "Введите вопрос для ИИ-Агронома:" : "Enter your question for AI Agronomist:";
       const text = prompt(promptMsg);
 
       if (text && text.trim() !== "") {
-        const output = document.getElementById('terminalOutput');
-        
-        output.innerHTML = '<b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + text + 
-                           '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'ИИ анализирует...' : 'AI analyzing...') + '</i>';
-
-        // Симуляция ответа ИИ через 1.5 секунды
-        setTimeout(() => {
-          if (currentMode === 'online') {
-            output.innerHTML = '<b>' + (currentLang === 'RU' ? 'Ответ ИИ (Онлайн):' : 'AI Response (Online):') + '</b><br><br>' +
-                               (currentLang === 'RU' ? 'Данные обработаны. Рекомендуется проверить уровень pH и внести азотные удобрения.' : 'Data processed. It is recommended to check pH level and apply nitrogen fertilizers.');
-          } else {
-            output.innerHTML = '<b>' + (currentLang === 'RU' ? 'База знаний (Офлайн):' : 'Knowledge Base (Offline):') + '</b><br><br>' +
-                               (currentLang === 'RU' ? 'Найдено совпадение в локальном справочнике: Норма pH для садов 6.0 - 6.8.' : 'Match found in local database: Optimal pH range for orchards is 6.0 - 6.8.');
-          }
-        }, 1500);
+        askAI(text.trim());
       }
     }
 
-    // Голосовой ввод
     function startVoiceInput() {
-      const output = document.getElementById('terminalOutput');
-      output.innerHTML = '🎙️ <b>' + (currentLang === 'RU' ? 'Слушаю ваш голос...' : 'Listening to your voice...') + '</b><br><br>' +
-                         '<i>' + (currentLang === 'RU' ? 'Говорите вопрос в микрофон' : 'Speak your question now') + '</i>';
-      
-      setTimeout(() => {
-        output.innerHTML = '<b>' + (currentLang === 'RU' ? 'Распознано:' : 'Recognized:') + '</b> "Какая норма полива для фисташки?"<br><br>⏳ <i>' + 
-                           (currentLang === 'RU' ? 'Ищет ответ...' : 'Searching answer...') + '</i>';
-      }, 2500);
+      const text = prompt(currentLang === 'RU' ? "🎙️ [Симуляция голоса] Введите надиктованный вопрос:" : "🎙️ [Voice simulation] Enter spoken question:");
+      if (text && text.trim() !== "") {
+        askAI(text.trim());
+      }
     }
 
-    // Ввод через Камеру
     function startCameraInput() {
-      const output = document.getElementById('terminalOutput');
-      output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Сканирование листа/почвы...' : 'Scanning leaf/soil...') + '</b><br><br>' +
-                         '<i>' + (currentLang === 'RU' ? 'Анализ симптомов болезней по фото' : 'Analyzing disease symptoms from photo') + '</i>';
-      
-      setTimeout(() => {
-        output.innerHTML = '🔍 <b>' + (currentLang === 'RU' ? 'Результат анализа фото:' : 'Photo Analysis Result:') + '</b><br><br>' +
-                           (currentLang === 'RU' ? 'Признаков ранковых болезней не обнаружено. Лист здоров.' : 'No disease symptoms detected. Leaf is healthy.');
-      }, 2500);
+      const text = prompt(currentLang === 'RU' ? "📷 [Анализ фото] Опишите симптомы или название растения:" : "📷 [Photo Analysis] Describe symptoms or plant name:");
+      if (text && text.trim() !== "") {
+        askAI("Анализ фото растения: " + text.trim());
+      }
     }
 
-    // Переключатель гарнитуры BT
     function toggleBT() {
       isBTActive = !isBTActive;
       const btBtn = document.getElementById('btBtn');
@@ -398,12 +403,10 @@
       }
     }
 
-    // Клик по нишам в Офлайн-Базе
     function openNiche(number) {
       alert((currentLang === 'RU' ? 'Открываем раздел #' : 'Opening section #') + number);
     }
 
-    // Смена языков (RU / EN)
     function toggleLanguage() {
       if(currentLang === 'RU') {
         currentLang = 'EN';
@@ -411,7 +414,7 @@
         document.getElementById('sendBtnText').innerText = 'SEND';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
         document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal is ready to work.</b><br><br>Ask a question by voice 🎙️, take a photo 📷 or click here to type.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal is ready to work.</b><br><br>Click Terminal or <b>SEND</b> button to ask live AI!';
         document.getElementById('baseTitleText').innerText = '📚 Offline Base';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         
@@ -435,7 +438,7 @@
         document.getElementById('sendBtnText').innerText = 'ОТПРАВИТЬ';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Задайте вопрос голосом 🎙️, сфотографируйте растение 📷 или кликните по Терминалу для ввода текста.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Нажмите на Терминал или на кнопку <b>ОТПРАВИТЬ</b>, чтобы задать агрономический вопрос онлайн-ИИ!';
         document.getElementById('baseTitleText').innerText = '📚 Офлайн-База';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         
