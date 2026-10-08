@@ -12,30 +12,22 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
-    body {
-      background-color: #121212;
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: #f4f6f4;
       color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 8px;
+      overflow: hidden;
     }
 
-    /* ФИКСИРОВАННЫЙ КРУПНЫЙ КОНТЕЙНЕР ДЛЯ ТЕЛЕФОНА */
+    /* РАСТЯГИВАЕМ НА ВЕСЬ ЭКРАН СМАРТФОНА */
     .app-container {
       width: 100%;
-      max-width: 420px;
       height: 100vh;
-      max-height: 850px;
-      background-color: #f4f6f4;
-      border-radius: 24px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      padding: 14px;
+      padding: 12px;
       gap: 12px;
-      overflow: hidden;
     }
 
     .screen {
@@ -47,7 +39,7 @@
 
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ СТРОКА (БЕЗ ЛИШНИХ КНОПОК) */
+    /* 1. ВЕРХНЯЯ СТРОКА */
     .top-bar {
       background-color: #1b5e20;
       padding: 10px 14px;
@@ -56,6 +48,7 @@
       justify-content: space-between;
       align-items: center;
       color: white;
+      flex-shrink: 0;
     }
 
     .toggle-container {
@@ -87,7 +80,7 @@
     }
 
     .btn-hdr {
-      padding: 8px 12px;
+      padding: 8px 14px;
       border-radius: 14px;
       border: none;
       font-weight: bold;
@@ -99,18 +92,19 @@
     .btn-lang { background-color: rgba(255, 255, 255, 0.25); }
     .btn-bt { background-color: #c62828; }
 
-    /* 2. ТРИ БОЛЬШИЕ КРУГЛЫЕ КНОПКИ В РЯД */
+    /* 2. ТРИ КРУПНЫЕ КНОПКИ */
     .action-row {
       display: flex;
       justify-content: space-around;
       align-items: center;
       padding: 4px 0;
+      flex-shrink: 0;
     }
 
     .round-btn {
       border-radius: 50%;
       border: none;
-      box-shadow: 0 5px 14px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -121,11 +115,11 @@
 
     .round-btn:active { transform: scale(0.92); }
 
-    .btn-mic { width: 78px; height: 78px; background-color: #2e7d32; font-size: 32px; }
-    .btn-send { width: 98px; height: 98px; background-color: #1b5e20; font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
-    .btn-cam { width: 78px; height: 78px; background-color: #2e7d32; font-size: 32px; }
+    .btn-mic { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
+    .btn-send { width: 95px; height: 95px; background-color: #1b5e20; font-size: 15px; font-weight: 900; }
+    .btn-cam { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
 
-    /* 3. ЦЕНТРАЛЬНЫЙ ТЕРМИНАЛ */
+    /* 3. ТЕРМИНАЛ НА ВСЁ СВОБОДНОЕ МЕСТО */
     .terminal-card {
       flex: 1;
       background: white;
@@ -135,7 +129,6 @@
       flex-direction: column;
       overflow: hidden;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     .terminal-header {
@@ -143,10 +136,11 @@
       padding: 10px 14px;
       display: flex;
       justify-content: space-between;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
       color: #1b5e20;
       border-bottom: 2px solid #c8e6c9;
+      flex-shrink: 0;
     }
 
     .terminal-body {
@@ -163,7 +157,7 @@
       align-items: center;
     }
 
-    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ЗНАНИЙ СНУЗУ */
+    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ЗНАНИЙ */
     .btn-base {
       width: 100%;
       padding: 18px;
@@ -175,6 +169,7 @@
       font-weight: bold;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
+      flex-shrink: 0;
     }
 
     /* СТРАНИЦА ОФЛАЙН БАЗЫ */
@@ -186,6 +181,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-shrink: 0;
     }
 
     .back-btn {
