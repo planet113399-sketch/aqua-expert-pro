@@ -9,60 +9,58 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      font-family: Arial, sans-serif;
     }
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      background-color: #f4f6f4;
-      color: #333;
-      overflow: hidden;
+    body {
+      background-color: #f2f5f2;
+      color: #111;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 10px;
     }
 
-    /* РАСТЯГИВАЕМ НА ВЕСЬ ЭКРАН СМАРТФОНА */
     .app-container {
       width: 100%;
-      height: 100vh;
+      max-width: 450px;
       display: flex;
       flex-direction: column;
-      padding: 12px;
-      gap: 12px;
+      gap: 14px;
     }
 
     .screen {
       display: flex;
       flex-direction: column;
-      height: 100%;
-      gap: 12px;
+      gap: 14px;
     }
 
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ СТРОКА */
+    /* 1. ВЕРХНЯЯ СТРОКА (КРУПНАЯ) */
     .top-bar {
       background-color: #1b5e20;
-      padding: 10px 14px;
+      padding: 12px 14px;
       border-radius: 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: white;
-      flex-shrink: 0;
     }
 
     .toggle-container {
       display: flex;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 20px;
-      padding: 3px;
+      padding: 4px;
     }
 
     .toggle-btn {
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 16px;
       border: none;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: bold;
       color: white;
       background: transparent;
@@ -84,7 +82,7 @@
       border-radius: 14px;
       border: none;
       font-weight: bold;
-      font-size: 14px;
+      font-size: 15px;
       color: white;
       cursor: pointer;
     }
@@ -92,36 +90,36 @@
     .btn-lang { background-color: rgba(255, 255, 255, 0.25); }
     .btn-bt { background-color: #c62828; }
 
-    /* 2. ТРИ КРУПНЫЕ КНОПКИ */
+    /* 2. ТРИ ОГРОМНЫЕ КРУГЛЫЕ КНОПКИ В РЯД */
     .action-row {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 4px 0;
-      flex-shrink: 0;
+      padding: 6px 0;
     }
 
     .round-btn {
       border-radius: 50%;
       border: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: bold;
       cursor: pointer;
       color: white;
+      flex-shrink: 0; /* ЗАПРЕЩАЕМ СЖИМАТЬ КНОПКИ */
     }
 
     .round-btn:active { transform: scale(0.92); }
 
-    .btn-mic { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
-    .btn-send { width: 95px; height: 95px; background-color: #1b5e20; font-size: 15px; font-weight: 900; }
-    .btn-cam { width: 75px; height: 75px; background-color: #2e7d32; font-size: 30px; }
+    .btn-mic { width: 85px; height: 85px; background-color: #2e7d32; font-size: 36px; }
+    .btn-send { width: 105px; height: 105px; background-color: #1b5e20; font-size: 16px; font-weight: 900; }
+    .btn-cam { width: 85px; height: 85px; background-color: #2e7d32; font-size: 36px; }
 
-    /* 3. ТЕРМИНАЛ НА ВСЁ СВОБОДНОЕ МЕСТО */
+    /* 3. ТЕРМИНАЛ ФИКСИРОВАННОЙ ВЫСОТЫ */
     .terminal-card {
-      flex: 1;
+      height: 320px; /* СТРОГАЯ ВЫСОТА, ЧТОБЫ НЕ ВЫЖИРАЛ МЕСТО */
       background: white;
       border: 3px solid #2e7d32;
       border-radius: 18px;
@@ -129,68 +127,67 @@
       flex-direction: column;
       overflow: hidden;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .terminal-header {
       background-color: #e8f5e9;
-      padding: 10px 14px;
+      padding: 12px 14px;
       display: flex;
       justify-content: space-between;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: bold;
       color: #1b5e20;
       border-bottom: 2px solid #c8e6c9;
-      flex-shrink: 0;
     }
 
     .terminal-body {
       flex: 1;
-      padding: 16px;
+      padding: 20px;
       overflow-y: auto;
       text-align: center;
-      color: #333;
-      font-size: 16px;
+      color: #222;
+      font-size: 18px; /* КРУПНЫЙ ТЕКСТ */
       line-height: 1.5;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      font-weight: bold;
     }
 
-    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ЗНАНИЙ */
+    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ЗНАНИЙ СНУЗУ */
     .btn-base {
       width: 100%;
-      padding: 18px;
+      padding: 20px;
       background-color: #1b5e20;
       color: white;
       border: none;
       border-radius: 18px;
-      font-size: 18px;
+      font-size: 19px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
-      flex-shrink: 0;
+      box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35);
     }
 
     /* СТРАНИЦА ОФЛАЙН БАЗЫ */
     .base-header {
       background-color: #1b5e20;
       color: white;
-      padding: 14px;
+      padding: 16px;
       border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
     }
 
     .back-btn {
       background: rgba(255,255,255,0.25);
       border: none;
       color: white;
-      padding: 8px 14px;
+      padding: 10px 16px;
       border-radius: 12px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -198,28 +195,26 @@
     .niche-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      overflow-y: auto;
-      flex: 1;
+      gap: 12px;
     }
 
     .niche-card {
       background: white;
-      padding: 16px;
+      padding: 18px;
       border-radius: 16px;
       border-left: 6px solid #2e7d32;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
       cursor: pointer;
     }
 
     .niche-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: bold;
       color: #1b5e20;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    .niche-desc { font-size: 13px; color: #555; }
+    .niche-desc { font-size: 14px; color: #555; }
   </style>
 </head>
 <body>
