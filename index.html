@@ -13,34 +13,41 @@
     }
 
     body {
-      background-color: #f4f6f4;
+      background-color: #121212;
       color: #333;
-      min-height: 100vh;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 8px;
     }
 
+    /* ФИКСИРОВАННЫЙ КРУПНЫЙ КОНТЕЙНЕР ДЛЯ ТЕЛЕФОНА */
     .app-container {
       width: 100%;
-      flex: 1;
+      max-width: 420px;
+      height: 100vh;
+      max-height: 850px;
+      background-color: #f4f6f4;
+      border-radius: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      padding: 12px;
+      padding: 14px;
       gap: 12px;
-      max-width: 600px;
-      margin: 0 auto;
+      overflow: hidden;
     }
 
     .screen {
       display: flex;
       flex-direction: column;
-      flex: 1;
+      height: 100%;
       gap: 12px;
     }
 
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ СТРОКА */
+    /* 1. ВЕРХНЯЯ СТРОКА (БЕЗ ЛИШНИХ КНОПОК) */
     .top-bar {
       background-color: #1b5e20;
       padding: 10px 14px;
@@ -59,10 +66,10 @@
     }
 
     .toggle-btn {
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 16px;
       border: none;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
       color: white;
       background: transparent;
@@ -76,27 +83,26 @@
 
     .hdr-actions {
       display: flex;
-      gap: 6px;
+      gap: 8px;
     }
 
     .btn-hdr {
-      padding: 6px 10px;
+      padding: 8px 12px;
       border-radius: 14px;
       border: none;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 14px;
       color: white;
       cursor: pointer;
     }
 
-    .btn-lang { background-color: rgba(255, 255, 255, 0.2); }
+    .btn-lang { background-color: rgba(255, 255, 255, 0.25); }
     .btn-bt { background-color: #c62828; }
-    .btn-clean { background-color: rgba(255, 255, 255, 0.25); font-size: 14px; }
 
-    /* 2. ТРИ КРУПНЫЕ КНОПКИ */
+    /* 2. ТРИ БОЛЬШИЕ КРУГЛЫЕ КНОПКИ В РЯД */
     .action-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
       padding: 4px 0;
     }
@@ -104,7 +110,7 @@
     .round-btn {
       border-radius: 50%;
       border: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+      box-shadow: 0 5px 14px rgba(0,0,0,0.25);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,23 +119,23 @@
       color: white;
     }
 
-    .round-btn:active { transform: scale(0.95); }
+    .round-btn:active { transform: scale(0.92); }
 
-    .btn-mic { width: 70px; height: 70px; background-color: #2e7d32; font-size: 28px; }
-    .btn-send { width: 90px; height: 90px; background-color: #1b5e20; font-size: 15px; font-weight: 900; }
-    .btn-cam { width: 70px; height: 70px; background-color: #2e7d32; font-size: 28px; }
+    .btn-mic { width: 78px; height: 78px; background-color: #2e7d32; font-size: 32px; }
+    .btn-send { width: 98px; height: 98px; background-color: #1b5e20; font-size: 15px; font-weight: 900; letter-spacing: 0.5px; }
+    .btn-cam { width: 78px; height: 78px; background-color: #2e7d32; font-size: 32px; }
 
-    /* 3. ТЕРМИНАЛ НА ВЕСЬ ЭКРАН */
+    /* 3. ЦЕНТРАЛЬНЫЙ ТЕРМИНАЛ */
     .terminal-card {
       flex: 1;
-      min-height: 250px;
       background: white;
-      border: 2px solid #2e7d32;
+      border: 3px solid #2e7d32;
       border-radius: 18px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     }
 
     .terminal-header {
@@ -145,7 +151,7 @@
 
     .terminal-body {
       flex: 1;
-      padding: 18px;
+      padding: 16px;
       overflow-y: auto;
       text-align: center;
       color: #333;
@@ -157,21 +163,21 @@
       align-items: center;
     }
 
-    /* 4. КНОПКА БАЗЫ ЗНАНИЙ */
+    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ЗНАНИЙ СНУЗУ */
     .btn-base {
       width: 100%;
-      padding: 16px;
+      padding: 18px;
       background-color: #1b5e20;
       color: white;
       border: none;
-      border-radius: 16px;
-      font-size: 17px;
+      border-radius: 18px;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
 
-    /* СТРАНИЦА БАЗЫ */
+    /* СТРАНИЦА ОФЛАЙН БАЗЫ */
     .base-header {
       background-color: #1b5e20;
       color: white;
@@ -232,7 +238,6 @@
           <button class="toggle-btn active" id="onlineBtn" onclick="setMode('online')">Онлайн</button>
         </div>
         <div class="hdr-actions">
-          <button class="btn-hdr btn-clean" onclick="clearCache()" title="Очистить кэш">🧹</button>
           <button class="btn-hdr btn-lang" id="langBtn" onclick="toggleLanguage()">🌐 RU</button>
           <button class="btn-hdr btn-bt">🎧 BT</button>
         </div>
@@ -312,10 +317,6 @@
       if (text && text.trim() !== "") {
         document.getElementById('terminalOutput').innerHTML = '<b>' + (currentLang === 'RU' ? 'Ваш вопрос:' : 'Your question:') + '</b> ' + text + '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'Анализирую данные...' : 'Analyzing data...') + '</i>';
       }
-    }
-
-    function clearCache() {
-      document.getElementById('terminalOutput').innerHTML = '🌱 <b>' + (currentLang === 'RU' ? 'ИИ-Терминал готов к работе.' : 'AI Terminal is ready.') + '</b><br><br>' + (currentLang === 'RU' ? 'Кэш очищен!' : 'Cache cleared!');
     }
 
     function setMode(mode) {
