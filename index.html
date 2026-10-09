@@ -117,7 +117,7 @@
 
     .main-action-btn:active { transform: scale(0.95); }
 
-    /* ОКНО ТЕРМИНАЛА СО ВСТРОЕННОЙ СТРОКОЙ И СТРЕЛКОЙ */
+    /* ОКНО ТЕРМИНАЛА */
     .terminal-card {
       flex: 1;
       background: white;
@@ -181,7 +181,6 @@
       cursor: pointer;
     }
 
-    /* СКРЫТЫЙ ИНПУТ ДЛЯ КАМЕРЫ */
     #cameraFileInput { display: none; }
 
     /* БОЛЬШАЯ КНОПКА БАЗЫ ВНИЗУ */
@@ -273,7 +272,6 @@
         </button>
       </div>
 
-      <!-- СКРЫТЫЙ СИСТЕМНЫЙ ВЫЗОВ КАМЕРЫ -->
       <input type="file" id="cameraFileInput" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)">
 
       <div class="terminal-card">
@@ -284,7 +282,7 @@
         
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Напечатайте вопрос в поле ниже, нажмите <b>ГОЛОС 🎙️</b> или сделайте снимок через <b>ФОТО 📷</b>.
+          Задайте вопрос голосом 🎙️, сделайте 📷 ФОТО или напечатайте текст ниже.
         </div>
 
         <div class="terminal-input-bar">
@@ -341,7 +339,6 @@
     let currentMode = 'online';
     let recognition = null;
 
-    // Настройка распознавания речи для микрофона
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SpeechRecognition();
@@ -355,8 +352,20 @@
       };
 
       recognition.onerror = function() {
-        document.getElementById('terminalOutput').innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка микрофона. Проверьте разрешения в браузере.' : 'Mic error. Check browser permissions.') + '</b>';
+        document.getElementById('terminalOutput').innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка микрофона. Напечатайте вопрос.' : 'Mic error. Type your question.') + '</b>';
       };
+    }
+
+    // ФУНКЦИЯ ОЗВУЧИВАНИЯ ОТВЕТА (ОЗВУЧКА В НАУШНИКИ / ДИНАМИК)
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel(); // Остановить предыдущую речь
+        const cleanText = text.replace(/<[^>]*>/g, ''); // Очистка от HTML-тегов
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
     }
 
     function showScreen(screenId) {
@@ -375,13 +384,13 @@
       if(mode === 'online') {
         document.getElementById('onlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU' 
-          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>Задайте любой вопрос в поле снизу, скажите голосом 🎙️ или сделайте фото 📷!'
-          : '🌐 <b>ONLINE mode activated.</b><br><br>Ask any question via input, voice 🎙️ or photo 📷!';
+          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>ИИ дает ответы голосом и текстом.'
+          : '🌐 <b>ONLINE mode activated.</b><br><br>AI replies by voice and text.';
       } else {
         document.getElementById('offlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU'
-          ? '💾 <b>Режим ОФЛАЙН активирован.</b><br><br>Используется локальная база данных без доступа к интернету.'
-          : '💾 <b>OFFLINE mode activated.</b><br><br>Using local offline database.';
+          ? '💾 <b>Режим ОФЛАЙН активирован.</b><br><br>Поиск по встроенной базе знаний.'
+          : '💾 <b>OFFLINE mode activated.</b><br><br>Searching local knowledge base.';
       }
     }
 
@@ -394,56 +403,61 @@
       }
     }
 
-    // ГОЛОСОВОЙ ВВОД С ЗАПРОСОМ РАЗРЕШЕНИЯ МИКРОФОНА
     function startVoiceInput() {
       const output = document.getElementById('terminalOutput');
       if (recognition) {
         recognition.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
-        output.innerHTML = '🎙️ <b>' + (currentLang === 'RU' ? 'Слушаю ваш голос... Говорите в микрофон!' : 'Listening... Speak into microphone!') + '</b>';
+        output.innerHTML = '🎙️ <b>' + (currentLang === 'RU' ? 'Слушаю вас... Говорите!' : 'Listening... Speak now!') + '</b>';
         try { recognition.start(); } catch(e) { console.log(e); }
       } else {
-        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Голосовой ввод не поддерживается данным браузером.' : 'Voice input not supported.') + '</b>';
+        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Голосовой ввод не поддерживается браузером.' : 'Voice input not supported.') + '</b>';
       }
     }
 
-    // ОТКРЫТИЕ КАМЕРЫ ТЕЛЕФОНА
     function triggerCamera() {
       document.getElementById('cameraFileInput').click();
     }
 
-    // ОБРАБОТКА СНИМКА С КАМЕРЫ
     function handlePhotoUpload(event) {
       const file = event.target.files[0];
       if (file) {
         const output = document.getElementById('terminalOutput');
-        output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Снимок получен!' : 'Photo captured!') + '</b><br><br>' +
-                           '⏳ <i>' + (currentLang === 'RU' ? 'ИИ анализирует состояние растения...' : 'AI analyzing plant health...') + '</i>';
+        output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Снимок принят!' : 'Photo received!') + '</b><br><br>' +
+                           '⏳ <i>' + (currentLang === 'RU' ? 'ИИ анализирует лист...' : 'AI analyzing leaf...') + '</i>';
         
         setTimeout(() => {
-          processAgroQuery(currentLang === 'RU' ? 'Анализ фото: Проверка симптомов поражения листьев' : 'Photo Analysis: Leaf disease check');
-        }, 1500);
+          processAgroQuery(currentLang === 'RU' ? 'Результат анализа фото листа' : 'Leaf photo analysis result');
+        }, 1200);
       }
     }
 
-    // ОБРАБОТКА ЗАПРОСОВ (ОНЛАЙН И ОФЛАЙН)
+    // ЛОГИКА ГЕНЕРАЦИИ И ОЗВУЧИВАНИЯ ОТВЕТА
     function processAgroQuery(userQuery) {
       const output = document.getElementById('terminalOutput');
       output.innerHTML = '❓ <b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + userQuery + 
-                         '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'AquaExpert генерирует ответ...' : 'AquaExpert generating answer...') + '</i>';
+                         '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'ИИ формулирует ответ...' : 'AI generating answer...') + '</i>';
 
       setTimeout(() => {
+        let replyText = "";
+
         if (currentMode === 'online') {
-          output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Ответ ИИ AquaExpert (Онлайн):' : 'AquaExpert AI Reply (Online):') + '</b><br><br>' +
-            (currentLang === 'RU'
-              ? '<b>Результат по запросу:</b> "' + userQuery + '"<br><br>1. Рекомендуется проверить уровень pH раствора (норма 5.8-6.2).<br>2. При повышении температуры увеличить частоту капельного полива на 15%.<br>3. Облачный ИИ-сервер подключен.'
-              : '<b>Result for query:</b> "' + userQuery + '"<br><br>1. Check solution pH level (optimal 5.8-6.2).<br>2. Increase drip irrigation rate by 15% during high temp.<br>3. AI Cloud connected.');
+          replyText = currentLang === 'RU'
+            ? 'Для капельного полива и регулирования pH поддерживайте уровень раствора от 5.8 до 6.2. При жаре увеличьте полив на 15 процентов.'
+            : 'For drip irrigation and pH regulation, keep the solution level between 5.8 and 6.2. Increase watering by 15 percent in hot weather.';
+          
+          output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Ответ ИИ (Онлайн):' : 'AI Reply (Online):') + '</b><br><br>' + replyText;
         } else {
-          output.innerHTML = '💾 <b>' + (currentLang === 'RU' ? 'Локальная База Знаний (Офлайн):' : 'Local Knowledge Base (Offline):') + '</b><br><br>' +
-            (currentLang === 'RU'
-              ? '<b>Запись в памяти устройства:</b><br>Найдено совпадение в Офлайн-Справочнике. Нормы полива и коррекции pH зафиксированы. Подробные таблицы смотрите в разделе Базы Знаний.'
-              : '<b>Record in device memory:</b><br>Offline database match found. Irrigation and pH norms fixed. Check Knowledge Base section.');
+          replyText = currentLang === 'RU'
+            ? 'Найдено в офлайн базе. Норма полива фисташки составляет 30 литров на дерево в сутки.'
+            : 'Found in offline database. Pistachio irrigation norm is 30 liters per tree per day.';
+
+          output.innerHTML = '💾 <b>' + (currentLang === 'RU' ? 'База знаний (Офлайн):' : 'Knowledge Base (Offline):') + '</b><br><br>' + replyText;
         }
-      }, 1200);
+
+        // Автоматически озвучиваем ответ голосом в наушники!
+        speakText(replyText);
+
+      }, 1000);
     }
 
     function openNiche(number) {
@@ -459,7 +473,7 @@
         document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>PHOTO</span>';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
         document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Type a question below, use VOICE 🎙️ or PHOTO 📷.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Ask via VOICE 🎙️, PHOTO 📷 or type below.';
         document.getElementById('baseTitleText').innerText = '📚 Offline Base';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         input.placeholder = "Enter your question...";
@@ -485,7 +499,7 @@
         document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>ФОТО</span>';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Напечатайте вопрос в поле ниже, нажмите ГОЛОС 🎙️ или сделайте снимок через ФОТО 📷.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Задайте вопрос голосом 🎙️, сделайте 📷 ФОТО или напечатайте текст ниже.';
         document.getElementById('baseTitleText').innerText = '📚 Офлайн-База';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         input.placeholder = "Введите ваш вопрос...";
