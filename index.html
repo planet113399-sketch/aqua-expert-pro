@@ -46,7 +46,7 @@
 
     .hidden { display: none !important; }
 
-    /* ВЕРХНЯЯ ПАНЕЛЬ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
     .top-bar {
       background-color: #1b5e20;
       padding: 10px 14px;
@@ -91,7 +91,7 @@
       cursor: pointer;
     }
 
-    /* ДВЕ КРУПНЫЕ КНОПКИ */
+    /* 2. ДВЕ КРУПНЫЕ КНОПКИ */
     .action-row {
       display: flex;
       justify-content: space-between;
@@ -117,7 +117,7 @@
 
     .main-action-btn:active { transform: scale(0.95); }
 
-    /* ОКНО ТЕРМИНАЛА */
+    /* 3. ОКНО ТЕРМИНАЛА */
     .terminal-card {
       flex: 1;
       background: white;
@@ -183,7 +183,7 @@
 
     #cameraFileInput { display: none; }
 
-    /* БОЛЬШАЯ КНОПКА БАЗЫ ВНИЗУ */
+    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ВНИЗУ */
     .btn-base {
       width: 100%;
       padding: 18px;
@@ -272,6 +272,7 @@
         </button>
       </div>
 
+      <!-- ВЫЗОВ НАШЕЙ РЕАЛЬНОЙ КАМЕРЫ -->
       <input type="file" id="cameraFileInput" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)">
 
       <div class="terminal-card">
@@ -282,7 +283,7 @@
         
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Задайте вопрос голосом 🎙️, сделайте 📷 ФОТО или напечатайте текст ниже.
+          Нажмите <b>ФОТО 📷</b>, сфотографируйте дерево на улице — ИИ назовет вид и определит его здоровье!
         </div>
 
         <div class="terminal-input-bar">
@@ -350,17 +351,12 @@
         document.getElementById('userInput').value = transcript;
         sendQuery();
       };
-
-      recognition.onerror = function() {
-        document.getElementById('terminalOutput').innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка микрофона. Напечатайте вопрос.' : 'Mic error. Type your question.') + '</b>';
-      };
     }
 
-    // ФУНКЦИЯ ОЗВУЧИВАНИЯ ОТВЕТА (ОЗВУЧКА В НАУШНИКИ / ДИНАМИК)
     function speakText(text) {
       if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // Остановить предыдущую речь
-        const cleanText = text.replace(/<[^>]*>/g, ''); // Очистка от HTML-тегов
+        window.speechSynthesis.cancel();
+        const cleanText = text.replace(/<[^>]*>/g, '');
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
         utterance.rate = 1.0;
@@ -384,13 +380,13 @@
       if(mode === 'online') {
         document.getElementById('onlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU' 
-          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>ИИ дает ответы голосом и текстом.'
-          : '🌐 <b>ONLINE mode activated.</b><br><br>AI replies by voice and text.';
+          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>Сделайте фото дерева 📷 — ИИ распознает его через интернет!'
+          : '🌐 <b>ONLINE mode activated.</b><br><br>Take a photo 📷 — AI will recognize it online!';
       } else {
         document.getElementById('offlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU'
-          ? '💾 <b>Режим ОФЛАЙН активирован.</b><br><br>Поиск по встроенной базе знаний.'
-          : '💾 <b>OFFLINE mode activated.</b><br><br>Searching local knowledge base.';
+          ? '💾 <b>Режим ОФЛАЙН активирован.</b><br><br>Поиск по локальной базе данных.'
+          : '💾 <b>OFFLINE mode activated.</b><br><br>Searching local database.';
       }
     }
 
@@ -398,7 +394,7 @@
       const input = document.getElementById('userInput');
       const query = input.value.trim();
       if (query !== "") {
-        processAgroQuery(query);
+        processTextQuery(query);
         input.value = "";
       }
     }
@@ -409,8 +405,6 @@
         recognition.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
         output.innerHTML = '🎙️ <b>' + (currentLang === 'RU' ? 'Слушаю вас... Говорите!' : 'Listening... Speak now!') + '</b>';
         try { recognition.start(); } catch(e) { console.log(e); }
-      } else {
-        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Голосовой ввод не поддерживается браузером.' : 'Voice input not supported.') + '</b>';
       }
     }
 
@@ -418,46 +412,89 @@
       document.getElementById('cameraFileInput').click();
     }
 
-    function handlePhotoUpload(event) {
+    // НАСТОЯЩИЙ АНАЛИЗ ФОТО С ДЕРЕВАМИ НА УЛИЦЕ
+    async function handlePhotoUpload(event) {
       const file = event.target.files[0];
-      if (file) {
-        const output = document.getElementById('terminalOutput');
-        output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Снимок принят!' : 'Photo received!') + '</b><br><br>' +
-                           '⏳ <i>' + (currentLang === 'RU' ? 'ИИ анализирует лист...' : 'AI analyzing leaf...') + '</i>';
-        
-        setTimeout(() => {
-          processAgroQuery(currentLang === 'RU' ? 'Результат анализа фото листа' : 'Leaf photo analysis result');
-        }, 1200);
+      if (!file) return;
+
+      const output = document.getElementById('terminalOutput');
+      output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Снимок сделан!' : 'Photo captured!') + '</b><br><br>' +
+                         '⏳ <i>' + (currentLang === 'RU' ? 'Загрузка изображения и сканирование нейросетью...' : 'Uploading and scanning image...') + '</i>';
+
+      try {
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          const base64Data = e.target.result.split(',')[1];
+          
+          // Отправка в Онлайн-ИИ для анализа картинки
+          const promptText = currentLang === 'RU'
+            ? "Что это за растение или дерево на фото? Опиши его вид, краткое состояние здоровья и есть ли видимые болезни или вредители. Ответь кратко, экспертно и по делу."
+            : "What plant or tree is in this photo? Describe its species, health status and any visible diseases or pests. Reply concisely.";
+
+          const response = await fetch('https://text.pollinations.ai/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              messages: [
+                {
+                  role: 'user',
+                  content: [
+                    { type: 'text', text: promptText },
+                    { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Data}` } }
+                  ]
+                }
+              ]
+            })
+          });
+
+          if (response.ok) {
+            const aiReply = await response.text();
+            output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Результат Онлайн-Анализа Фото:' : 'Online Photo Analysis Result:') + '</b><br><br>' + aiReply.replace(/\n/g, '<br>');
+            speakText(aiReply);
+          } else {
+            throw new Error("API Error");
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch (err) {
+        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка обработки фото.' : 'Photo processing error.') + '</b><br><br>' +
+                           (currentLang === 'RU' ? 'Проверьте интернет-соединение.' : 'Check internet connection.');
       }
     }
 
-    // ЛОГИКА ГЕНЕРАЦИИ И ОЗВУЧИВАНИЯ ОТВЕТА
-    function processAgroQuery(userQuery) {
+    // ТЕКСТОВЫЕ ЗАПРОСЫ
+    async function processTextQuery(userQuery) {
       const output = document.getElementById('terminalOutput');
       output.innerHTML = '❓ <b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + userQuery + 
-                         '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'ИИ формулирует ответ...' : 'AI generating answer...') + '</i>';
+                         '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'Запрос к ИИ-серверу...' : 'Querying AI server...') + '</i>';
 
-      setTimeout(() => {
-        let replyText = "";
+      if (currentMode === 'offline') {
+        setTimeout(() => {
+          const offlineReply = currentLang === 'RU' 
+            ? 'Офлайн справочник: Найдена запись по агрономии и защите растений. Смотрите таблицы в базе знаний.' 
+            : 'Offline DB: Match found in plant protection handbook.';
+          output.innerHTML = '💾 <b>' + (currentLang === 'RU' ? 'Офлайн База:' : 'Offline DB:') + '</b><br><br>' + offlineReply;
+          speakText(offlineReply);
+        }, 800);
+        return;
+      }
 
-        if (currentMode === 'online') {
-          replyText = currentLang === 'RU'
-            ? 'Для капельного полива и регулирования pH поддерживайте уровень раствора от 5.8 до 6.2. При жаре увеличьте полив на 15 процентов.'
-            : 'For drip irrigation and pH regulation, keep the solution level between 5.8 and 6.2. Increase watering by 15 percent in hot weather.';
-          
-          output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Ответ ИИ (Онлайн):' : 'AI Reply (Online):') + '</b><br><br>' + replyText;
+      try {
+        const promptText = currentLang === 'RU'
+          ? "Ты — профессиональный ИИ-агроном AquaExpert. Ответь кратко, емко и экспертно на вопрос: " + userQuery
+          : "You are an expert agronomist AquaExpert. Reply concisely to: " + userQuery;
+
+        const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}`);
+        if (response.ok) {
+          const aiText = await response.text();
+          output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Ответ ИИ (Онлайн):' : 'AI Reply (Online):') + '</b><br><br>' + aiText.replace(/\n/g, '<br>');
+          speakText(aiText);
         } else {
-          replyText = currentLang === 'RU'
-            ? 'Найдено в офлайн базе. Норма полива фисташки составляет 30 литров на дерево в сутки.'
-            : 'Found in offline database. Pistachio irrigation norm is 30 liters per tree per day.';
-
-          output.innerHTML = '💾 <b>' + (currentLang === 'RU' ? 'База знаний (Офлайн):' : 'Knowledge Base (Offline):') + '</b><br><br>' + replyText;
+          throw new Error("Net error");
         }
-
-        // Автоматически озвучиваем ответ голосом в наушники!
-        speakText(replyText);
-
-      }, 1000);
+      } catch(e) {
+        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка связи.' : 'Connection error.') + '</b>';
+      }
     }
 
     function openNiche(number) {
@@ -473,7 +510,7 @@
         document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>PHOTO</span>';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
         document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Ask via VOICE 🎙️, PHOTO 📷 or type below.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Take a PHOTO 📷 of a tree outside to analyze it live!';
         document.getElementById('baseTitleText').innerText = '📚 Offline Base';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         input.placeholder = "Enter your question...";
@@ -499,7 +536,7 @@
         document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>ФОТО</span>';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Задайте вопрос голосом 🎙️, сделайте 📷 ФОТО или напечатайте текст ниже.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Сделайте ФОТО 📷 дерева на улице — ИИ проанализирует его в реальном времени!';
         document.getElementById('baseTitleText').innerText = '📚 Офлайн-База';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         input.placeholder = "Введите ваш вопрос...";
