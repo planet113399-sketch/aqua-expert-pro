@@ -21,6 +21,7 @@
       padding: 10px;
     }
 
+    /* ИДЕАЛЬНЫЙ МОБИЛЬНЫЙ МАКЕТ */
     .phone-mockup {
       width: 100%;
       max-width: 410px;
@@ -32,7 +33,7 @@
       display: flex;
       flex-direction: column;
       padding: 16px;
-      gap: 14px;
+      gap: 12px;
       position: relative;
       overflow: hidden;
     }
@@ -41,15 +42,15 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      gap: 14px;
+      gap: 12px;
     }
 
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ С ДВУМЯ ТУМБЛЕРАМИ */
     .top-bar {
       background-color: #1b5e20;
-      padding: 12px 14px;
+      padding: 10px 14px;
       border-radius: 18px;
       display: flex;
       justify-content: space-between;
@@ -68,7 +69,7 @@
       padding: 8px 14px;
       border-radius: 16px;
       border: none;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: bold;
       color: white;
       background: transparent;
@@ -80,52 +81,44 @@
       color: #1b5e20;
     }
 
-    .hdr-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-hdr {
-      padding: 9px 14px;
+    .btn-lang {
+      padding: 8px 14px;
       border-radius: 16px;
       border: none;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 14px;
       color: white;
+      background-color: rgba(255, 255, 255, 0.25);
       cursor: pointer;
     }
 
-    .btn-lang { background-color: rgba(255, 255, 255, 0.25); }
-    .btn-bt { background-color: #d32f2f; }
-
-    /* 2. ТРИ КРУПНЫЕ КНОПКИ */
+    /* 2. ДВЕ КРУПНЫЕ УДОБНЫЕ КНОПКИ */
     .action-row {
       display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 6px 0;
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .round-btn {
-      border-radius: 50%;
+    .main-action-btn {
+      flex: 1;
+      height: 70px;
+      background-color: #1b5e20;
+      border-radius: 18px;
       border: none;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 10px;
       font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
       color: white;
-      flex-shrink: 0;
     }
 
-    .round-btn:active { transform: scale(0.92); }
+    .main-action-btn:active { transform: scale(0.95); }
 
-    .btn-mic { width: 80px; height: 80px; background-color: #2e7d32; font-size: 36px; }
-    .btn-send { width: 100px; height: 100px; background-color: #1b5e20; font-size: 16px; font-weight: 900; letter-spacing: 0.5px; }
-    .btn-cam { width: 80px; height: 80px; background-color: #2e7d32; font-size: 36px; }
-
-    /* 3. ОКНО ТЕРМИНАЛА (БЕЗ ЛИШНИХ СТРОК) */
+    /* 3. ОКНО ТЕРМИНАЛА СО ВСТРОЕННЫМ ВВОДОМ */
     .terminal-card {
       flex: 1;
       background: white;
@@ -134,13 +127,12 @@
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      cursor: pointer;
       box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .terminal-header {
       background-color: #e8f5e9;
-      padding: 12px 14px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       font-size: 14px;
@@ -151,12 +143,43 @@
 
     .terminal-body {
       flex: 1;
-      padding: 18px;
+      padding: 14px;
       overflow-y: auto;
       text-align: left;
       color: #111;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.5;
+    }
+
+    .terminal-input-bar {
+      display: flex;
+      padding: 8px;
+      background: #e8f5e9;
+      border-top: 2px solid #c8e6c9;
+      gap: 6px;
+    }
+
+    .terminal-field {
+      flex: 1;
+      padding: 10px 12px;
+      border: 2px solid #1b5e20;
+      border-radius: 12px;
+      font-size: 15px;
+      outline: none;
+      background-color: #ffffff;
+      color: #111;
+      font-weight: bold;
+    }
+
+    .terminal-sub-btn {
+      background-color: #1b5e20;
+      color: white;
+      border: none;
+      padding: 0 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
     /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ВНИЗУ */
@@ -174,7 +197,7 @@
       flex-shrink: 0;
     }
 
-    /* ВТОРОЙ ЭКРАН - ОФЛАЙН БАЗА */
+    /* ЭКРАН 2: ОФЛАЙН БАЗА */
     .base-header {
       background-color: #1b5e20;
       color: white;
@@ -234,26 +257,34 @@
           <button class="toggle-btn" id="offlineBtn" onclick="setMode('offline')">Офлайн</button>
           <button class="toggle-btn active" id="onlineBtn" onclick="setMode('online')">Онлайн</button>
         </div>
-        <div class="hdr-actions">
-          <button class="btn-hdr btn-lang" id="langBtn" onclick="toggleLanguage()">🌐 RU</button>
-          <button class="btn-hdr btn-bt" id="btBtn" onclick="toggleBT()">🎧 BT</button>
-        </div>
+        <button class="btn-lang" id="langBtn" onclick="toggleLanguage()">🌐 RU</button>
       </div>
 
       <div class="action-row">
-        <button class="round-btn btn-mic" id="micBtn" onclick="startVoiceInput()">🎙️</button>
-        <button class="round-btn btn-send" id="sendBtnText" onclick="typeInTerminal()">ОТПРАВИТЬ</button>
-        <button class="round-btn btn-cam" onclick="startCameraInput()">📷</button>
+        <button class="main-action-btn" id="micBtnText" onclick="startVoiceInput()">
+          <span style="font-size: 26px;">🎙️</span>
+          <span>ГОЛОС</span>
+        </button>
+        <button class="main-action-btn" id="camBtnText" onclick="startCameraInput()">
+          <span style="font-size: 26px;">📷</span>
+          <span>ФОТО</span>
+        </button>
       </div>
 
-      <div class="terminal-card" onclick="typeInTerminal()">
+      <div class="terminal-card">
         <div class="terminal-header">
           <span id="termTitle">🟢 ТЕРМИНАЛ АГРО-ИИ</span>
           <span>AquaExpert v2.0</span>
         </div>
+        
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Задайте вопрос голосом 🎙️, через фото 📷 или кликом по Терминалу.
+          Напечатайте вопрос в поле ниже или воспользуйтесь кнопками <b>ГОЛОС 🎙️</b> / <b>ФОТО 📷</b>.
+        </div>
+
+        <div class="terminal-input-bar">
+          <input type="text" id="userInput" class="terminal-field" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
+          <button class="terminal-sub-btn" onclick="sendQuery()">➔</button>
         </div>
       </div>
 
@@ -303,10 +334,8 @@
   <script>
     let currentLang = 'RU';
     let currentMode = 'online';
-    let isBTActive = false;
     let recognition = null;
 
-    // Настройка распознавания голоса
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       recognition = new SpeechRecognition();
@@ -315,11 +344,12 @@
 
       recognition.onresult = function(event) {
         const transcript = event.results[0][0].transcript;
-        processAgroQuery(transcript);
+        document.getElementById('userInput').value = transcript;
+        sendQuery();
       };
 
       recognition.onerror = function() {
-        processAgroQuery(currentLang === 'RU' ? 'Какая норма полива фисташки?' : 'Pistachio irrigation rate?');
+        document.getElementById('terminalOutput').innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Голос не распознан. Напечатайте вопрос ниже.' : 'Voice not recognized. Type your question below.') + '</b>';
       };
     }
 
@@ -339,8 +369,8 @@
       if(mode === 'online') {
         document.getElementById('onlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU' 
-          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>Задайте любой вопрос ИИ-Терминалу!'
-          : '🌐 <b>ONLINE mode activated.</b><br><br>Ask any question to AI Terminal!';
+          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>Задайте любой вопрос в поле снизу или через ГОЛОС 🎙️!'
+          : '🌐 <b>ONLINE mode activated.</b><br><br>Ask any question via text below or VOICE 🎙️!';
       } else {
         document.getElementById('offlineBtn').classList.add('active');
         output.innerHTML = currentLang === 'RU'
@@ -349,11 +379,12 @@
       }
     }
 
-    function typeInTerminal() {
-      const defaultQ = currentLang === 'RU' ? 'Как повысить pH почвы и нормы внесения?' : 'How to increase soil pH?';
-      const text = prompt(currentLang === 'RU' ? "Введите вопрос для Терминала:" : "Enter your question:", defaultQ);
-      if (text && text.trim() !== "") {
-        processAgroQuery(text.trim());
+    function sendQuery() {
+      const input = document.getElementById('userInput');
+      const query = input.value.trim();
+      if (query !== "") {
+        processAgroQuery(query);
+        input.value = "";
       }
     }
 
@@ -369,10 +400,11 @@
     }
 
     function startCameraInput() {
-      processAgroQuery(currentLang === 'RU' ? 'Анализ фото: Лист фисташки (Симптомы ожога)' : 'Photo analysis: Pistachio leaf symptoms');
+      const input = document.getElementById('userInput');
+      input.value = currentLang === 'RU' ? "Анализ фото: Лист фисташки (Симптомы ожога)" : "Photo analysis: Pistachio leaf symptoms";
+      sendQuery();
     }
 
-    // ОБРАБОТКА ЗАПРОСОВ ИИ ТЕРМИНАЛА (БЕЗ ОШИБОК СЕТИ)
     function processAgroQuery(userQuery) {
       const output = document.getElementById('terminalOutput');
       output.innerHTML = '❓ <b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + userQuery + 
@@ -390,19 +422,7 @@
               ? '<b>Запись #402:</b> Найдено в Офлайн-Справочнике.<br>Регламент полива фисташковых и миндальных садов: 30-40 л/дерево при капельном орошении. Подробнее в разделе Базы Знаний.'
               : '<b>Record #402:</b> Found in Offline Base.<br>Drip irrigation norm for pistachio: 30-40 L/tree. Check Knowledge Base section.');
         }
-      }, 1200);
-    }
-
-    function toggleBT() {
-      isBTActive = !isBTActive;
-      const btBtn = document.getElementById('btBtn');
-      if(isBTActive) {
-        btBtn.style.backgroundColor = '#2e7d32';
-        alert(currentLang === 'RU' ? 'Bluetooth-гарнитура подключена' : 'Bluetooth headset connected');
-      } else {
-        btBtn.style.backgroundColor = '#d32f2f';
-        alert(currentLang === 'RU' ? 'Bluetooth отключен' : 'Bluetooth disconnected');
-      }
+      }, 1000);
     }
 
     function openNiche(number) {
@@ -410,15 +430,18 @@
     }
 
     function toggleLanguage() {
+      const input = document.getElementById('userInput');
       if(currentLang === 'RU') {
         currentLang = 'EN';
         document.getElementById('langBtn').innerText = '🌐 EN';
-        document.getElementById('sendBtnText').innerText = 'SEND';
+        document.getElementById('micBtnText').innerHTML = '<span style="font-size: 26px;">🎙️</span><span>VOICE</span>';
+        document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>PHOTO</span>';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
         document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Ask question via mic 🎙️, photo 📷 or click Terminal.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Type a question below or press VOICE 🎙️ / PHOTO 📷.';
         document.getElementById('baseTitleText').innerText = '📚 Offline Base';
         document.getElementById('backBtnText').innerText = '⬅ Back';
+        input.placeholder = "Enter your question...";
         
         document.getElementById('n1Title').innerText = '💧 1. Hydroponics & Drip Irrigation';
         document.getElementById('n1Desc').innerText = 'Nutrient solutions, sensors, pumps, automation.';
@@ -437,12 +460,14 @@
       } else {
         currentLang = 'RU';
         document.getElementById('langBtn').innerText = '🌐 RU';
-        document.getElementById('sendBtnText').innerText = 'ОТПРАВИТЬ';
+        document.getElementById('micBtnText').innerHTML = '<span style="font-size: 26px;">🎙️</span><span>ГОЛОС</span>';
+        document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>ФОТО</span>';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Задайте вопрос голосом 🎙️, через фото 📷 или кликом по Терминалу.';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Напечатайте вопрос в поле ниже или воспользуйтесь кнопками ГОЛОС 🎙️ / ФОТО 📷.';
         document.getElementById('baseTitleText').innerText = '📚 Офлайн-База';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
+        input.placeholder = "Введите ваш вопрос...";
         
         document.getElementById('n1Title').innerText = '💧 1. Гидропоника и Капельный полив';
         document.getElementById('n1Desc').innerText = 'Расчет растворов, датчики, насосы, автоматика.';
