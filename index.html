@@ -38,7 +38,6 @@
     .niche-title { font-size: 18px; font-weight: bold; color: #1b5e20; margin-bottom: 6px; }
     .niche-desc { font-size: 14px; color: #444; }
 
-    /* ДЕТАЛЬНЫЙ ЭКРАН РАЗДЕЛОВ БАЗЫ */
     .detail-body { flex: 1; overflow-y: auto; background: white; padding: 14px; border-radius: 18px; color: #222; font-size: 14px; line-height: 1.6; }
     .agro-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
     .agro-table th { background: #1b5e20; color: white; padding: 8px; text-align: left; }
@@ -108,7 +107,7 @@
         </div>
         <div class="niche-card" onclick="openNicheDetail(2)">
           <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
-          <div class="niche-desc" id="n2Desc">Карты полей, NDVI индексы, облет садов.</div>
+          <div class="niche-desc" id="n2Desc">Индексы NDVI/NDRE, мультиспектр, опрыскивание.</div>
         </div>
         <div class="niche-card" onclick="openNicheDetail(3)">
           <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
@@ -231,13 +230,13 @@
       setTimeout(() => {
         let text = currentMode === 'online' 
           ? 'Ответ ИИ (AquaExpert Pro): По запросу "' + userQuery + '" рекомендуем соблюдать экологические нормы pH 5.8-6.5 и органический баланс.'
-          : 'Офлайн-База: Нормативы pH/EC и вылива капельниц доступны в разделе 1 Справочника.';
+          : 'Офлайн-База: Нормативы pH/EC и мультиспектрального мониторинга доступны в Справочнике.';
         output.innerHTML = (currentMode === 'online' ? '🤖 <b>Ответ ИИ:</b><br><br>' : '💾 <b>Офлайн Справочник:</b><br><br>') + text;
         speakText(text);
       }, 700);
     }
 
-    /* ИНЖЕНЕРНОЕ НАПОЛНЕНИЕ РАЗДЕЛОВ (US / GLOBAL ORGANIC STANDARDS) */
+    /* ИНЖЕНЕРНОЕ НАПОЛНЕНИЕ РАЗДЕЛОВ (US / GLOBAL STANDARDS) */
     function openNicheDetail(id) {
       const title = document.getElementById('detailTitle');
       const content = document.getElementById('detailContent');
@@ -263,6 +262,27 @@
           <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Нормы вылива (Капельное орошение):</h4>
           <p>• <b>Молодые деревья (1-3 года):</b> 15-20 л/дерево в сутки.</p>
           <p>• <b>Плодоносящий сад (5+ лет):</b> 40-60 л/дерево в сутки (при жаре +35°C).</p>
+        `;
+      } else if (id === 2) {
+        title.innerText = currentLang === 'RU' ? '🛸 2. Дроны и Агро-Мониторинг' : '🛸 2. Drones & Precision Ag';
+        content.innerHTML = `
+          <span class="section-tag">Precision Ag & Multispectral Standards</span>
+          <h4 style="color:#1b5e20; margin-bottom:6px;">Шкала вегетационных индексов (NDVI / NDRE)</h4>
+          <table class="agro-table">
+            <tr><th>Индекс</th><th>Диапазон</th><th>Интерпретация состояния</th></tr>
+            <tr><td><b>NDVI</b></td><td>0.1 - 0.3</td><td>Отсутствие вегетации / Сильный стресс / Голая почва</td></tr>
+            <tr><td><b>NDVI</b></td><td>0.4 - 0.6</td><td>Умеренное развитие / Начало вегетации / Легкий недостаток азота</td></tr>
+            <tr><td><b>NDVI</b></td><td>0.7 - 0.85</td><td>Здоровая биомасса / Активный фотосинтез (Норма)</td></tr>
+            <tr><td><b>NDRE</b></td><td>0.3 - 0.5</td><td>Диагностика хлорофилла при густой кроне (Сады)</td></tr>
+          </table>
+
+          <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Тепловизионный мониторинг капельного полива:</h4>
+          <p>• <b>Выявление сухих зон:</b> Повышение температуры кроны на 2-4°C показывает забитые капельницы или недостаток вылива.</p>
+          <p>• <b>Утечки и переувлажнение:</b> Локальное снижение температуры почвы указывает на порыв капельной ленты.</p>
+
+          <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Регламент внесения с Агродронов (ULV/УМО):</h4>
+          <p>• <b>Расход рабочей жидкости:</b> 8 - 12 л/га (Ультрамалообъемное распыление).</p>
+          <p>• <b>Размер капли:</b> 130 - 200 мкм (Распыление биопрепаратов и энтомофагов без повреждения живых спор).</p>
         `;
       } else {
         title.innerText = currentLang === 'RU' ? 'Раздел #' + id : 'Section #' + id;
