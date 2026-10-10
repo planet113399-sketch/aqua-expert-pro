@@ -10,14 +10,17 @@
     .phone-mockup { width: 100%; max-width: 410px; height: 820px; background-color: #f2f5f2; border-radius: 32px; border: 8px solid #333; box-shadow: 0 15px 35px rgba(0,0,0,0.6); display: flex; flex-direction: column; padding: 16px; gap: 12px; position: relative; overflow: hidden; }
     .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; }
     .hidden { display: none !important; }
+    
     .top-bar { background-color: #1b5e20; padding: 10px 14px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; color: white; }
     .toggle-container { display: flex; background: rgba(0, 0, 0, 0.35); border-radius: 20px; padding: 4px; }
     .toggle-btn { padding: 8px 14px; border-radius: 16px; border: none; font-size: 14px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: #1b5e20; }
     .btn-lang { padding: 8px 14px; border-radius: 16px; border: none; font-weight: bold; font-size: 14px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
+    
     .action-row { display: flex; justify-content: space-between; gap: 12px; }
     .main-action-btn { flex: 1; height: 70px; background-color: #1b5e20; border-radius: 18px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: bold; font-size: 16px; cursor: pointer; color: white; }
     .main-action-btn:active { transform: scale(0.95); }
+    
     .terminal-card { flex: 1; background: white; border: 3px solid #1b5e20; border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
     .terminal-header { background-color: #e8f5e9; padding: 10px 14px; display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; color: #1b5e20; border-bottom: 2px solid #c8e6c9; }
     .terminal-body { flex: 1; padding: 14px; overflow-y: auto; text-align: left; color: #111; font-size: 15px; line-height: 1.5; }
@@ -25,18 +28,29 @@
     .terminal-field { flex: 1; padding: 10px 12px; border: 2px solid #1b5e20; border-radius: 12px; font-size: 15px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
     .terminal-sub-btn { background-color: #1b5e20; color: white; border: none; padding: 0 16px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; }
     #cameraFileInput { display: none; }
+    
     .btn-base { width: 100%; padding: 18px; background-color: #1b5e20; color: white; border: none; border-radius: 18px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35); flex-shrink: 0; }
+    
     .base-header { background-color: #1b5e20; color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; }
     .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; }
     .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
     .niche-card { background: white; padding: 18px; border-radius: 18px; border-left: 6px solid #1b5e20; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; }
     .niche-title { font-size: 18px; font-weight: bold; color: #1b5e20; margin-bottom: 6px; }
     .niche-desc { font-size: 14px; color: #444; }
+
+    /* ДЕТАЛЬНЫЙ ЭКРАН РАЗДЕЛОВ БАЗЫ */
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 14px; border-radius: 18px; color: #222; font-size: 14px; line-height: 1.6; }
+    .agro-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
+    .agro-table th { background: #1b5e20; color: white; padding: 8px; text-align: left; }
+    .agro-table td { border: 1px solid #ccc; padding: 6px 8px; }
+    .section-tag { background: #e8f5e9; color: #1b5e20; padding: 4px 8px; border-radius: 6px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
   </style>
 </head>
 <body>
 
   <div class="phone-mockup">
+    
+    <!-- ЭКРАН 1: ГЛАВНЫЙ ТЕРМИНАЛ -->
     <div id="mainScreen" class="screen">
       <div class="top-bar">
         <div class="toggle-container">
@@ -48,12 +62,10 @@
 
       <div class="action-row">
         <button class="main-action-btn" id="micBtnText" onclick="startVoiceInput()">
-          <span style="font-size: 26px;">🎙️</span>
-          <span>ГОЛОС</span>
+          <span>🎙️</span><span>ГОЛОС</span>
         </button>
         <button class="main-action-btn" id="camBtnText" onclick="triggerCamera()">
-          <span style="font-size: 26px;">📷</span>
-          <span>ФОТО</span>
+          <span>📷</span><span>ФОТО</span>
         </button>
       </div>
 
@@ -67,7 +79,7 @@
         
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Нажмите <b>ФОТО 📷</b>, сфотографируйте дерево — ИИ определит вид и состояние!
+          Задайте вопрос через <b>ГОЛОС 🎙️</b>, <b>ФОТО 📷</b> или напечатайте текст ниже.
         </div>
 
         <div class="terminal-input-bar">
@@ -81,6 +93,7 @@
       </button>
     </div>
 
+    <!-- ЭКРАН 2: ОФЛАЙН БАЗА ЗНАНИЙ -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
@@ -89,28 +102,41 @@
       </div>
 
       <div class="niche-list">
-        <div class="niche-card" onclick="openNiche(1)">
+        <div class="niche-card" onclick="openNicheDetail(1)">
           <div class="niche-title" id="n1Title">💧 1. Гидропоника и Капельный полив</div>
-          <div class="niche-desc" id="n1Desc">Расчет растворов, датчики, насосы, автоматика.</div>
+          <div class="niche-desc" id="n1Desc">Международные стандарты pH/EC, вылив, био-чистка.</div>
         </div>
-        <div class="niche-card" onclick="openNiche(2)">
+        <div class="niche-card" onclick="openNicheDetail(2)">
           <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
           <div class="niche-desc" id="n2Desc">Карты полей, NDVI индексы, облет садов.</div>
         </div>
-        <div class="niche-card" onclick="openNiche(3)">
+        <div class="niche-card" onclick="openNicheDetail(3)">
           <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
-          <div class="niche-desc" id="n3Desc">Безмедевые препараты, биозащита, биоудобрения.</div>
+          <div class="niche-desc" id="n3Desc">Безмедевые препараты, биозащита, органика.</div>
         </div>
-        <div class="niche-card" onclick="openNiche(4)">
+        <div class="niche-card" onclick="openNicheDetail(4)">
           <div class="niche-title" id="n4Title">🔬 4. Определитель Болезней</div>
           <div class="niche-desc" id="n4Desc">Атлас симптомов фисташек, садов и культур.</div>
         </div>
-        <div class="niche-card" onclick="openNiche(5)">
+        <div class="niche-card" onclick="openNicheDetail(5)">
           <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
-          <div class="niche-desc" id="n5Desc">pH почвы, мелиорация, азотный баланс, уход.</div>
+          <div class="niche-desc" id="n5Desc">pH почвы, органический баланс, уход.</div>
         </div>
       </div>
     </div>
+
+    <!-- ЭКРАН 3: ДЕТАЛЬНЫЙ ПРОСМОТР РАЗДЕЛОВ -->
+    <div id="detailScreen" class="screen hidden">
+      <div class="base-header">
+        <button class="back-btn" onclick="showScreen('baseScreen')">⬅ К разделам</button>
+        <h4 id="detailTitle">Раздел</h4>
+        <div></div>
+      </div>
+      <div class="detail-body" id="detailContent">
+        <!-- Сюда подгружаются инженерные таблицы -->
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -142,6 +168,7 @@
     function showScreen(screenId) {
       document.getElementById('mainScreen').classList.add('hidden');
       document.getElementById('baseScreen').classList.add('hidden');
+      document.getElementById('detailScreen').classList.add('hidden');
       document.getElementById(screenId).classList.remove('hidden');
     }
 
@@ -171,7 +198,7 @@
     function startVoiceInput() {
       if (recognition) {
         recognition.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
-        document.getElementById('terminalOutput').innerHTML = '🎙️ <b>Слушаю вас...</b>';
+        document.getElementById('terminalOutput').innerHTML = '🎙️ <b>Слушаю ваш вопрос...</b>';
         try { recognition.start(); } catch(e){}
       }
     }
@@ -185,41 +212,64 @@
       if (!file) return;
 
       const output = document.getElementById('terminalOutput');
-      output.innerHTML = '📷 <b>Фото получено!</b><br><br>⏳ <i>Экспресс-анализ растения...</i>';
+      output.innerHTML = '📷 <b>Снимок принят!</b><br><br>⏳ <i>Экспресс-анализ растения...</i>';
 
-      // Тасвирни қайта ишлаш ва таҳлил
       setTimeout(() => {
         let analysisResult = currentLang === 'RU' 
-          ? '<b>ИИ-Диагностика по фото:</b><br>1. Лиственное дерево (тополь/карагач).<br>2. Признаки дефицита влаги и некроза краев листьев.<br>3. Рекомендация: полив и обработка против тли.' 
-          : '<b>AI Photo Diagnosis:</b><br>1. Deciduous tree.<br>2. Leaf edge chlorosis detected.<br>3. Recommendation: Irrigation update.';
+          ? '<b>ИИ-Диагностика по фото (Organic US Standard):</b><br>1. Лиственное дерево / Садовая культура.<br>2. Признаки дефицита капельного орошения или микроэлементов.<br>3. Рекомендация: Проверить EC раствора и внести био-стимулятор гумата калия.' 
+          : '<b>AI Photo Diagnosis (USDA Organic):</b><br>1. Orchard crop / Leaf tree.<br>2. Drip irrigation stress symptoms.<br>3. Rec: Adjust solution EC and apply potassium humate bio-stimulant.';
         
-        output.innerHTML = '🤖 <b>Ответ ИИ (Онлайн-Анализ):</b><br><br>' + analysisResult;
+        output.innerHTML = '🤖 <b>Ответ ИИ (Онлайн):</b><br><br>' + analysisResult;
         speakText(analysisResult);
-      }, 1500);
+      }, 1200);
     }
 
-    async function processTextQuery(userQuery) {
+    function processTextQuery(userQuery) {
       const output = document.getElementById('terminalOutput');
-      output.innerHTML = '❓ <b>Запрос:</b> ' + userQuery + '<br><br>⏳ <i>Обработка...</i>';
-
-      if (currentMode === 'offline') {
-        setTimeout(() => {
-          let offText = 'Офлайн База: Запись найдена.';
-          output.innerHTML = '💾 <b>Офлайн Справочник:</b><br><br>' + offText;
-          speakText(offText);
-        }, 600);
-        return;
-      }
+      output.innerHTML = '❓ <b>Запрос:</b> ' + userQuery + '<br><br>⏳ <i>Формулирование ответа...</i>';
 
       setTimeout(() => {
-        let onText = 'Ответ AquaExpert ИИ: По вашему запросу (' + userQuery + ') рекомендуем соблюдать норматив pH 5.8-6.2 и проверить систему капельного орошения.';
-        output.innerHTML = '🤖 <b>Ответ ИИ:</b><br><br>' + onText;
-        speakText(onText);
-      }, 800);
+        let text = currentMode === 'online' 
+          ? 'Ответ ИИ (AquaExpert Pro): По запросу "' + userQuery + '" рекомендуем соблюдать экологические нормы pH 5.8-6.5 и органический баланс.'
+          : 'Офлайн-База: Нормативы pH/EC и вылива капельниц доступны в разделе 1 Справочника.';
+        output.innerHTML = (currentMode === 'online' ? '🤖 <b>Ответ ИИ:</b><br><br>' : '💾 <b>Офлайн Справочник:</b><br><br>') + text;
+        speakText(text);
+      }, 700);
     }
 
-    function openNiche(number) {
-      alert((currentLang === 'RU' ? 'Открываем раздел #' : 'Opening section #') + number);
+    /* ИНЖЕНЕРНОЕ НАПОЛНЕНИЕ РАЗДЕЛОВ (US / GLOBAL ORGANIC STANDARDS) */
+    function openNicheDetail(id) {
+      const title = document.getElementById('detailTitle');
+      const content = document.getElementById('detailContent');
+
+      if (id === 1) {
+        title.innerText = currentLang === 'RU' ? '💧 1. Гидропоника и Капельный полив' : '💧 1. Hydroponics & Drip Irrigation';
+        content.innerHTML = `
+          <span class="section-tag">USDA Organic & GlobalGAP Standards</span>
+          <h4 style="color:#1b5e20; margin-bottom:6px;">Target pH & EC Levels (Органика & Гидропоника)</h4>
+          <table class="agro-table">
+            <tr><th>Культура</th><th>pH</th><th>EC (mS/cm)</th></tr>
+            <tr><td><b>Фисташка & Миндаль</b></td><td>6.0 - 6.8</td><td>1.5 - 2.2</td></tr>
+            <tr><td><b>Гранат & Виноград</b></td><td>5.8 - 6.5</td><td>1.8 - 2.4</td></tr>
+            <tr><td><b>Клубника (Drip/NFT)</b></td><td>5.5 - 6.2</td><td>1.2 - 1.6</td></tr>
+            <tr><td><b>Томат & Перец</b></td><td>5.6 - 6.3</td><td>2.0 - 3.0</td></tr>
+            <tr><td><b>Яблоня & Сады</b></td><td>6.0 - 6.5</td><td>1.2 - 1.8</td></tr>
+          </table>
+
+          <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Экологическая коррекция растворов:</h4>
+          <p>• <b>Понижение pH:</b> Лимонная кислота или пищевая ортофосфорная кислота (85%). Безопасно для почвенной микрофлоры.</p>
+          <p>• <b>Очистка капельниц:</b> Промывка 0.1% раствором лимонной кислоты или перекисью водорода (H₂O₂) от солей и био-налета без токсичной химии.</p>
+
+          <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Нормы вылива (Капельное орошение):</h4>
+          <p>• <b>Молодые деревья (1-3 года):</b> 15-20 л/дерево в сутки.</p>
+          <p>• <b>Плодоносящий сад (5+ лет):</b> 40-60 л/дерево в сутки (при жаре +35°C).</p>
+        `;
+      } else {
+        title.innerText = currentLang === 'RU' ? 'Раздел #' + id : 'Section #' + id;
+        content.innerHTML = `<p>Раздел подготавливается к загрузке инженерных таблиц...</p>`;
+      }
+
+      showScreen('detailScreen');
     }
 
     function toggleLanguage() {
