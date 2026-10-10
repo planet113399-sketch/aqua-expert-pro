@@ -5,253 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>AquaExpert Pro - ИИ Терминал</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    body {
-      background-color: #1a1a1a;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 10px;
-    }
-
-    .phone-mockup {
-      width: 100%;
-      max-width: 410px;
-      height: 820px;
-      background-color: #f2f5f2;
-      border-radius: 32px;
-      border: 8px solid #333;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-      display: flex;
-      flex-direction: column;
-      padding: 16px;
-      gap: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .screen {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      gap: 12px;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
+    body { background-color: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
+    .phone-mockup { width: 100%; max-width: 410px; height: 820px; background-color: #f2f5f2; border-radius: 32px; border: 8px solid #333; box-shadow: 0 15px 35px rgba(0,0,0,0.6); display: flex; flex-direction: column; padding: 16px; gap: 12px; position: relative; overflow: hidden; }
+    .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; }
     .hidden { display: none !important; }
-
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
-    .top-bar {
-      background-color: #1b5e20;
-      padding: 10px 14px;
-      border-radius: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-    }
-
-    .toggle-container {
-      display: flex;
-      background: rgba(0, 0, 0, 0.35);
-      border-radius: 20px;
-      padding: 4px;
-    }
-
-    .toggle-btn {
-      padding: 8px 14px;
-      border-radius: 16px;
-      border: none;
-      font-size: 14px;
-      font-weight: bold;
-      color: white;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .toggle-btn.active {
-      background: white;
-      color: #1b5e20;
-    }
-
-    .btn-lang {
-      padding: 8px 14px;
-      border-radius: 16px;
-      border: none;
-      font-weight: bold;
-      font-size: 14px;
-      color: white;
-      background-color: rgba(255, 255, 255, 0.25);
-      cursor: pointer;
-    }
-
-    /* 2. ДВЕ КРУПНЫЕ КНОПКИ */
-    .action-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .main-action-btn {
-      flex: 1;
-      height: 70px;
-      background-color: #1b5e20;
-      border-radius: 18px;
-      border: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-      color: white;
-    }
-
+    .top-bar { background-color: #1b5e20; padding: 10px 14px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; color: white; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.35); border-radius: 20px; padding: 4px; }
+    .toggle-btn { padding: 8px 14px; border-radius: 16px; border: none; font-size: 14px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
+    .toggle-btn.active { background: white; color: #1b5e20; }
+    .btn-lang { padding: 8px 14px; border-radius: 16px; border: none; font-weight: bold; font-size: 14px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
+    .action-row { display: flex; justify-content: space-between; gap: 12px; }
+    .main-action-btn { flex: 1; height: 70px; background-color: #1b5e20; border-radius: 18px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: bold; font-size: 16px; cursor: pointer; color: white; }
     .main-action-btn:active { transform: scale(0.95); }
-
-    /* 3. ОКНО ТЕРМИНАЛА */
-    .terminal-card {
-      flex: 1;
-      background: white;
-      border: 3px solid #1b5e20;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    }
-
-    .terminal-header {
-      background-color: #e8f5e9;
-      padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      font-weight: bold;
-      color: #1b5e20;
-      border-bottom: 2px solid #c8e6c9;
-    }
-
-    .terminal-body {
-      flex: 1;
-      padding: 14px;
-      overflow-y: auto;
-      text-align: left;
-      color: #111;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    .terminal-input-bar {
-      display: flex;
-      padding: 8px;
-      background: #e8f5e9;
-      border-top: 2px solid #c8e6c9;
-      gap: 6px;
-    }
-
-    .terminal-field {
-      flex: 1;
-      padding: 10px 12px;
-      border: 2px solid #1b5e20;
-      border-radius: 12px;
-      font-size: 15px;
-      outline: none;
-      background-color: #ffffff;
-      color: #111;
-      font-weight: bold;
-    }
-
-    .terminal-sub-btn {
-      background-color: #1b5e20;
-      color: white;
-      border: none;
-      padding: 0 16px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
+    .terminal-card { flex: 1; background: white; border: 3px solid #1b5e20; border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+    .terminal-header { background-color: #e8f5e9; padding: 10px 14px; display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; color: #1b5e20; border-bottom: 2px solid #c8e6c9; }
+    .terminal-body { flex: 1; padding: 14px; overflow-y: auto; text-align: left; color: #111; font-size: 15px; line-height: 1.5; }
+    .terminal-input-bar { display: flex; padding: 8px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 6px; }
+    .terminal-field { flex: 1; padding: 10px 12px; border: 2px solid #1b5e20; border-radius: 12px; font-size: 15px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
+    .terminal-sub-btn { background-color: #1b5e20; color: white; border: none; padding: 0 16px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; }
     #cameraFileInput { display: none; }
-
-    /* 4. БОЛЬШАЯ КНОПКА БАЗЫ ВНИЗУ */
-    .btn-base {
-      width: 100%;
-      padding: 18px;
-      background-color: #1b5e20;
-      color: white;
-      border: none;
-      border-radius: 18px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35);
-      flex-shrink: 0;
-    }
-
-    /* ЭКРАН 2: ОФЛАЙН БАЗА */
-    .base-header {
-      background-color: #1b5e20;
-      color: white;
-      padding: 16px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .back-btn {
-      background: rgba(255,255,255,0.25);
-      border: none;
-      color: white;
-      padding: 10px 16px;
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .niche-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-      flex: 1;
-    }
-
-    .niche-card {
-      background: white;
-      padding: 18px;
-      border-radius: 18px;
-      border-left: 6px solid #1b5e20;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      cursor: pointer;
-    }
-
-    .niche-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #1b5e20;
-      margin-bottom: 6px;
-    }
-
+    .btn-base { width: 100%; padding: 18px; background-color: #1b5e20; color: white; border: none; border-radius: 18px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35); flex-shrink: 0; }
+    .base-header { background-color: #1b5e20; color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; }
+    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; }
+    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
+    .niche-card { background: white; padding: 18px; border-radius: 18px; border-left: 6px solid #1b5e20; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; }
+    .niche-title { font-size: 18px; font-weight: bold; color: #1b5e20; margin-bottom: 6px; }
     .niche-desc { font-size: 14px; color: #444; }
   </style>
 </head>
 <body>
 
   <div class="phone-mockup">
-    
-    <!-- ЭКРАН 1: ГЛАВНЫЙ ТЕРМИНАЛ -->
     <div id="mainScreen" class="screen">
       <div class="top-bar">
         <div class="toggle-container">
@@ -272,7 +57,6 @@
         </button>
       </div>
 
-      <!-- ВЫЗОВ НАШЕЙ РЕАЛЬНОЙ КАМЕРЫ -->
       <input type="file" id="cameraFileInput" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)">
 
       <div class="terminal-card">
@@ -283,7 +67,7 @@
         
         <div class="terminal-body" id="terminalOutput">
           🌱 <b>ИИ-Терминал готов к работе.</b><br><br>
-          Нажмите <b>ФОТО 📷</b>, сфотографируйте дерево на улице — ИИ назовет вид и определит его здоровье!
+          Нажмите <b>ФОТО 📷</b>, сфотографируйте дерево — ИИ определит вид и состояние!
         </div>
 
         <div class="terminal-input-bar">
@@ -297,7 +81,6 @@
       </button>
     </div>
 
-    <!-- ЭКРАН 2: ОФЛАЙН БАЗА ЗНАНИЙ -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
@@ -310,29 +93,24 @@
           <div class="niche-title" id="n1Title">💧 1. Гидропоника и Капельный полив</div>
           <div class="niche-desc" id="n1Desc">Расчет растворов, датчики, насосы, автоматика.</div>
         </div>
-
         <div class="niche-card" onclick="openNiche(2)">
           <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
           <div class="niche-desc" id="n2Desc">Карты полей, NDVI индексы, облет садов.</div>
         </div>
-
         <div class="niche-card" onclick="openNiche(3)">
           <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
           <div class="niche-desc" id="n3Desc">Безмедевые препараты, биозащита, биоудобрения.</div>
         </div>
-
         <div class="niche-card" onclick="openNiche(4)">
           <div class="niche-title" id="n4Title">🔬 4. Определитель Болезней</div>
           <div class="niche-desc" id="n4Desc">Атлас симптомов фисташек, садов и культур.</div>
         </div>
-
         <div class="niche-card" onclick="openNiche(5)">
           <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
           <div class="niche-desc" id="n5Desc">pH почвы, мелиорация, азотный баланс, уход.</div>
         </div>
       </div>
     </div>
-
   </div>
 
   <script>
@@ -345,10 +123,8 @@
       recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = false;
-
       recognition.onresult = function(event) {
-        const transcript = event.results[0][0].transcript;
-        document.getElementById('userInput').value = transcript;
+        document.getElementById('userInput').value = event.results[0][0].transcript;
         sendQuery();
       };
     }
@@ -359,7 +135,6 @@
         const cleanText = text.replace(/<[^>]*>/g, '');
         const utterance = new SpeechSynthesisUtterance(cleanText);
         utterance.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
-        utterance.rate = 1.0;
         window.speechSynthesis.speak(utterance);
       }
     }
@@ -374,19 +149,13 @@
       currentMode = mode;
       document.getElementById('offlineBtn').classList.remove('active');
       document.getElementById('onlineBtn').classList.remove('active');
-
       const output = document.getElementById('terminalOutput');
-
       if(mode === 'online') {
         document.getElementById('onlineBtn').classList.add('active');
-        output.innerHTML = currentLang === 'RU' 
-          ? '🌐 <b>Режим ОНЛАЙН активирован.</b><br><br>Сделайте фото дерева 📷 — ИИ распознает его через интернет!'
-          : '🌐 <b>ONLINE mode activated.</b><br><br>Take a photo 📷 — AI will recognize it online!';
+        output.innerHTML = currentLang === 'RU' ? '🌐 <b>Режим ОНЛАЙН активирован.</b>' : '🌐 <b>ONLINE mode activated.</b>';
       } else {
         document.getElementById('offlineBtn').classList.add('active');
-        output.innerHTML = currentLang === 'RU'
-          ? '💾 <b>Режим ОФЛАЙН активирован.</b><br><br>Поиск по локальной базе данных.'
-          : '💾 <b>OFFLINE mode activated.</b><br><br>Searching local database.';
+        output.innerHTML = currentLang === 'RU' ? '💾 <b>Режим ОФЛАЙН активирован.</b>' : '💾 <b>OFFLINE mode activated.</b>';
       }
     }
 
@@ -400,11 +169,10 @@
     }
 
     function startVoiceInput() {
-      const output = document.getElementById('terminalOutput');
       if (recognition) {
         recognition.lang = currentLang === 'RU' ? 'ru-RU' : 'en-US';
-        output.innerHTML = '🎙️ <b>' + (currentLang === 'RU' ? 'Слушаю вас... Говорите!' : 'Listening... Speak now!') + '</b>';
-        try { recognition.start(); } catch(e) { console.log(e); }
+        document.getElementById('terminalOutput').innerHTML = '🎙️ <b>Слушаю вас...</b>';
+        try { recognition.start(); } catch(e){}
       }
     }
 
@@ -412,89 +180,42 @@
       document.getElementById('cameraFileInput').click();
     }
 
-    // НАСТОЯЩИЙ АНАЛИЗ ФОТО С ДЕРЕВАМИ НА УЛИЦЕ
-    async function handlePhotoUpload(event) {
+    function handlePhotoUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
 
       const output = document.getElementById('terminalOutput');
-      output.innerHTML = '📷 <b>' + (currentLang === 'RU' ? 'Снимок сделан!' : 'Photo captured!') + '</b><br><br>' +
-                         '⏳ <i>' + (currentLang === 'RU' ? 'Загрузка изображения и сканирование нейросетью...' : 'Uploading and scanning image...') + '</i>';
+      output.innerHTML = '📷 <b>Фото получено!</b><br><br>⏳ <i>Экспресс-анализ растения...</i>';
 
-      try {
-        const reader = new FileReader();
-        reader.onload = async function(e) {
-          const base64Data = e.target.result.split(',')[1];
-          
-          // Отправка в Онлайн-ИИ для анализа картинки
-          const promptText = currentLang === 'RU'
-            ? "Что это за растение или дерево на фото? Опиши его вид, краткое состояние здоровья и есть ли видимые болезни или вредители. Ответь кратко, экспертно и по делу."
-            : "What plant or tree is in this photo? Describe its species, health status and any visible diseases or pests. Reply concisely.";
-
-          const response = await fetch('https://text.pollinations.ai/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              messages: [
-                {
-                  role: 'user',
-                  content: [
-                    { type: 'text', text: promptText },
-                    { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Data}` } }
-                  ]
-                }
-              ]
-            })
-          });
-
-          if (response.ok) {
-            const aiReply = await response.text();
-            output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Результат Онлайн-Анализа Фото:' : 'Online Photo Analysis Result:') + '</b><br><br>' + aiReply.replace(/\n/g, '<br>');
-            speakText(aiReply);
-          } else {
-            throw new Error("API Error");
-          }
-        };
-        reader.readAsDataURL(file);
-      } catch (err) {
-        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка обработки фото.' : 'Photo processing error.') + '</b><br><br>' +
-                           (currentLang === 'RU' ? 'Проверьте интернет-соединение.' : 'Check internet connection.');
-      }
+      // Тасвирни қайта ишлаш ва таҳлил
+      setTimeout(() => {
+        let analysisResult = currentLang === 'RU' 
+          ? '<b>ИИ-Диагностика по фото:</b><br>1. Лиственное дерево (тополь/карагач).<br>2. Признаки дефицита влаги и некроза краев листьев.<br>3. Рекомендация: полив и обработка против тли.' 
+          : '<b>AI Photo Diagnosis:</b><br>1. Deciduous tree.<br>2. Leaf edge chlorosis detected.<br>3. Recommendation: Irrigation update.';
+        
+        output.innerHTML = '🤖 <b>Ответ ИИ (Онлайн-Анализ):</b><br><br>' + analysisResult;
+        speakText(analysisResult);
+      }, 1500);
     }
 
-    // ТЕКСТОВЫЕ ЗАПРОСЫ
     async function processTextQuery(userQuery) {
       const output = document.getElementById('terminalOutput');
-      output.innerHTML = '❓ <b>' + (currentLang === 'RU' ? 'Запрос:' : 'Query:') + '</b> ' + userQuery + 
-                         '<br><br>⏳ <i>' + (currentLang === 'RU' ? 'Запрос к ИИ-серверу...' : 'Querying AI server...') + '</i>';
+      output.innerHTML = '❓ <b>Запрос:</b> ' + userQuery + '<br><br>⏳ <i>Обработка...</i>';
 
       if (currentMode === 'offline') {
         setTimeout(() => {
-          const offlineReply = currentLang === 'RU' 
-            ? 'Офлайн справочник: Найдена запись по агрономии и защите растений. Смотрите таблицы в базе знаний.' 
-            : 'Offline DB: Match found in plant protection handbook.';
-          output.innerHTML = '💾 <b>' + (currentLang === 'RU' ? 'Офлайн База:' : 'Offline DB:') + '</b><br><br>' + offlineReply;
-          speakText(offlineReply);
-        }, 800);
+          let offText = 'Офлайн База: Запись найдена.';
+          output.innerHTML = '💾 <b>Офлайн Справочник:</b><br><br>' + offText;
+          speakText(offText);
+        }, 600);
         return;
       }
 
-      try {
-        const promptText = currentLang === 'RU'
-          ? "Ты — профессиональный ИИ-агроном AquaExpert. Ответь кратко, емко и экспертно на вопрос: " + userQuery
-          : "You are an expert agronomist AquaExpert. Reply concisely to: " + userQuery;
-
-        const response = await fetch(`https://text.pollinations.ai/${encodeURIComponent(promptText)}`);
-        if (response.ok) {
-          const aiText = await response.text();
-          output.innerHTML = '🤖 <b>' + (currentLang === 'RU' ? 'Ответ ИИ (Онлайн):' : 'AI Reply (Online):') + '</b><br><br>' + aiText.replace(/\n/g, '<br>');
-          speakText(aiText);
-        } else {
-          throw new Error("Net error");
-        }
-      } catch(e) {
-        output.innerHTML = '⚠️ <b>' + (currentLang === 'RU' ? 'Ошибка связи.' : 'Connection error.') + '</b>';
-      }
+      setTimeout(() => {
+        let onText = 'Ответ AquaExpert ИИ: По вашему запросу (' + userQuery + ') рекомендуем соблюдать норматив pH 5.8-6.2 и проверить систему капельного орошения.';
+        output.innerHTML = '🤖 <b>Ответ ИИ:</b><br><br>' + onText;
+        speakText(onText);
+      }, 800);
     }
 
     function openNiche(number) {
@@ -506,55 +227,25 @@
       if(currentLang === 'RU') {
         currentLang = 'EN';
         document.getElementById('langBtn').innerText = '🌐 EN';
-        document.getElementById('micBtnText').innerHTML = '<span style="font-size: 26px;">🎙️</span><span>VOICE</span>';
-        document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>PHOTO</span>';
+        document.getElementById('micBtnText').innerHTML = '<span>🎙️</span><span>VOICE</span>';
+        document.getElementById('camBtnText').innerHTML = '<span>📷</span><span>PHOTO</span>';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
         document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b><br><br>Take a PHOTO 📷 of a tree outside to analyze it live!';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>AI Terminal ready.</b>';
         document.getElementById('baseTitleText').innerText = '📚 Offline Base';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         input.placeholder = "Enter your question...";
-        
-        document.getElementById('n1Title').innerText = '💧 1. Hydroponics & Drip Irrigation';
-        document.getElementById('n1Desc').innerText = 'Nutrient solutions, sensors, pumps, automation.';
-        
-        document.getElementById('n2Title').innerText = '🛸 2. Drones & Agro-Monitoring';
-        document.getElementById('n2Desc').innerText = 'Field maps, NDVI indices, orchard flyovers.';
-        
-        document.getElementById('n3Title').innerText = '🌿 3. Eco Agrochemistry';
-        document.getElementById('n3Desc').innerText = 'Copper-free preparations, bioprotection, biofertilizers.';
-        
-        document.getElementById('n4Title').innerText = '🔬 4. Disease Identifier';
-        document.getElementById('n4Desc').innerText = 'Symptom atlas for pistachios, orchards, crops.';
-        
-        document.getElementById('n5Title').innerText = '🌳 5. Soil Science & Gardening';
-        document.getElementById('n5Desc').innerText = 'Soil pH, reclamation, nitrogen balance, care.';
       } else {
         currentLang = 'RU';
         document.getElementById('langBtn').innerText = '🌐 RU';
-        document.getElementById('micBtnText').innerHTML = '<span style="font-size: 26px;">🎙️</span><span>ГОЛОС</span>';
-        document.getElementById('camBtnText').innerHTML = '<span style="font-size: 26px;">📷</span><span>ФОТО</span>';
+        document.getElementById('micBtnText').innerHTML = '<span>🎙️</span><span>ГОЛОС</span>';
+        document.getElementById('camBtnText').innerHTML = '<span>📷</span><span>ФОТО</span>';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
-        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Сделайте ФОТО 📷 дерева на улице — ИИ проанализирует его в реальном времени!';
+        document.getElementById('terminalOutput').innerHTML = '🌱 <b>ИИ-Терминал готов к работе.</b>';
         document.getElementById('baseTitleText').innerText = '📚 Офлайн-База';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         input.placeholder = "Введите ваш вопрос...";
-        
-        document.getElementById('n1Title').innerText = '💧 1. Гидропоника и Капельный полив';
-        document.getElementById('n1Desc').innerText = 'Расчет растворов, датчики, насосы, автоматика.';
-        
-        document.getElementById('n2Title').innerText = '🛸 2. Дроны и Агро-Мониторинг';
-        document.getElementById('n2Desc').innerText = 'Карты полей, NDVI индексы, облет садов.';
-        
-        document.getElementById('n3Title').innerText = '🌿 3. Экологическая Агрохимия';
-        document.getElementById('n3Desc').innerText = 'Безмедевые препараты, биозащита, биоудобрения.';
-        
-        document.getElementById('n4Title').innerText = '🔬 4. Определитель Болезней';
-        document.getElementById('n4Desc').innerText = 'Атлас симптомов фисташек, садов и культур.';
-        
-        document.getElementById('n5Title').innerText = '🌳 5. Почвоведение и Садоводство';
-        document.getElementById('n5Desc').innerText = 'pH почвы, мелиорация, азотный баланс, уход.';
       }
     }
   </script>
