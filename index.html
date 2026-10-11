@@ -119,7 +119,7 @@
         </div>
         <div class="niche-card" onclick="openNicheDetail(5)">
           <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
-          <div class="niche-desc" id="n5Desc">pH почвы, био-гумус, азотфиксация, уход.</div>
+          <div class="niche-desc" id="n5Desc">pH почвы, био-гумус, Фисташка & Миндаль Big Data.</div>
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@
         <div></div>
       </div>
       <div class="detail-body" id="detailContent">
-        <!-- Сюда подгружаются инженерные таблицы -->
+        <!-- Подгрузка Big Data -->
       </div>
     </div>
 
@@ -215,8 +215,8 @@
 
       setTimeout(() => {
         let analysisResult = currentLang === 'RU' 
-          ? '<b>ИИ-Диагностика по фото (Organic US Standard):</b><br>1. Лиственное дерево / Садовая культура.<br>2. Признаки дефицита капельного орошения или микроэлементов.<br>3. Рекомендация: Проверить EC раствора и внести био-стимулятор гумата калия.' 
-          : '<b>AI Photo Diagnosis (USDA Organic):</b><br>1. Orchard crop / Leaf tree.<br>2. Drip irrigation stress symptoms.<br>3. Rec: Adjust solution EC and apply potassium humate bio-stimulant.';
+          ? '<b>ИИ-Диагностика по фото (Organic US Standard):</b><br>1. Лиственное дерево / Орехоплодная культура.<br>2. Признаки дефицита капельного орошения или микроэлементов.<br>3. Рекомендация: Проверить EC раствора и внести био-стимулятор гумата калия.' 
+          : '<b>AI Photo Diagnosis (USDA Organic):</b><br>1. Orchard crop / Nut tree.<br>2. Drip irrigation stress symptoms.<br>3. Rec: Adjust solution EC and apply potassium humate bio-stimulant.';
         
         output.innerHTML = '🤖 <b>Ответ ИИ (Онлайн):</b><br><br>' + analysisResult;
         speakText(analysisResult);
@@ -225,18 +225,18 @@
 
     function processTextQuery(userQuery) {
       const output = document.getElementById('terminalOutput');
-      output.innerHTML = '❓ <b>Запрос:</b> ' + userQuery + '<br><br>⏳ <i>Формулирование ответа...</i>';
+      output.innerHTML = '❓ <b>Запрос:</b> ' + userQuery + '<br><br>⏳ <i>Поиск в глубокой базе...</i>';
 
       setTimeout(() => {
         let text = currentMode === 'online' 
           ? 'Ответ ИИ (AquaExpert Pro): По запросу "' + userQuery + '" рекомендуем соблюдать экологические нормы pH 5.8-6.5 и органический баланс.'
-          : 'Офлайн-База: Нормативы почвоведения, гумуса и органического ухода зафиксированы в Справочнике.';
+          : 'Офлайн-База: Академические данные по кутильвации фисташки, миндаля и почвоведению загружены из локального архива.';
         output.innerHTML = (currentMode === 'online' ? '🤖 <b>Ответ ИИ:</b><br><br>' : '💾 <b>Офлайн Справочник:</b><br><br>') + text;
         speakText(text);
       }, 700);
     }
 
-    /* ИНЖЕНЕРНОЕ НАПОЛНЕНИЕ РАЗДЕЛОВ (US / GLOBAL STANDARDS) */
+    /* ИНЖЕНЕРНОЕ НАПОЛНЕНИЕ РАЗДЕЛОВ (US / GLOBAL STANDARDS - BIG DATA) */
     function openNicheDetail(id) {
       const title = document.getElementById('detailTitle');
       const content = document.getElementById('detailContent');
@@ -254,10 +254,8 @@
             <tr><td><b>Томат & Перец</b></td><td>5.6 - 6.3</td><td>2.0 - 3.0</td></tr>
             <tr><td><b>Яблоня & Сады</b></td><td>6.0 - 6.5</td><td>1.2 - 1.8</td></tr>
           </table>
-
-          <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Экологическая коррекция растворов:</h4>
-          <p>• <b>Понижение pH:</b> Лимонная кислота или пищевая ортофосфорная кислота (85%). Безопасно для почвенной микрофлоры.</p>
-          <p>• <b>Очистка капельниц:</b> Промывка 0.1% раствором лимонной кислоты или перекисью водорода (H₂O₂) от солей и био-налета без токсичной химии.</p>
+          <p>• <b>Коррекция pH:</b> Лимонная / пищевая ортофосфорная кислота 85%.</p>
+          <p>• <b>Очистка линий:</b> Перекись водорода H₂O₂ (0.1-0.2%).</p>
         `;
       } else if (id === 2) {
         title.innerText = currentLang === 'RU' ? '🛸 2. Дроны и Агро-Мониторинг' : '🛸 2. Drones & Precision Ag';
@@ -266,9 +264,9 @@
           <h4 style="color:#1b5e20; margin-bottom:6px;">Шкала вегетационных индексов (NDVI / NDRE)</h4>
           <table class="agro-table">
             <tr><th>Индекс</th><th>Диапазон</th><th>Интерпретация состояния</th></tr>
-            <tr><td><b>NDVI</b></td><td>0.1 - 0.3</td><td>Отсутствие вегетации / Сильный стресс / Голая почва</td></tr>
-            <tr><td><b>NDVI</b></td><td>0.4 - 0.6</td><td>Умеренное развитие / Начало вегетации</td></tr>
-            <tr><td><b>NDVI</b></td><td>0.7 - 0.85</td><td>Здоровая биомасса / Активный фотосинтез (Норма)</td></tr>
+            <tr><td><b>NDVI</b></td><td>0.1 - 0.3</td><td>Отсутствие вегетации / Голая почва</td></tr>
+            <tr><td><b>NDVI</b></td><td>0.4 - 0.6</td><td>Умеренное развитие</td></tr>
+            <tr><td><b>NDVI</b></td><td>0.7 - 0.85</td><td>Здоровая биомасса (Норма)</td></tr>
           </table>
         `;
       } else if (id === 3) {
@@ -277,10 +275,10 @@
           <span class="section-tag">USDA Organic & European Bio Standards</span>
           <h4 style="color:#1b5e20; margin-bottom:6px;">Альтернатива медным купоросам и пестицидам</h4>
           <table class="agro-table">
-            <tr><th>Вредитель / Болезнь</th><th>Экологический био-агент</th><th>Регламент применения</th></tr>
-            <tr><td><b>Грибковые (Мучнистая роса, Парша)</b></td><td><i>Bacillus subtilis</i> (Штамм 26Д) / Сенная палочка</td><td>Капельно / Опрыскивание 2-3 л/га (Без угнетения почвы)</td></tr>
-            <tr><td><b>Корневые гнили (Фузариоз)</b></td><td><i>Trichoderma harzianum</i> / <i>viride</i></td><td>Внесение в прикорневую зону с капельным поливом</td></tr>
-            <tr><td><b>Тля, Клещи, Медяница</b></td><td>Масло Нима (Cold-Pressed Neem) + Зеленое мыло</td><td>0.5-1% Эмульсия для обработки листовой поверхности</td></tr>
+            <tr><th>Вредитель / Болезнь</th><th>Экологический био-агент</th><th>Регламент</th></tr>
+            <tr><td><b>Грибковые (Парша, Ржавчина)</b></td><td><i>Bacillus subtilis</i></td><td>Капельно / Опрыскивание 2-3 л/га</td></tr>
+            <tr><td><b>Корневые гнили</b></td><td><i>Trichoderma harzianum</i></td><td>Внесение в прикорневую зону</td></tr>
+            <tr><td><b>Тля, Клещи</b></td><td>Масло Нима + Зеленое мыло</td><td>0.5-1% Эмульсия по листу</td></tr>
           </table>
         `;
       } else if (id === 4) {
@@ -289,28 +287,28 @@
           <span class="section-tag">USDA Organic Symptom Diagnostics</span>
           <h4 style="color:#1b5e20; margin-bottom:6px;">Атлас симптомов и Экологический протокол</h4>
           <table class="agro-table">
-            <tr><th>Симптом на листе/плоде</th><th>Вероятная причина</th><th>Органическое решение</th></tr>
-            <tr><td><b>Краевой некроз (Ожог краев)</b></td><td>Дефицит Калия (K) / Засоление EC > 3.0</td><td>Промывка капельной линии, калийно-гуматный полив</td></tr>
-            <tr><td><b>Межжилковый хлороз молодняка</b></td><td>Дефицит Железа (Fe) / Высокий pH почвы (>7.8)</td><td>Внесение Хелата Железа (Fe-EDDHA) в прикорневую зону</td></tr>
-            <tr><td><b>Темные пятна с налетом (Альтернариоз)</b></td><td>Грибковое поражение в период влажности</td><td>Обработка <i>Bacillus subtilis</i> + Аминокислоты</td></tr>
+            <tr><th>Симптом</th><th>Вероятная причина</th><th>Органическое решение</th></tr>
+            <tr><td><b>Краевой некроз</b></td><td>Дефицит K / Засоление EC > 3.0</td><td>Промывка линии, калийный гумат</td></tr>
+            <tr><td><b>Хлороз молодняка</b></td><td>Дефицит Fe / Высокий pH (>7.8)</td><td>Хелат Железа (Fe-EDDHA)</td></tr>
+            <tr><td><b>Темные пятна</b></td><td>Альтернариоз</td><td><i>Bacillus subtilis</i> + Аминокислоты</td></tr>
           </table>
         `;
       } else if (id === 5) {
         title.innerText = currentLang === 'RU' ? '🌳 5. Почвоведение и Садоводство' : '🌳 5. Soil Science & Organic Management';
         content.innerHTML = `
-          <span class="section-tag">USDA Organic Soil Health Standards</span>
-          <h4 style="color:#1b5e20; margin-bottom:6px;">Анализ почвы и Нормы био-восстановления</h4>
-          <table class="agro-table">
-            <tr><th>Показатель почвы</th><th>Целевая норма</th><th>Способ экологической коррекции</th></tr>
-            <tr><td><b>pH Почвы</b></td><td>6.2 - 7.5</td><td>При pH > 8.0: Внесение Элементарной серы (Elementary Sulfur) + Гуматы</td></tr>
-            <tr><td><b>Органическое вещество (Гумус)</b></td><td>3.0% - 5.0%</td><td>Внесение Биочара (Biochar) + Биокомпост (10-15 т/га)</td></tr>
-            <tr><td><b>Азотофиксация (N)</b></td><td>Естественный баланс</td><td>Сидераты в междурядьях (Клевер, Люцерна, Вика) до 150 кг N/га</td></tr>
-            <tr><td><b>Микориза (Фосфор P)</b></td><td>Высокая био-активность</td><td>Инокуляция микоризными грибами (<i>Glomus intraradices</i>)</td></tr>
-          </table>
+          <span class="section-tag">USDA Organic Big Data: Фисташка & Миндаль</span>
+          <h4 style="color:#1b5e20; margin-bottom:6px;">Энциклопедический стандарт: Фисташка & Миндаль</h4>
+          <p>• <b>Chilling Hours (Часы холода):</b> 700 - 1000 часов ниже +7°C.</p>
+          <p>• <b>Сумма температур (GDD):</b> 1800 - 2200°C для созревания ядра.</p>
+          <p>• <b>Солеустойчивость:</b> Пороговый EC почвенной вытяжки до 6.0 mS/cm.</p>
+          
+          <h4 style="color:#1b5e20; margin-top:10px; margin-bottom:4px;">Полив и Гидродинамика (Капельный вылив):</h4>
+          <p>• <b>Коэффициент транспирации (Kc):</b> Июнь-Август (налив) = 1.0 - 1.15.</p>
+          <p>• <b>Норма вылива:</b> 45 - 65 л/дерево в сутки при жаре +35°C.</p>
 
-          <h4 style="color:#1b5e20; margin-top:12px; margin-bottom:4px;">Регламент ухода за садами (Фисташка, Миндаль, Гранат):</h4>
-          <p>• <b>Защита от засухи:</b> Мульчирование приствольных кругов органикой (щепа, солома) толщиной 8-10 см сокращает испарение на 40%.</p>
-          <p>• <b>Аэрация корней:</b> Глубокое рыхление междурядий с внесением органических гуматов восстанавливает дыхание корней.</p>
+          <h4 style="color:#1b5e20; margin-top:10px; margin-bottom:4px;">Био-защита от Вертициллеза и Медяницы:</h4>
+          <p>• <b>Вертициллез (Verticillium dahliae):</b> Внесение <i>Trichoderma harzianum</i> (10-15 кг/га) с поливной водой.</p>
+          <p>• <b>Медяница фисташковая:</b> Обработка маслом Нима (0.8%) + заселение энтомофагов (Трихограмма).</p>
         `;
       }
 
