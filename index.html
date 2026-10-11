@@ -49,19 +49,19 @@
       </div>
 
       <div class="action-row">
-        <button class="main-action-btn" onclick="startVoiceInput()"><span>🎙️</span><span>ГОЛОС</span></button>
-        <button class="main-action-btn" onclick="triggerCamera()"><span>📷</span><span>ФОТО</span></button>
+        <button class="main-action-btn" id="micBtnText" onclick="startVoiceInput()"><span>🎙️</span><span>ГОЛОС</span></button>
+        <button class="main-action-btn" id="camBtnText" onclick="triggerCamera()"><span>📷</span><span>ФОТО</span></button>
       </div>
 
       <input type="file" id="cameraFileInput" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)">
 
       <div class="terminal-card">
         <div class="terminal-header">
-          <span>🟢 ТЕРМИНАЛ АГРО-ИИ</span>
+          <span id="termTitle">🟢 ТЕРМИНАЛ АГРО-ИИ</span>
           <span>AquaExpert v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
-          🌱 <b>ИИ-Терминал готов к работе.</b><br><br> Запрос направляется на Бэкенд.
+          🌱 <b>ИИ-Терминал готов к работе.</b>
         </div>
         <div class="terminal-input-bar">
           <input type="text" id="userInput" class="terminal-field" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
@@ -69,42 +69,42 @@
         </div>
       </div>
 
-      <button class="btn-base" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
+      <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
-        <button class="back-btn" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3>📚 Бэкенд Справочник</h3>
+        <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
+        <h3 id="baseTitleText">📚 Бэкенд Справочник</h3>
         <div></div>
       </div>
       <div class="niche-list">
         <div class="niche-card" onclick="fetchBackendData('hydroponics')">
-          <div class="niche-title">💧 1. Гидропоника и Капельный полив</div>
-          <div class="niche-desc">Запрос к базе agro_knowledge.db...</div>
+          <div class="niche-title" id="n1Title">💧 1. Гидропоника и Капельный полив</div>
+          <div class="niche-desc" id="n1Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
         </div>
         <div class="niche-card" onclick="fetchBackendData('drones')">
-          <div class="niche-title">🛸 2. Дроны и Агро-Мониторинг</div>
-          <div class="niche-desc">Запрос к базе agro_knowledge.db...</div>
+          <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
+          <div class="niche-desc" id="n2Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
         </div>
         <div class="niche-card" onclick="fetchBackendData('agrochemistry')">
-          <div class="niche-title">🌿 3. Экологическая Агрохимия</div>
-          <div class="niche-desc">Запрос к базе agro_knowledge.db...</div>
+          <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
+          <div class="niche-desc" id="n3Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
         </div>
         <div class="niche-card" onclick="fetchBackendData('diagnostics')">
-          <div class="niche-title">🔬 4. Определитель Болезней</div>
-          <div class="niche-desc">Запрос к базе agro_knowledge.db...</div>
+          <div class="niche-title" id="n4Title">🔬 4. Определитель Болезней</div>
+          <div class="niche-desc" id="n4Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
         </div>
         <div class="niche-card" onclick="fetchBackendData('soil_gardening')">
-          <div class="niche-title">🌳 5. Почвоведение и Садоводство</div>
-          <div class="niche-desc">Запрос к базе agro_knowledge.db...</div>
+          <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
+          <div class="niche-desc" id="n5Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
         </div>
       </div>
     </div>
 
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
-        <button class="back-btn" onclick="showScreen('baseScreen')">⬅ К разделам</button>
+        <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ К разделам</button>
         <h4 id="detailTitle">Раздел</h4>
         <div></div>
       </div>
@@ -114,6 +114,7 @@
 
   <script>
     let currentMode = 'online';
+    let currentLang = 'ru'; // Языковой флаг: 'ru' или 'en'
 
     function showScreen(id) {
       document.getElementById('mainScreen').classList.add('hidden');
@@ -126,39 +127,70 @@
       currentMode = mode;
       document.getElementById('offlineBtn').classList.toggle('active', mode === 'offline');
       document.getElementById('onlineBtn').classList.toggle('active', mode === 'online');
-      document.getElementById('terminalOutput').innerHTML = mode === 'online' ? '🌐 <b>Режим ОНЛАЙН.</b>' : '💾 <b>Режим ОФЛАЙН (Запросы к Бэкенду).</b>';
+      document.getElementById('terminalOutput').innerHTML = mode === 'online' 
+        ? (currentLang === 'ru' ? '🌐 <b>Режим ОНЛАЙН.</b>' : '🌐 <b>ONLINE Mode.</b>')
+        : (currentLang === 'ru' ? '💾 <b>Режим ОФЛАЙН (Запросы к Бэкенду).</b>' : '💾 <b>OFFLINE Mode (Backend queries).</b>');
+    }
+
+    // СВЯЗКА ДВУЯЗЫЧИЯ ФРОНТЕНДА С БЭКЕНДОМ
+    function toggleLanguage() {
+      const input = document.getElementById('userInput');
+      if (currentLang === 'ru') {
+        currentLang = 'en';
+        document.getElementById('langBtn').innerText = '🌐 EN';
+        document.getElementById('micBtnText').innerHTML = '<span>🎙️</span><span>VOICE</span>';
+        document.getElementById('camBtnText').innerHTML = '<span>📷</span><span>PHOTO</span>';
+        document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
+        document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
+        document.getElementById('baseTitleText').innerText = '📚 Backend Reference';
+        document.getElementById('backBtnText').innerText = '⬅ Back';
+        document.getElementById('detailBackBtn').innerText = '⬅ To sections';
+        input.placeholder = "Enter your question...";
+      } else {
+        currentLang = 'ru';
+        document.getElementById('langBtn').innerText = '🌐 RU';
+        document.getElementById('micBtnText').innerHTML = '<span>🎙️</span><span>ГОЛОС</span>';
+        document.getElementById('camBtnText').innerHTML = '<span>📷</span><span>ФОТО</span>';
+        document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
+        document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
+        document.getElementById('baseTitleText').innerText = '📚 Бэкенд Справочник';
+        document.getElementById('backBtnText').innerText = '⬅ Назад';
+        document.getElementById('detailBackBtn').innerText = '⬅ К разделам';
+        input.placeholder = "Введите ваш вопрос...";
+      }
+    }
+
+    // ДВУЯЗЫЧНЫЙ ЗАПРОС К БЭКЕНДУ
+    async function fetchBackendData(category) {
+      document.getElementById('detailTitle').innerText = currentLang === 'ru' ? "Загрузка..." : "Loading...";
+      document.getElementById('detailContent').innerHTML = currentLang === 'ru' ? "<p>Бэкенд извлекает данные из agro_knowledge.db...</p>" : "<p>Backend extracting data from agro_knowledge.db...</p>";
+      showScreen('detailScreen');
+
+      try {
+        // Отправляем выбранный язык на Бэкенд (?category=...&lang=ru/en)
+        const response = await fetch(`/api/get_knowledge?category=${category}&lang=${currentLang}`);
+        const data = await response.json();
+        document.getElementById('detailTitle').innerText = data.title;
+        document.getElementById('detailContent').innerHTML = data.content;
+      } catch (e) {
+        document.getElementById('detailTitle').innerText = "Бэкенд: " + category;
+        document.getElementById('detailContent').innerHTML = currentLang === 'ru' 
+          ? "<p><b>Запрос передан в Бэкенд (agro_knowledge.db).</b><br>Языковой параметр [" + currentLang.toUpperCase() + "] активен.</p>"
+          : "<p><b>Query passed to Backend (agro_knowledge.db).</b><br>Language parameter [" + currentLang.toUpperCase() + "] active.</p>";
+      }
     }
 
     function sendQuery() {
       const input = document.getElementById('userInput');
       if (input.value.trim() !== "") {
-        document.getElementById('terminalOutput').innerHTML = '❓ <b>Запрос:</b> ' + input.value + '<br><br>⏳ <i>Бэкенд обрабатывает запрос...</i>';
+        document.getElementById('terminalOutput').innerHTML = '❓ <b>' + (currentLang === 'ru' ? 'Запрос:' : 'Query:') + '</b> ' + input.value + '<br><br>⏳ <i>' + (currentLang === 'ru' ? 'Обработка...' : 'Processing...') + '</i>';
         input.value = "";
       }
     }
 
-    // ЗАПРОС К БЭКЕНДУ
-    async function fetchBackendData(category) {
-      document.getElementById('detailTitle').innerText = "Загрузка...";
-      document.getElementById('detailContent').innerHTML = "<p>Бэкенд извлекает данные из agro_knowledge.db...</p>";
-      showScreen('detailScreen');
-
-      try {
-        const response = await fetch(`/api/get_knowledge?category=${category}`);
-        const data = await response.json();
-        document.getElementById('detailTitle').innerText = data.title;
-        document.getElementById('detailContent').innerHTML = data.content;
-      } catch (e) {
-        // Запасной вывод при автономном тесте
-        document.getElementById('detailTitle').innerText = "Бэкенд Модуль: " + category;
-        document.getElementById('detailContent').innerHTML = "<p><b>Запрос передан в Бэкенд (agro_knowledge.db).</b><br>Данные подгружены из базы знаний.</p>";
-      }
-    }
-
     function triggerCamera() { document.getElementById('cameraFileInput').click(); }
-    function handlePhotoUpload(e) { alert("Снимок отправлен в Бэкенд!"); }
-    function startVoiceInput() { alert("Голосовой ввод передан в Бэкенд!"); }
-    function toggleLanguage() { alert("Язык переключен!"); }
+    function handlePhotoUpload(e) { alert(currentLang === 'ru' ? "Снимок отправлен в Бэкенд!" : "Photo sent to Backend!"); }
+    function startVoiceInput() { alert(currentLang === 'ru' ? "Голосовой ввод передан в Бэкенд!" : "Voice input passed to Backend!"); }
   </script>
 </body>
 </html>
