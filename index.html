@@ -27,10 +27,10 @@
     .btn-base { width: 100%; padding: 18px; background-color: #1b5e20; color: white; border: none; border-radius: 18px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35); flex-shrink: 0; }
     .base-header { background-color: #1b5e20; color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; }
     .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; }
-    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 18px; border-radius: 18px; border-left: 6px solid #1b5e20; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; }
-    .niche-title { font-size: 18px; font-weight: bold; color: #1b5e20; margin-bottom: 6px; }
-    .niche-desc { font-size: 14px; color: #444; }
+    .niche-list { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; padding-right: 4px; }
+    .niche-card { background: white; padding: 14px 16px; border-radius: 16px; border-left: 6px solid #1b5e20; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; }
+    .niche-title { font-size: 16px; font-weight: bold; color: #1b5e20; margin-bottom: 4px; }
+    .niche-desc { font-size: 13px; color: #555; }
     .detail-body { flex: 1; overflow-y: auto; background: white; padding: 14px; border-radius: 18px; color: #222; font-size: 14px; line-height: 1.6; }
     .agro-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13px; }
     .agro-table th { background: #1b5e20; color: white; padding: 8px; text-align: left; }
@@ -39,6 +39,7 @@
 </head>
 <body>
   <div class="phone-mockup">
+    <!-- ЭКРАН 1: ТЕРМИНАЛ -->
     <div id="mainScreen" class="screen">
       <div class="top-bar">
         <div class="toggle-container">
@@ -61,7 +62,7 @@
           <span>AquaExpert v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
-          🌱 <b>ИИ-Терминал готов к работе.</b>
+          🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Выберите нужную культуру в базе знаний или задайте вопрос.
         </div>
         <div class="terminal-input-bar">
           <input type="text" id="userInput" class="terminal-field" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
@@ -72,40 +73,50 @@
       <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
+    <!-- ЭКРАН 2: БЭКЕНД РЕЕСТР КУЛЬТУР -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText">📚 Бэкенд Справочник</h3>
+        <h3 id="baseTitleText">📚 Реестр Агрокультур</h3>
         <div></div>
       </div>
       <div class="niche-list">
-        <div class="niche-card" onclick="fetchBackendData('hydroponics')">
-          <div class="niche-title" id="n1Title">💧 1. Гидропоника и Капельный полив</div>
-          <div class="niche-desc" id="n1Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
+        <div class="niche-card" onclick="fetchBackendData('herbs_alliums')">
+          <div class="niche-title" id="m1Title">🥬 Зелень, Пряности, Чеснок & Лук</div>
+          <div class="niche-desc" id="m1Desc">Укроп, Петрушка, Базилик, Чеснок, Лук, Кинза</div>
         </div>
-        <div class="niche-card" onclick="fetchBackendData('drones')">
-          <div class="niche-title" id="n2Title">🛸 2. Дроны и Агро-Мониторинг</div>
-          <div class="niche-desc" id="n2Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
+        <div class="niche-card" onclick="fetchBackendData('stone_fruits')">
+          <div class="niche-title" id="m2Title">🍒 Косточковые сады</div>
+          <div class="niche-desc" id="m2Desc">Черешня, Персик, Нектарин, Слива, Урюк/Абрикос</div>
         </div>
-        <div class="niche-card" onclick="fetchBackendData('agrochemistry')">
-          <div class="niche-title" id="n3Title">🌿 3. Экологическая Агрохимия</div>
-          <div class="niche-desc" id="n3Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
+        <div class="niche-card" onclick="fetchBackendData('nuts_orchards')">
+          <div class="niche-title" id="m3Title">🌰 Орехоплодные сады</div>
+          <div class="niche-desc" id="m3Desc">Фисташка, Миндаль, Грецкий орех, Фундук</div>
         </div>
-        <div class="niche-card" onclick="fetchBackendData('diagnostics')">
-          <div class="niche-title" id="n4Title">🔬 4. Определитель Болезней</div>
-          <div class="niche-desc" id="n4Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
+        <div class="niche-card" onclick="fetchBackendData('subtropical_fruits')">
+          <div class="niche-title" id="m4Title">🍊 Субтропические культуры</div>
+          <div class="niche-desc" id="m4Desc">Гранат, Олива, Инжир, Хурма</div>
         </div>
-        <div class="niche-card" onclick="fetchBackendData('soil_gardening')">
-          <div class="niche-title" id="n5Title">🌳 5. Почвоведение и Садоводство</div>
-          <div class="niche-desc" id="n5Desc">Запрос к agro_knowledge.db (RU/EN)...</div>
+        <div class="niche-card" onclick="fetchBackendData('berries_grapes')">
+          <div class="niche-title" id="m5Title">🍇 Ягодники и Виноградники</div>
+          <div class="niche-desc" id="m5Desc">Клубника, Голубика, Малина, Виноград</div>
+        </div>
+        <div class="niche-card" onclick="fetchBackendData('vegetables_solanaceous')">
+          <div class="niche-title" id="m6Title">🍅 Овощи и Закрытый грунт</div>
+          <div class="niche-desc" id="m6Desc">Томат, Перец, Баклажан, Огурец</div>
+        </div>
+        <div class="niche-card" onclick="fetchBackendData('field_crops')">
+          <div class="niche-title" id="m7Title">🌾 Полевые & Бобовые культуры</div>
+          <div class="niche-desc" id="m7Desc">Пшеница, Кукуруза, Нут, Подсолнечник, Рапс</div>
         </div>
       </div>
     </div>
 
+    <!-- ЭКРАН 3: ДЕТАЛЬНЫЙ ПРОСМОТР БЭКЕНДА -->
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
-        <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ К разделам</button>
-        <h4 id="detailTitle">Раздел</h4>
+        <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ К категориям</button>
+        <h4 id="detailTitle">Загрузка...</h4>
         <div></div>
       </div>
       <div class="detail-body" id="detailContent"></div>
@@ -114,7 +125,7 @@
 
   <script>
     let currentMode = 'online';
-    let currentLang = 'ru'; // Языковой флаг: 'ru' или 'en'
+    let currentLang = 'ru';
 
     function showScreen(id) {
       document.getElementById('mainScreen').classList.add('hidden');
@@ -129,10 +140,10 @@
       document.getElementById('onlineBtn').classList.toggle('active', mode === 'online');
       document.getElementById('terminalOutput').innerHTML = mode === 'online' 
         ? (currentLang === 'ru' ? '🌐 <b>Режим ОНЛАЙН.</b>' : '🌐 <b>ONLINE Mode.</b>')
-        : (currentLang === 'ru' ? '💾 <b>Режим ОФЛАЙН (Запросы к Бэкенду).</b>' : '💾 <b>OFFLINE Mode (Backend queries).</b>');
+        : (currentLang === 'ru' ? '💾 <b>Режим ОФЛАЙН (Запросы к agro_knowledge.db).</b>' : '💾 <b>OFFLINE Mode (Queries to agro_knowledge.db).</b>');
     }
 
-    // СВЯЗКА ДВУЯЗЫЧИЯ ФРОНТЕНДА С БЭКЕНДОМ
+    // ДВУЯЗЫЧНЫЙ ИНТЕРФЕЙС СВЯЗАННЫЙ С БЭКЕНДОМ
     function toggleLanguage() {
       const input = document.getElementById('userInput');
       if (currentLang === 'ru') {
@@ -142,10 +153,26 @@
         document.getElementById('camBtnText').innerHTML = '<span>📷</span><span>PHOTO</span>';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
         document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
-        document.getElementById('baseTitleText').innerText = '📚 Backend Reference';
+        document.getElementById('baseTitleText').innerText = '📚 Crop Registry';
         document.getElementById('backBtnText').innerText = '⬅ Back';
-        document.getElementById('detailBackBtn').innerText = '⬅ To sections';
+        document.getElementById('detailBackBtn').innerText = '⬅ Categories';
         input.placeholder = "Enter your question...";
+        
+        // Перевод названий карточек
+        document.getElementById('m1Title').innerText = '🥬 Herbs, Garlic & Onions';
+        document.getElementById('m1Desc').innerText = 'Dill, Parsley, Basil, Garlic, Onion, Cilantro';
+        document.getElementById('m2Title').innerText = '🍒 Stone Fruit Orchards';
+        document.getElementById('m2Desc').innerText = 'Cherry, Peach, Nectarine, Plum, Apricot';
+        document.getElementById('m3Title').innerText = '🌰 Nut Orchards';
+        document.getElementById('m3Desc').innerText = 'Pistachio, Almond, Walnut, Hazelnut';
+        document.getElementById('m4Title').innerText = '🍊 Subtropical Crops';
+        document.getElementById('m4Desc').innerText = 'Pomegranate, Olive, Fig, Persimmon';
+        document.getElementById('m5Title').innerText = '🍇 Berries & Vineyards';
+        document.getElementById('m5Desc').innerText = 'Strawberry, Blueberry, Raspberry, Grape';
+        document.getElementById('m6Title').innerText = '🍅 Vegetables & Greenhouses';
+        document.getElementById('m6Desc').innerText = 'Tomato, Pepper, Eggplant, Cucumber';
+        document.getElementById('m7Title').innerText = '🌾 Field Crops & Legumes';
+        document.getElementById('m7Desc').innerText = 'Wheat, Corn, Chickpea, Sunflower, Rapeseed';
       } else {
         currentLang = 'ru';
         document.getElementById('langBtn').innerText = '🌐 RU';
@@ -153,30 +180,44 @@
         document.getElementById('camBtnText').innerHTML = '<span>📷</span><span>ФОТО</span>';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
-        document.getElementById('baseTitleText').innerText = '📚 Бэкенд Справочник';
+        document.getElementById('baseTitleText').innerText = '📚 Реестр Агрокультур';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
-        document.getElementById('detailBackBtn').innerText = '⬅ К разделам';
+        document.getElementById('detailBackBtn').innerText = '⬅ К категориям';
         input.placeholder = "Введите ваш вопрос...";
+        
+        document.getElementById('m1Title').innerText = '🥬 Зелень, Пряности, Чеснок & Лук';
+        document.getElementById('m1Desc').innerText = 'Укроп, Петрушка, Базилик, Чеснок, Лук, Кинза';
+        document.getElementById('m2Title').innerText = '🍒 Косточковые сады';
+        document.getElementById('m2Desc').innerText = 'Черешня, Персик, Нектарин, Слива, Урюк/Абрикос';
+        document.getElementById('m3Title').innerText = '🌰 Орехоплодные сады';
+        document.getElementById('m3Desc').innerText = 'Фисташка, Миндаль, Грецкий орех, Фундук';
+        document.getElementById('m4Title').innerText = '🍊 Субтропические культуры';
+        document.getElementById('m4Desc').innerText = 'Гранат, Олива, Инжир, Хурма';
+        document.getElementById('m5Title').innerText = '🍇 Ягодники и Виноградники';
+        document.getElementById('m5Desc').innerText = 'Клубника, Голубика, Малина, Виноград';
+        document.getElementById('m6Title').innerText = '🍅 Овощи и Закрытый грунт';
+        document.getElementById('m6Desc').innerText = 'Томат, Перец, Баклажан, Огурец';
+        document.getElementById('m7Title').innerText = '🌾 Полевые & Бобовые культуры';
+        document.getElementById('m7Desc').innerText = 'Пшеница, Кукуруза, Нут, Подсолнечник, Рапс';
       }
     }
 
-    // ДВУЯЗЫЧНЫЙ ЗАПРОС К БЭКЕНДУ
+    // ДВУЯЗЫЧНЫЙ ЗАПРОС К БЭКЕНДУ (AGRO_KNOWLEDGE.DB)
     async function fetchBackendData(category) {
       document.getElementById('detailTitle').innerText = currentLang === 'ru' ? "Загрузка..." : "Loading...";
       document.getElementById('detailContent').innerHTML = currentLang === 'ru' ? "<p>Бэкенд извлекает данные из agro_knowledge.db...</p>" : "<p>Backend extracting data from agro_knowledge.db...</p>";
       showScreen('detailScreen');
 
       try {
-        // Отправляем выбранный язык на Бэкенд (?category=...&lang=ru/en)
         const response = await fetch(`/api/get_knowledge?category=${category}&lang=${currentLang}`);
         const data = await response.json();
         document.getElementById('detailTitle').innerText = data.title;
         document.getElementById('detailContent').innerHTML = data.content;
       } catch (e) {
-        document.getElementById('detailTitle').innerText = "Бэкенд: " + category;
+        document.getElementById('detailTitle').innerText = "Бэкенд Модуль: " + category;
         document.getElementById('detailContent').innerHTML = currentLang === 'ru' 
-          ? "<p><b>Запрос передан в Бэкенд (agro_knowledge.db).</b><br>Языковой параметр [" + currentLang.toUpperCase() + "] активен.</p>"
-          : "<p><b>Query passed to Backend (agro_knowledge.db).</b><br>Language parameter [" + currentLang.toUpperCase() + "] active.</p>";
+          ? "<p><b>Запрос передан в Бэкенд (agro_knowledge.db).</b><br>Языковой режим [" + currentLang.toUpperCase() + "] активен. Все данные загружаются из локальной базы.</p>"
+          : "<p><b>Query sent to Backend (agro_knowledge.db).</b><br>Language mode [" + currentLang.toUpperCase() + "] active. All data loads from local DB.</p>";
       }
     }
 
