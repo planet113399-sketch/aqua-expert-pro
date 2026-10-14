@@ -1,53 +1,133 @@
 import sqlite3
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, request, jsonify
 
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__)
+
+DB_NAME = 'agro_knowledge.db'
 
 def get_db_connection():
-    conn = sqlite3.connect("agro_knowledge.db")
-    # Настраиваем текстовое декодирование
-    conn.text_factory = str
+    conn = sqlite3.connect(DB_NAME)
     conn.row_factory = sqlite3.Row
     return conn
 
-@app.route("/")
-def index():
-    return render_template("index.html")
-
-@app.route("/api/search")
-def search():
-    query = request.args.get("q", "").strip()
+# ЭНДПОИНТ ИЗВЛЕЧЕНИЯ ДАННЫХ ИЗ БАЗЫ
+@app.route('/api/get_knowledge', methods=['GET'])
+def get_knowledge():
+    category = request.args.get('category', 'hydroponics')
+    lang = request.args.get('lang', 'ru')
+    
     conn = get_db_connection()
     cursor = conn.cursor()
-
-    # Извлекаем все данные из базы
-    rows = cursor.execute("SELECT * FROM knowledge").fetchall()
+    row = cursor.execute('SELECT * FROM knowledge WHERE category = ? ORDER BY id DESC LIMIT 1', (category,)).fetchone()
     conn.close()
 
-    results = []
-    for row in rows:
-        item = dict(row)
+    if row:
+        title = row['title_ru'] if lang == 'ru' else row['title_en']
+        content = row['content_ru'] if lang == 'ru' else row['content_en']
+        return jsonify({'title': title, 'content': content})
+    else:
+        return jsonify({
+            'title': 'База знаний' if lang == 'ru' else 'Knowledge Base',
+            'content': '<p>Данные подгружаются из локального резерва...</p>'
+        })
+
+# ЭНДПОИНТ АВТО-СОХРАНЕНИЯ НОВЫХ ИИ-ОТВЕТОВ И ФОТО-ДИАГНОЗОВ В БЭКЕНД
+@app.route('/api/save_knowledge', methods=['POST'])
+def save_knowledge():
+    data = request.get_json()
+    if not data:
+        return jsonify({'status': 'error', 'message': 'No data provided'}), 400
+
+    category = data.get('category', 'diagnostics')
+    title = data.get('title', 'Новая запись ИИ')
+    content = data.get('content', '')
+    lang = data.get('lang', 'ru')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Автоматическая дозапись новой статьи в бэкенд без стирания старых
+    if lang == 'ru':
+        cursor.execute(
+            'INSERT INTO knowledge (category, title_ru, title_en, content_ru, content_en) VALUES (?, ?, ?, ?, ?)',
+            (category, title, title + " (EN)", content, content)
+        )
+    else:
+        cursor.execute(
+            'INSERT INTO knowledge (category, title_ru, title_en, content_ru, content_en) VALUES (?, ?, ?, ?, ?)',
+            (category, title + " (RU)", title, content, content)
+        )
         
-        name_ru = str(item.get("name_ru") or "")
-        name_en = str(item.get("name_en") or "")
-        desc_ru = str(item.get("description_ru") or "")
-        desc_en = str(item.get("description_en") or "")
-        cat = str(item.get("category") or "")
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'status': 'success', 'message': 'Успешно сохранено в бэкенд БД!'})
 
-        # Если поиск пустой ИЛИ слово есть в любом из полей (без учета регистра Python)
-        q_low = query.lower()
-        if not query or (q_low in name_ru.lower() or q_low in name_en.lower() or q_low in desc_ru.lower() or q_low in desc_en.lower() or q_low in cat.lower()):
-            results.append({
-                "title": name_ru if name_ru else name_en,
-                "title_en": name_en if name_en else name_ru,
-                "content": desc_ru if desc_ru else desc_en,
-                "content_en": desc_en if desc_en else desc_ru,
-                "category": cat if cat else "Агрономия",
-                "eppo_code": item.get("code_eppo", ""),
-                "dosage": item.get("tank_mix_rule_ru", "")
-            })
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)import sqlite3
+from flask import Flask, request, jsonify
 
-    return jsonify(results)
+app = Flask(__name__)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+DB_NAME = 'agro_knowledge.db'
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_NAME)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# ЭНДПОИНТ ИЗВЛЕЧЕНИЯ ДАННЫХ ИЗ БАЗЫ
+@app.route('/api/get_knowledge', methods=['GET'])
+def get_knowledge():
+    category = request.args.get('category', 'hydroponics')
+    lang = request.args.get('lang', 'ru')
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    row = cursor.execute('SELECT * FROM knowledge WHERE category = ? ORDER BY id DESC LIMIT 1', (category,)).fetchone()
+    conn.close()
+
+    if row:
+        title = row['title_ru'] if lang == 'ru' else row['title_en']
+        content = row['content_ru'] if lang == 'ru' else row['content_en']
+        return jsonify({'title': title, 'content': content})
+    else:
+        return jsonify({
+            'title': 'База знаний' if lang == 'ru' else 'Knowledge Base',
+            'content': '<p>Данные подгружаются из локального резерва...</p>'
+        })
+
+# ЭНДПОИНТ АВТО-СОХРАНЕНИЯ НОВЫХ ИИ-ОТВЕТОВ И ФОТО-ДИАГНОЗОВ В БЭКЕНД
+@app.route('/api/save_knowledge', methods=['POST'])
+def save_knowledge():
+    data = request.get_json()
+    if not data:
+        return jsonify({'status': 'error', 'message': 'No data provided'}), 400
+
+    category = data.get('category', 'diagnostics')
+    title = data.get('title', 'Новая запись ИИ')
+    content = data.get('content', '')
+    lang = data.get('lang', 'ru')
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Автоматическая дозапись новой статьи в бэкенд без стирания старых
+    if lang == 'ru':
+        cursor.execute(
+            'INSERT INTO knowledge (category, title_ru, title_en, content_ru, content_en) VALUES (?, ?, ?, ?, ?)',
+            (category, title, title + " (EN)", content, content)
+        )
+    else:
+        cursor.execute(
+            'INSERT INTO knowledge (category, title_ru, title_en, content_ru, content_en) VALUES (?, ?, ?, ?, ?)',
+            (category, title + " (RU)", title, content, content)
+        )
+        
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'status': 'success', 'message': 'Успешно сохранено в бэкенд БД!'})
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
