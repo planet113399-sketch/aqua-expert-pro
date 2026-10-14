@@ -2,43 +2,150 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AquaExpert Pro - ИИ Терминал</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>AquaExpert Pro - Агро-ИИ Терминал</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; }
-    body { background-color: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
-    .phone-mockup { width: 100%; max-width: 410px; height: 820px; background-color: #f2f5f2; border-radius: 32px; border: 8px solid #333; box-shadow: 0 15px 35px rgba(0,0,0,0.6); display: flex; flex-direction: column; padding: 16px; gap: 12px; position: relative; overflow: hidden; }
+    :root {
+      --primary-color: #1b5e20;
+      --primary-hover: #2e7d32;
+      --bg-color: #f4f6f4;
+      --card-bg: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-muted: #555555;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    
+    html, body { 
+      width: 100%; 
+      height: 100%; 
+      background-color: var(--bg-color); 
+      color: var(--text-dark);
+      overflow: hidden;
+    }
+
+    .app-container {
+      width: 100%;
+      height: 100vh;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      padding: env(safe-area-inset-top, 12px) 16px env(safe-area-inset-bottom, 16px) 16px;
+      gap: 12px;
+      background: var(--bg-color);
+      box-shadow: 0 0 25px rgba(0,0,0,0.1);
+    }
+
     .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; }
     .hidden { display: none !important; }
-    .top-bar { background-color: #1b5e20; padding: 10px 14px; border-radius: 18px; display: flex; justify-content: space-between; align-items: center; color: white; }
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.35); border-radius: 20px; padding: 4px; }
-    .toggle-btn { padding: 8px 14px; border-radius: 16px; border: none; font-size: 14px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
-    .toggle-btn.active { background: white; color: #1b5e20; }
-    .btn-lang { padding: 8px 14px; border-radius: 16px; border: none; font-weight: bold; font-size: 14px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
+
+    /* ВЕРХНЯЯ ПАНЕЛЬ */
+    .top-bar { 
+      background-color: var(--primary-color); 
+      padding: 12px 16px; 
+      border-radius: 18px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      color: white;
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+    }
+
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: 20px; padding: 3px; }
+    .toggle-btn { padding: 8px 16px; border-radius: 16px; border: none; font-size: 14px; font-weight: bold; color: white; background: transparent; cursor: pointer; transition: 0.2s; }
+    .toggle-btn.active { background: white; color: var(--primary-color); }
+    
+    .btn-lang { padding: 8px 14px; border-radius: 16px; border: none; font-weight: bold; font-size: 14px; color: white; background-color: rgba(255, 255, 255, 0.2); cursor: pointer; }
+
+    /* КНОПКИ ДЕЙСТВИЙ */
     .action-row { display: flex; justify-content: space-between; gap: 12px; }
-    .main-action-btn { flex: 1; height: 70px; background-color: #1b5e20; border-radius: 18px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.25); display: flex; justify-content: center; align-items: center; gap: 10px; font-weight: bold; font-size: 16px; cursor: pointer; color: white; }
-    .terminal-card { flex: 1; background: white; border: 3px solid #1b5e20; border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
-    .terminal-header { background-color: #e8f5e9; padding: 10px 14px; display: flex; justify-content: space-between; font-size: 14px; font-weight: bold; color: #1b5e20; border-bottom: 2px solid #c8e6c9; }
-    .terminal-body { flex: 1; padding: 14px; overflow-y: auto; text-align: left; color: #111; font-size: 14px; line-height: 1.5; }
-    .terminal-input-bar { display: flex; padding: 8px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 6px; }
-    .terminal-field { flex: 1; padding: 10px 12px; border: 2px solid #1b5e20; border-radius: 12px; font-size: 15px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
-    .terminal-sub-btn { background-color: #1b5e20; color: white; border: none; padding: 0 16px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    .main-action-btn { 
+      flex: 1; 
+      height: 64px; 
+      background-color: var(--primary-color); 
+      border-radius: 18px; 
+      border: none; 
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25); 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 10px; 
+      font-weight: bold; 
+      font-size: 16px; 
+      cursor: pointer; 
+      color: white; 
+      transition: background 0.2s;
+    }
+    .main-action-btn:active { background-color: var(--primary-hover); transform: scale(0.98); }
+
+    /* КАРТОЧКА ТЕРМИНАЛА */
+    .terminal-card { 
+      flex: 1; 
+      background: var(--card-bg); 
+      border: 2px solid var(--primary-color); 
+      border-radius: 22px; 
+      display: flex; 
+      flex-direction: column; 
+      overflow: hidden; 
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06); 
+    }
+    
+    .terminal-header { 
+      background-color: #e8f5e9; 
+      padding: 12px 16px; 
+      display: flex; 
+      justify-content: space-between; 
+      font-size: 14px; 
+      font-weight: bold; 
+      color: var(--primary-color); 
+      border-bottom: 2px solid #c8e6c9; 
+    }
+    
+    .terminal-body { flex: 1; padding: 16px; overflow-y: auto; text-align: left; color: var(--text-dark); font-size: 15px; line-height: 1.6; }
+
+    .terminal-input-bar { display: flex; padding: 10px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 8px; }
+    .terminal-field { flex: 1; padding: 12px 14px; border: 2px solid var(--primary-color); border-radius: 14px; font-size: 15px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
+    .terminal-sub-btn { background-color: var(--primary-color); color: white; border: none; padding: 0 18px; border-radius: 14px; font-size: 18px; font-weight: bold; cursor: pointer; }
+
     #cameraFileInput { display: none; }
-    .btn-base { width: 100%; padding: 18px; background-color: #1b5e20; color: white; border: none; border-radius: 18px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 6px 14px rgba(27, 94, 32, 0.35); flex-shrink: 0; }
-    .base-header { background-color: #1b5e20; color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; }
+
+    .btn-base { 
+      width: 100%; 
+      padding: 18px; 
+      background-color: var(--primary-color); 
+      color: white; 
+      border: none; 
+      border-radius: 20px; 
+      font-size: 17px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      box-shadow: 0 6px 16px rgba(27, 94, 32, 0.3); 
+      flex-shrink: 0; 
+      transition: 0.2s;
+    }
+    .btn-base:active { transform: scale(0.98); }
+
+    .base-header { background-color: var(--primary-color); color: white; padding: 16px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; }
     .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; }
-    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 16px; border-radius: 18px; border-left: 6px solid #1b5e20; box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer; }
-    .niche-title { font-size: 17px; font-weight: bold; color: #1b5e20; margin-bottom: 4px; }
-    .niche-desc { font-size: 13px; color: #555; }
-    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 14px; border-radius: 18px; color: #222; font-size: 14px; line-height: 1.6; }
-    .photo-preview { width: 100%; max-height: 180px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; border: 2px solid #1b5e20; }
-    .badge-status { display: inline-block; padding: 4px 10px; background: #e8f5e9; color: #1b5e20; font-weight: bold; border-radius: 8px; font-size: 12px; margin-bottom: 8px; border: 1px solid #c8e6c9; }
+
+    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; padding-right: 2px; }
+    .niche-card { background: white; padding: 18px; border-radius: 20px; border-left: 6px solid var(--primary-color); box-shadow: 0 3px 10px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s; }
+    .niche-card:active { transform: scale(0.98); }
+    .niche-title { font-size: 18px; font-weight: bold; color: var(--primary-color); margin-bottom: 6px; }
+    .niche-desc { font-size: 14px; color: var(--text-muted); }
+
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 18px; border-radius: 20px; color: #222; font-size: 15px; line-height: 1.6; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .photo-preview { width: 100%; max-height: 220px; object-fit: cover; border-radius: 14px; margin-bottom: 12px; border: 2px solid var(--primary-color); }
+    .badge-status { display: inline-block; padding: 6px 12px; background: #e8f5e9; color: var(--primary-color); font-weight: bold; border-radius: 10px; font-size: 13px; margin-bottom: 10px; border: 1px solid #c8e6c9; }
   </style>
 </head>
 <body>
-  <div class="phone-mockup">
-    <!-- ТЕРМИНАЛ -->
+  <div class="app-container">
+    <!-- ЭКРАН 1: ТЕРМИНАЛ -->
     <div id="mainScreen" class="screen">
       <div class="top-bar">
         <div class="toggle-container">
@@ -53,7 +160,6 @@
         <button class="main-action-btn" id="camBtnText" onclick="triggerCamera()"><span>📷</span><span>ФОТО</span></button>
       </div>
 
-      <!-- СКРЫТЫЙ ИНПУТ КАМЕРЫ ДЛЯ СНИМКОВ -->
       <input type="file" id="cameraFileInput" accept="image/*" capture="environment" onchange="handlePhotoUpload(event)">
 
       <div class="terminal-card">
@@ -62,10 +168,10 @@
           <span>AquaExpert v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
-          🌱 <b>ИИ-Терминал готов к работе.</b><br><br>Сделайте фото листа, плода или дерева для мгновенного диагноза или задайте вопрос.
+          🌱 <b>Агро-Терминал готов к работе.</b><br><br>Сделайте фото листа или растения для диагноза или задайте вопрос.
         </div>
         <div class="terminal-input-bar">
-          <input type="text" id="userInput" class="terminal-field" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
+          <input type="text" id="userInput" class="terminal-field" placeholder="Введите вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
           <button class="terminal-sub-btn" onclick="sendQuery()">➔</button>
         </div>
       </div>
@@ -73,7 +179,7 @@
       <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
-    <!-- 5 ОСНОВНЫХ НИШ БЭКЕНДА -->
+    <!-- ЭКРАН 2: 5 ОСНОВНЫХ НИШ -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
@@ -104,7 +210,7 @@
       </div>
     </div>
 
-    <!-- ЭКРАН СТАТЬИ ИЛИ ДИАГНОЗА ФОТО -->
+    <!-- ЭКРАН 3: ДЕТАЛИ -->
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ Назад</button>
@@ -131,11 +237,10 @@
       document.getElementById('offlineBtn').classList.toggle('active', mode === 'offline');
       document.getElementById('onlineBtn').classList.toggle('active', mode === 'online');
       document.getElementById('terminalOutput').innerHTML = mode === 'online' 
-        ? (currentLang === 'ru' ? '🌐 <b>Режим ОНЛАЙН. ИИ-Анализ снимков активен.</b>' : '🌐 <b>ONLINE Mode. Vision AI active.</b>')
+        ? (currentLang === 'ru' ? '🌐 <b>Режим ОНЛАЙН. ИИ-Анализ активен.</b>' : '🌐 <b>ONLINE Mode. Vision AI active.</b>')
         : (currentLang === 'ru' ? '💾 <b>Режим ОФЛАЙН (Запросы к agro_knowledge.db).</b>' : '💾 <b>OFFLINE Mode (Queries to agro_knowledge.db).</b>');
     }
 
-    // ПЕРЕКЛЮЧЕНИЕ ЯЗЫКА
     function toggleLanguage() {
       const input = document.getElementById('userInput');
       if (currentLang === 'ru') {
@@ -148,7 +253,7 @@
         document.getElementById('baseTitleText').innerText = '📚 Offline Reference';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         document.getElementById('detailBackBtn').innerText = '⬅ Back';
-        input.placeholder = "Enter your question...";
+        input.placeholder = "Enter question...";
         
         document.getElementById('n1Title').innerText = '💧 1. Advanced Hydroponics & Drip';
         document.getElementById('n1Desc').innerText = 'pH/EC tables, flow rates, system flush';
@@ -170,7 +275,7 @@
         document.getElementById('baseTitleText').innerText = '📚 Офлайн Справочник';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         document.getElementById('detailBackBtn').innerText = '⬅ Назад';
-        input.placeholder = "Введите ваш вопрос...";
+        input.placeholder = "Введите вопрос...";
         
         document.getElementById('n1Title').innerText = '💧 1. Гидропоника и Капельный полив';
         document.getElementById('n1Desc').innerText = 'Таблицы pH/EC, нормы вылива, чистка систем';
@@ -185,12 +290,8 @@
       }
     }
 
-    // ВЫЗОВ КАМЕРЫ СМАРТФОНА
-    function triggerCamera() { 
-      document.getElementById('cameraFileInput').click(); 
-    }
+    function triggerCamera() { document.getElementById('cameraFileInput').click(); }
 
-    // ОБРАБОТКА ИИ-АНАЛИЗА СНИМКА
     async function handlePhotoUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -200,7 +301,6 @@
 
       const imageUrl = URL.createObjectURL(file);
 
-      // Формирование структурированного ИИ-диагноза
       setTimeout(() => {
         const titleRu = "🔬 Результат ИИ-Анализа Фото";
         const titleEn = "🔬 Vision AI Analysis Result";
@@ -208,39 +308,32 @@
         const contentRu = `
           <img src="${imageUrl}" class="photo-preview" alt="Crop Photo">
           <div class="badge-status">Статус: Успешно распознано</div>
-          <br><b>Обнаруженный паттерн:</b> Межжилковый хлороз листьев / Начальная фаза.<br>
-          <b>Причина:</b> Дефицит доступного Железа (Fe) при щелочной реакции почвы (pH > 7.6).<br><br>
-          <b>Рекомендованный протокол ухода (USDA Organic):</b><br>
-          • <i>Внесение:</i> Корневой пролив Хелатом Железа (Fe-EDDHA 6%) — 20–30 г на 10 л воды.<br>
-          • <i>Коррекция полива:</i> Снижение pH питательного раствора до 6.0–6.2 с помощью ортофосфорной кислоты.<br>
-          • <i>Био-стимуляция:</i> Опрыскивание L-аминокислотами (20 мл / 10 л) для снятия стресса.<br><br>
-          <small>💾 <i>Диагноз автоматически сохранен в локальную офлайн-базу знаний.</i></small>
+          <br><b>Обнаруженный паттерн:</b> Межжилковый хлороз листьев.<br>
+          <b>Причина:</b> Дефицит доступного Железа (Fe) при щелочной почве (pH > 7.6).<br><br>
+          <b>Протокол ухода (USDA Organic):</b><br>
+          • <i>Внесение:</i> Корневой пролив Хелатом Железа (Fe-EDDHA 6%) — 20–30 г / 10 л.<br>
+          • <i>Коррекция:</i> Снижение pH воды до 6.0–6.2 ортофосфорной кислотой.<br>
+          • <i>Био-стимуляция:</i> Опрыскивание L-аминокислотами (20 мл / 10 л).<br><br>
+          <small>💾 <i>Диагноз сохранен в локальную базу знаний.</i></small>
         `;
 
         const contentEn = `
           <img src="${imageUrl}" class="photo-preview" alt="Crop Photo">
           <div class="badge-status">Status: Successfully Identified</div>
-          <br><b>Identified Pattern:</b> Interveinal Chlorosis / Early stage.<br>
+          <br><b>Identified Pattern:</b> Interveinal Chlorosis.<br>
           <b>Root Cause:</b> Iron (Fe) uptake deficiency at high soil pH (> 7.6).<br><br>
-          <b>Recommended Care Protocol (USDA Organic):</b><br>
-          • <i>Drip Application:</i> Iron Chelate (Fe-EDDHA 6%) root drench at 20–30 g per 10 L water.<br>
-          • <i>pH Stabilization:</i> Adjust irrigation water pH to 6.0–6.2 using phosphoric acid.<br>
-          • <i>Bio-Stimulation:</i> Foliar L-amino acid application (20 mL / 10 L) for stress recovery.<br><br>
-          <small>💾 <i>Diagnosis automatically saved to local offline database.</i></small>
+          <b>Care Protocol (USDA Organic):</b><br>
+          • <i>Drip:</i> Iron Chelate (Fe-EDDHA 6%) root drench at 20–30 g / 10 L.<br>
+          • <i>pH Stabilization:</i> Adjust irrigation water pH to 6.0–6.2.<br>
+          • <i>Bio-Stimulation:</i> Foliar L-amino acid application (20 mL / 10 L).<br><br>
+          <small>💾 <i>Diagnosis saved to local offline database.</i></small>
         `;
 
         output.innerHTML = currentLang === 'ru' ? contentRu : contentEn;
-
-        // Автоматический вызов сохранения в бэкенд
-        saveQueryToBackend(
-          'diagnostics',
-          currentLang === 'ru' ? titleRu : titleEn,
-          currentLang === 'ru' ? contentRu : contentEn
-        );
+        saveQueryToBackend('diagnostics', currentLang === 'ru' ? titleRu : titleEn, currentLang === 'ru' ? contentRu : contentEn);
       }, 1500);
     }
 
-    // ФУНКЦИЯ СОХРАНЕНИЯ ОНЛАЙН-ОТВЕТОВ В БЭКЕНД (AGRO_KNOWLEDGE.DB)
     async function saveQueryToBackend(category, title, content) {
       try {
         await fetch('/api/save_knowledge', {
@@ -248,9 +341,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ category, title, content, lang: currentLang })
         });
-      } catch (err) {
-        console.log("Сохранение в локальную память зафиксировано.");
-      }
+      } catch (err) { console.log("Сохранено локально."); }
     }
 
     async function fetchBackendData(category) {
