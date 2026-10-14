@@ -21,30 +21,26 @@
     
     html, body { 
       width: 100%; 
-      min-height: 100vh; 
-      background-color: #121212; 
+      height: 100%; 
+      background-color: var(--bg); 
       color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      overflow: hidden;
     }
 
+    /* ПОЛНОЭКРАННЫЙ КОНТЕЙНЕР БЕЗ РАМОК И ЧЕРНЫХ ПОЛЕЙ */
     .app-container {
-      width: 100%;
-      max-width: 500px;
-      min-height: 100vh;
+      width: 100vw;
+      height: 100vh;
       background: var(--bg);
       display: flex;
       flex-direction: column;
-      padding: clamp(10px, 2vh, 16px);
-      padding-top: calc(env(safe-area-inset-top, 10px) + 8px);
-      padding-bottom: calc(env(safe-area-inset-bottom, 10px) + 12px);
+      padding: clamp(10px, 2vh, 14px);
+      padding-top: calc(env(safe-area-inset-top, 10px) + 6px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 10px) + 10px);
       gap: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      overflow-y: auto;
     }
 
-    .screen { display: flex; flex-direction: column; flex: 1; gap: 10px; }
+    .screen { display: flex; flex-direction: column; height: 100%; gap: 10px; overflow: hidden; }
     .hidden { display: none !important; }
 
     /* ВЕРХНЯЯ ПАНЕЛЬ */
@@ -56,10 +52,11 @@
       justify-content: space-between; 
       align-items: center; 
       color: white;
+      box-shadow: 0 4px 10px rgba(27, 94, 32, 0.2);
     }
 
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: 16px; padding: 3px; }
-    .toggle-btn { padding: 6px 12px; border-radius: 12px; border: none; font-size: 13px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: 14px; padding: 3px; }
+    .toggle-btn { padding: 6px 14px; border-radius: 11px; border: none; font-size: 13px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: var(--primary); }
     
     .btn-lang { padding: 6px 12px; border-radius: 12px; border: none; font-weight: bold; font-size: 13px; color: white; background-color: rgba(255, 255, 255, 0.2); cursor: pointer; }
@@ -68,7 +65,7 @@
     .action-row { display: flex; gap: 10px; }
     .main-action-btn { 
       flex: 1; 
-      height: 56px; 
+      height: 52px; 
       background-color: var(--primary); 
       border-radius: 16px; 
       border: none; 
@@ -80,18 +77,19 @@
       font-size: 15px; 
       cursor: pointer; 
       color: white; 
+      box-shadow: 0 3px 8px rgba(27, 94, 32, 0.2);
     }
 
-    /* ТЕРМИНАЛ */
+    /* ТЕРМИНАЛ С АДАПТИВНОЙ ВЫСОТОЙ */
     .terminal-card { 
       flex: 1; 
-      min-height: 280px;
       background: var(--card-bg); 
       border: 2px solid var(--primary); 
       border-radius: 18px; 
       display: flex; 
       flex-direction: column; 
       overflow: hidden; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     
     .terminal-header { 
@@ -113,6 +111,7 @@
 
     #cameraFileInput { display: none; }
 
+    /* НИЖНЯЯ КНОПКА */
     .btn-base { 
       width: 100%; 
       padding: 16px; 
@@ -123,7 +122,8 @@
       font-size: 16px; 
       font-weight: bold; 
       cursor: pointer; 
-      margin-top: auto;
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25);
+      flex-shrink: 0;
     }
 
     .base-header { background-color: var(--primary); color: white; padding: 14px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; }
@@ -221,7 +221,6 @@
     let currentMode = 'online';
     let currentLang = 'ru';
 
-    // ВСТРОЕННЫЙ ОФЛАЙН-РЕЗЕРВ (БАЗА ЗНАНИЙ ДЛЯ 100% РАБОТЫ БЕЗ СЕТИ)
     const localDatabase = {
       hydroponics: {
         ru: {
@@ -292,7 +291,6 @@
       document.getElementById('terminalOutput').innerHTML = currentLang === 'ru' ? statusRu : statusEn;
     }
 
-    // ПОЛНЫЙ ПЕРЕВОД ВСЕГО ИНТЕРФЕЙСА
     function toggleLanguage() {
       const input = document.getElementById('userInput');
       if (currentLang === 'ru') {
@@ -390,7 +388,6 @@
       }, 1200);
     }
 
-    // ВЫЗОВ БЭКЕНДА ИЛИ ЛОКАЛЬНОГО РЕЗЕРВА
     async function fetchBackendData(category) {
       document.getElementById('detailTitle').innerText = currentLang === 'ru' ? "Загрузка..." : "Loading...";
       document.getElementById('detailContent').innerHTML = "<p>⏳ Loading...</p>";
@@ -403,7 +400,6 @@
         document.getElementById('detailTitle').innerText = data.title;
         document.getElementById('detailContent').innerHTML = data.content;
       } catch (e) {
-        // Загрузка из встроенной офлайн-базы
         const fallback = localDatabase[category][currentLang];
         document.getElementById('detailTitle').innerText = fallback.title;
         document.getElementById('detailContent').innerHTML = fallback.content;
