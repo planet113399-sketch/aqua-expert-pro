@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>AquaExpert Pro</title>
   <style>
     :root {
       --primary: #1b5e20;
       --primary-hover: #2e7d32;
-      --bg: #f4f6f4;
+      --bg: #f2f5f2;
       --card-bg: #ffffff;
-      --text: #1a1a1a;
+      --text: #111111;
       --muted: #555555;
     }
 
@@ -27,116 +24,122 @@
       overflow: hidden;
     }
 
-    /* ПОЛНОЭКРАННЫЙ КОНТЕЙНЕР БЕЗ РАМОК И ЧЕРНЫХ ПОЛЕЙ */
+    /* ОСНОВНОЙ ЭКРАН С ЖЕСТКОЙ ФИКСАЦИЕЙ КНОПОК И СКРОЛЛОМ ЦЕНТРА */
     .app-container {
       width: 100vw;
       height: 100vh;
       background: var(--bg);
       display: flex;
       flex-direction: column;
-      padding: clamp(10px, 2vh, 14px);
-      padding-top: calc(env(safe-area-inset-top, 10px) + 6px);
-      padding-bottom: calc(env(safe-area-inset-bottom, 10px) + 10px);
-      gap: 10px;
+      padding: 12px;
+      padding-top: calc(env(safe-area-inset-top, 10px) + 8px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 10px) + 12px);
+      gap: 12px;
     }
 
-    .screen { display: flex; flex-direction: column; height: 100%; gap: 10px; overflow: hidden; }
+    .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; overflow: hidden; }
     .hidden { display: none !important; }
 
-    /* ВЕРХНЯЯ ПАНЕЛЬ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
     .top-bar { 
       background-color: var(--primary); 
-      padding: 10px 14px; 
-      border-radius: 16px; 
+      padding: 12px 16px; 
+      border-radius: 18px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
       color: white;
-      box-shadow: 0 4px 10px rgba(27, 94, 32, 0.2);
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(27, 94, 32, 0.25);
     }
 
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: 14px; padding: 3px; }
-    .toggle-btn { padding: 6px 14px; border-radius: 11px; border: none; font-size: 13px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: 16px; padding: 4px; }
+    .toggle-btn { padding: 8px 16px; border-radius: 12px; border: none; font-size: 15px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: var(--primary); }
     
-    .btn-lang { padding: 6px 12px; border-radius: 12px; border: none; font-weight: bold; font-size: 13px; color: white; background-color: rgba(255, 255, 255, 0.2); cursor: pointer; }
+    .btn-lang { padding: 8px 14px; border-radius: 14px; border: none; font-weight: bold; font-size: 15px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
 
-    /* КНОПКИ ДЕЙСТВИЙ */
-    .action-row { display: flex; gap: 10px; }
+    /* 2. КРУПНЫЕ УДОБНЫЕ КНОПКИ ДЕЙСТВИЙ */
+    .action-row { display: flex; gap: 12px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
-      height: 52px; 
+      height: 62px; 
       background-color: var(--primary); 
-      border-radius: 16px; 
+      border-radius: 18px; 
       border: none; 
       display: flex; 
       justify-content: center; 
       align-items: center; 
-      gap: 8px; 
+      gap: 10px; 
       font-weight: bold; 
-      font-size: 15px; 
+      font-size: 17px; 
       cursor: pointer; 
       color: white; 
-      box-shadow: 0 3px 8px rgba(27, 94, 32, 0.2);
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25);
     }
 
-    /* ТЕРМИНАЛ С АДАПТИВНОЙ ВЫСОТОЙ */
+    /* 3. КОМПАКТНЫЙ АДАПТИВНЫЙ ТЕРМИНАЛ */
     .terminal-card { 
-      flex: 1; 
+      flex: 1;
+      min-height: 200px;
       background: var(--card-bg); 
-      border: 2px solid var(--primary); 
-      border-radius: 18px; 
+      border: 3px solid var(--primary); 
+      border-radius: 20px; 
       display: flex; 
       flex-direction: column; 
       overflow: hidden; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
     
     .terminal-header { 
       background-color: #e8f5e9; 
-      padding: 10px 14px; 
+      padding: 12px 16px; 
       display: flex; 
       justify-content: space-between; 
-      font-size: 13px; 
+      font-size: 14px; 
       font-weight: bold; 
       color: var(--primary); 
       border-bottom: 2px solid #c8e6c9; 
+      flex-shrink: 0;
     }
     
-    .terminal-body { flex: 1; padding: 14px; overflow-y: auto; color: var(--text); font-size: 14px; line-height: 1.5; }
+    .terminal-body { flex: 1; padding: 16px; overflow-y: auto; color: var(--text); font-size: 15px; line-height: 1.6; }
 
-    .terminal-input-bar { display: flex; padding: 8px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 6px; }
-    .terminal-field { flex: 1; padding: 10px 12px; border: 2px solid var(--primary); border-radius: 12px; font-size: 14px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
-    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 16px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    .terminal-input-bar { display: flex; padding: 10px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 8px; flex-shrink: 0; }
+    .terminal-field { flex: 1; padding: 12px 14px; border: 2px solid var(--primary); border-radius: 14px; font-size: 16px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
+    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 18px; border-radius: 14px; font-size: 18px; font-weight: bold; cursor: pointer; }
 
     #cameraFileInput { display: none; }
 
-    /* НИЖНЯЯ КНОПКА */
+    /* 4. КРУПНАЯ ЖЕСТКО ЗАФИКСИРОВАННАЯ НИЖНЯЯ КНОПКА */
     .btn-base { 
       width: 100%; 
-      padding: 16px; 
+      height: 64px;
       background-color: var(--primary); 
       color: white; 
       border: none; 
-      border-radius: 16px; 
-      font-size: 16px; 
+      border-radius: 18px; 
+      font-size: 17px; 
       font-weight: bold; 
       cursor: pointer; 
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 6px 16px rgba(27, 94, 32, 0.35);
       flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .base-header { background-color: var(--primary); color: white; padding: 14px; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; }
-    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 8px 14px; border-radius: 12px; font-size: 14px; font-weight: bold; cursor: pointer; }
+    .base-header { background-color: var(--primary); color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; }
 
-    .niche-list { display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 14px 16px; border-radius: 16px; border-left: 5px solid var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.05); cursor: pointer; }
-    .niche-title { font-size: 16px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
-    .niche-desc { font-size: 13px; color: var(--muted); }
+    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
+    .niche-card { background: white; padding: 16px 18px; border-radius: 18px; border-left: 6px solid var(--primary); box-shadow: 0 3px 8px rgba(0,0,0,0.06); cursor: pointer; }
+    .niche-title { font-size: 17px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
+    .niche-desc { font-size: 14px; color: var(--muted); }
 
-    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 16px; border-radius: 16px; color: #222; font-size: 14px; line-height: 1.6; }
-    .photo-preview { width: 100%; max-height: 200px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; border: 2px solid var(--primary); }
-    .badge-status { display: inline-block; padding: 4px 10px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 8px; font-size: 12px; margin-bottom: 8px; border: 1px solid #c8e6c9; }
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 18px; border-radius: 18px; color: #222; font-size: 15px; line-height: 1.6; }
+    .photo-preview { width: 100%; max-height: 220px; object-fit: cover; border-radius: 14px; margin-bottom: 12px; border: 2px solid var(--primary); }
+    .badge-status { display: inline-block; padding: 6px 12px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 10px; font-size: 13px; margin-bottom: 10px; border: 1px solid #c8e6c9; }
   </style>
 </head>
 <body>
@@ -172,6 +175,7 @@
         </div>
       </div>
 
+      <!-- КНОПКА ВСЕГДА В НАДОЕ РЯДОМ С НИЖНИМ КРАЕМ -->
       <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
