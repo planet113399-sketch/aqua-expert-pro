@@ -8,7 +8,7 @@
     :root {
       --primary: #1b5e20;
       --primary-hover: #2e7d32;
-      --bg: #f4f6f4;
+      --bg: #1b5e20; /* Единый фоновый цвет шапки и подложки */
       --card-bg: #ffffff;
       --text: #111111;
       --muted: #444444;
@@ -24,67 +24,66 @@
       overflow: hidden;
     }
 
-    /* ОСНОВНОЙ КОНТЕЙНЕР С СТРОГИМИ ПРОПОРЦИЯМИ ПОД ЭКРАН СМАРТФОНА */
+    /* АДАПТИВНЫЙ ФЛЕКС-КОНТЕЙНЕР НА ВЕСЬ ЭКРАН */
     .app-container {
       width: 100vw;
       height: 100vh;
-      background: var(--bg);
+      background: #f4f6f4;
       display: flex;
       flex-direction: column;
       padding: 12px;
-      padding-top: calc(env(safe-area-inset-top, 8px) + 6px);
-      padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 10px);
+      padding-top: calc(env(safe-area-inset-top, 8px) + 8px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 12px);
       gap: 10px;
     }
 
     .screen { display: flex; flex-direction: column; height: 100%; gap: 10px; overflow: hidden; }
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ С УВЕЛИЧЕННОЙ ВЫСОТОЙ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
     .top-bar { 
       background-color: var(--primary); 
-      padding: 14px 18px; 
-      border-radius: 20px; 
+      padding: 12px 16px; 
+      border-radius: 18px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
       color: white;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.3); border-radius: 18px; padding: 4px; }
-    .toggle-btn { padding: 12px 20px; border-radius: 14px; border: none; font-size: 18px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.3); border-radius: 14px; padding: 3px; }
+    .toggle-btn { padding: 8px 16px; border-radius: 11px; border: none; font-size: 16px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: var(--primary); }
     
-    .btn-lang { padding: 12px 18px; border-radius: 16px; border: none; font-weight: bold; font-size: 18px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
+    .btn-lang { padding: 8px 14px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
 
-    /* 2. РАСШИРЕННЫЕ ВЫСОКИЕ КНОПКИ ДЕЙСТВИЙ (УДОБНЫЕ ДЛЯ ПАЛЬЦЕВ) */
-    .action-row { display: flex; gap: 12px; flex-shrink: 0; }
+    /* 2. УДОБНЫЕ КНОПКИ ДЕЙСТВИЙ */
+    .action-row { display: flex; gap: 10px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
-      height: 72px; 
+      height: 60px; 
       background-color: var(--primary); 
-      border-radius: 22px; 
+      border-radius: 18px; 
       border: none; 
       display: flex; 
       justify-content: center; 
       align-items: center; 
-      gap: 12px; 
+      gap: 10px; 
       font-weight: bold; 
-      font-size: 22px; 
+      font-size: 19px; 
       cursor: pointer; 
       color: white; 
-      box-shadow: 0 4px 14px rgba(27, 94, 32, 0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    /* 3. СЖАТЫЙ ТЕРМИНАЛ (ЧТОБЫ НИЖНЯЯ КНОПКА ПОДТЯНУЛАСЬ НАВЕРХ) */
+    /* 3. ЦЕНТРАЛЬНЫЙ ТЕРМИНАЛ (ЗАНИМАЕТ ВСЁ СВОБОДНОЕ МЕСТО) */
     .terminal-card { 
       flex: 1;
-      max-height: 48vh;
       background: var(--card-bg); 
       border: 3px solid var(--primary); 
-      border-radius: 22px; 
+      border-radius: 20px; 
       display: flex; 
       flex-direction: column; 
       overflow: hidden; 
@@ -96,50 +95,50 @@
       padding: 12px 16px; 
       display: flex; 
       justify-content: space-between; 
-      font-size: 16px; 
+      font-size: 15px; 
       font-weight: bold; 
       color: var(--primary); 
       border-bottom: 2px solid #c8e6c9; 
       flex-shrink: 0;
     }
     
-    .terminal-body { flex: 1; padding: 18px; overflow-y: auto; color: var(--text); font-size: 20px; line-height: 1.6; }
+    .terminal-body { flex: 1; padding: 16px; overflow-y: auto; color: var(--text); font-size: 18px; line-height: 1.5; }
 
-    .terminal-input-bar { display: flex; padding: 10px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 10px; flex-shrink: 0; }
-    .terminal-field { flex: 1; padding: 12px 16px; border: 2px solid var(--primary); border-radius: 16px; font-size: 18px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
-    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 22px; border-radius: 16px; font-size: 22px; font-weight: bold; cursor: pointer; }
+    .terminal-input-bar { display: flex; padding: 10px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 8px; flex-shrink: 0; }
+    .terminal-field { flex: 1; padding: 12px 14px; border: 2px solid var(--primary); border-radius: 14px; font-size: 17px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
+    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 20px; border-radius: 14px; font-size: 20px; font-weight: bold; cursor: pointer; }
 
     #cameraFileInput { display: none; }
 
-    /* 4. ВЫСОКАЯ КРУПНАЯ НИЖНЯЯ КНОПКА (ВСЕГДА НА ЭКРАНЕ) */
+    /* 4. КРУПНАЯ НИЖНЯЯ КНОПКА (ПРИЖАТА К НИЗУ) */
     .btn-base { 
       width: 100%; 
-      height: 74px;
+      height: 64px;
       background-color: var(--primary); 
       color: white; 
       border: none; 
-      border-radius: 22px; 
-      font-size: 21px; 
+      border-radius: 18px; 
+      font-size: 19px; 
       font-weight: bold; 
       cursor: pointer; 
-      box-shadow: 0 6px 18px rgba(27, 94, 32, 0.4);
+      box-shadow: 0 4px 14px rgba(27, 94, 32, 0.35);
       flex-shrink: 0;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .base-header { background-color: var(--primary); color: white; padding: 18px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 12px 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; }
+    .base-header { background-color: var(--primary); color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
-    .niche-list { display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 20px 22px; border-radius: 22px; border-left: 8px solid var(--primary); box-shadow: 0 3px 10px rgba(0,0,0,0.08); cursor: pointer; }
-    .niche-title { font-size: 22px; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
-    .niche-desc { font-size: 18px; color: var(--muted); }
+    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
+    .niche-card { background: white; padding: 16px 18px; border-radius: 18px; border-left: 7px solid var(--primary); box-shadow: 0 3px 8px rgba(0,0,0,0.08); cursor: pointer; }
+    .niche-title { font-size: 20px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
+    .niche-desc { font-size: 16px; color: var(--muted); }
 
-    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 22px; border-radius: 22px; color: #111; font-size: 20px; line-height: 1.7; }
-    .photo-preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 18px; margin-bottom: 14px; border: 3px solid var(--primary); }
-    .badge-status { display: inline-block; padding: 8px 16px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 12px; font-size: 17px; margin-bottom: 14px; border: 1px solid #c8e6c9; }
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 18px; border-radius: 18px; color: #111; font-size: 18px; line-height: 1.6; }
+    .photo-preview { width: 100%; max-height: 240px; object-fit: cover; border-radius: 16px; margin-bottom: 12px; border: 3px solid var(--primary); }
+    .badge-status { display: inline-block; padding: 6px 14px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 10px; font-size: 15px; margin-bottom: 10px; border: 1px solid #c8e6c9; }
   </style>
 </head>
 <body>
@@ -175,7 +174,6 @@
         </div>
       </div>
 
-      <!-- КНОПКА ТЕПЕРЬ ВСЕГДА ВАЖНО СИДИТ ВНИЗУ НА ЭКРАНЕ -->
       <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
@@ -183,7 +181,7 @@
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText" style="font-size: 22px;">📚 Офлайн Справочник</h3>
+        <h3 id="baseTitleText" style="font-size: 20px;">📚 Офлайн Справочник</h3>
         <div></div>
       </div>
       <div class="niche-list">
@@ -214,7 +212,7 @@
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ Назад</button>
-        <h4 id="detailTitle" style="font-size: 20px;">Загрузка...</h4>
+        <h4 id="detailTitle" style="font-size: 19px;">Загрузка...</h4>
         <div></div>
       </div>
       <div class="detail-body" id="detailContent"></div>
