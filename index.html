@@ -8,10 +8,10 @@
     :root {
       --primary: #1b5e20;
       --primary-hover: #2e7d32;
-      --bg: #f2f5f2;
+      --bg: #f4f6f4;
       --card-bg: #ffffff;
       --text: #111111;
-      --muted: #555555;
+      --muted: #444444;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -24,7 +24,7 @@
       overflow: hidden;
     }
 
-    /* ОСНОВНОЙ ЭКРАН С ЖЕСТКОЙ ФИКСАЦИЕЙ КНОПОК И СКРОЛЛОМ ЦЕНТРА */
+    /* ОСНОВНОЙ КОНТЕЙНЕР С ВЕРТИКАЛЬНЫМ СКРОЛЛОМ ПРИ НЕОБХОДИМОСТИ */
     .app-container {
       width: 100vw;
       height: 100vh;
@@ -32,15 +32,16 @@
       display: flex;
       flex-direction: column;
       padding: 12px;
-      padding-top: calc(env(safe-area-inset-top, 10px) + 8px);
-      padding-bottom: calc(env(safe-area-inset-bottom, 10px) + 12px);
+      padding-top: calc(env(safe-area-inset-top, 8px) + 6px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 12px);
       gap: 12px;
+      overflow-y: auto;
     }
 
-    .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; overflow: hidden; }
+    .screen { display: flex; flex-direction: column; min-height: 100%; gap: 12px; }
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ С КРУПНЫМИ КНОПКАМИ */
     .top-bar { 
       background-color: var(--primary); 
       padding: 12px 16px; 
@@ -53,93 +54,94 @@
       box-shadow: 0 4px 10px rgba(27, 94, 32, 0.25);
     }
 
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.25); border-radius: 16px; padding: 4px; }
-    .toggle-btn { padding: 8px 16px; border-radius: 12px; border: none; font-size: 15px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.3); border-radius: 16px; padding: 4px; }
+    .toggle-btn { padding: 10px 18px; border-radius: 12px; border: none; font-size: 16px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: var(--primary); }
     
-    .btn-lang { padding: 8px 14px; border-radius: 14px; border: none; font-weight: bold; font-size: 15px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
+    .btn-lang { padding: 10px 16px; border-radius: 14px; border: none; font-weight: bold; font-size: 16px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
 
-    /* 2. КРУПНЫЕ УДОБНЫЕ КНОПКИ ДЕЙСТВИЙ */
+    /* 2. ВЫСОКИЕ КРУПНЫЕ КНОПКИ ДЕЙСТВИЙ */
     .action-row { display: flex; gap: 12px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
-      height: 62px; 
+      height: 68px; 
       background-color: var(--primary); 
-      border-radius: 18px; 
+      border-radius: 20px; 
       border: none; 
       display: flex; 
       justify-content: center; 
       align-items: center; 
       gap: 10px; 
       font-weight: bold; 
-      font-size: 17px; 
+      font-size: 20px; 
       cursor: pointer; 
       color: white; 
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
 
-    /* 3. КОМПАКТНЫЙ АДАПТИВНЫЙ ТЕРМИНАЛ */
+    /* 3. ТЕРМИНАЛ С ВЫСОКИМ КРУПНЫМ ШРИФТОМ */
     .terminal-card { 
       flex: 1;
-      min-height: 200px;
+      min-height: 260px;
       background: var(--card-bg); 
       border: 3px solid var(--primary); 
-      border-radius: 20px; 
+      border-radius: 22px; 
       display: flex; 
       flex-direction: column; 
       overflow: hidden; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     
     .terminal-header { 
       background-color: #e8f5e9; 
-      padding: 12px 16px; 
+      padding: 14px 16px; 
       display: flex; 
       justify-content: space-between; 
-      font-size: 14px; 
+      font-size: 16px; 
       font-weight: bold; 
       color: var(--primary); 
       border-bottom: 2px solid #c8e6c9; 
       flex-shrink: 0;
     }
     
-    .terminal-body { flex: 1; padding: 16px; overflow-y: auto; color: var(--text); font-size: 15px; line-height: 1.6; }
+    .terminal-body { flex: 1; padding: 18px; overflow-y: auto; color: var(--text); font-size: 18px; line-height: 1.6; }
 
-    .terminal-input-bar { display: flex; padding: 10px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 8px; flex-shrink: 0; }
-    .terminal-field { flex: 1; padding: 12px 14px; border: 2px solid var(--primary); border-radius: 14px; font-size: 16px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
-    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 18px; border-radius: 14px; font-size: 18px; font-weight: bold; cursor: pointer; }
+    .terminal-input-bar { display: flex; padding: 12px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 10px; flex-shrink: 0; }
+    .terminal-field { flex: 1; padding: 14px 16px; border: 2px solid var(--primary); border-radius: 16px; font-size: 18px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
+    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 22px; border-radius: 16px; font-size: 22px; font-weight: bold; cursor: pointer; }
 
     #cameraFileInput { display: none; }
 
-    /* 4. КРУПНАЯ ЖЕСТКО ЗАФИКСИРОВАННАЯ НИЖНЯЯ КНОПКА */
+    /* 4. МОЩНАЯ КРУПНАЯ НИЖНЯЯ КНОПКА БАЗЫ ЗНАНИЙ */
     .btn-base { 
       width: 100%; 
-      height: 64px;
+      height: 72px;
       background-color: var(--primary); 
       color: white; 
       border: none; 
-      border-radius: 18px; 
-      font-size: 17px; 
+      border-radius: 20px; 
+      font-size: 19px; 
       font-weight: bold; 
       cursor: pointer; 
-      box-shadow: 0 6px 16px rgba(27, 94, 32, 0.35);
+      box-shadow: 0 6px 18px rgba(27, 94, 32, 0.4);
       flex-shrink: 0;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-bottom: 4px;
     }
 
-    .base-header { background-color: var(--primary); color: white; padding: 16px; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 10px 16px; border-radius: 14px; font-size: 15px; font-weight: bold; cursor: pointer; }
+    .base-header { background-color: var(--primary); color: white; padding: 18px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 12px 18px; border-radius: 16px; font-size: 17px; font-weight: bold; cursor: pointer; }
 
-    .niche-list { display: flex; flex-direction: column; gap: 12px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 16px 18px; border-radius: 18px; border-left: 6px solid var(--primary); box-shadow: 0 3px 8px rgba(0,0,0,0.06); cursor: pointer; }
-    .niche-title { font-size: 17px; font-weight: bold; color: var(--primary); margin-bottom: 4px; }
-    .niche-desc { font-size: 14px; color: var(--muted); }
+    .niche-list { display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; }
+    .niche-card { background: white; padding: 18px 20px; border-radius: 20px; border-left: 7px solid var(--primary); box-shadow: 0 3px 10px rgba(0,0,0,0.08); cursor: pointer; }
+    .niche-title { font-size: 20px; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
+    .niche-desc { font-size: 16px; color: var(--muted); }
 
-    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 18px; border-radius: 18px; color: #222; font-size: 15px; line-height: 1.6; }
-    .photo-preview { width: 100%; max-height: 220px; object-fit: cover; border-radius: 14px; margin-bottom: 12px; border: 2px solid var(--primary); }
-    .badge-status { display: inline-block; padding: 6px 12px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 10px; font-size: 13px; margin-bottom: 10px; border: 1px solid #c8e6c9; }
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 20px; border-radius: 20px; color: #111; font-size: 18px; line-height: 1.7; }
+    .photo-preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 16px; margin-bottom: 14px; border: 3px solid var(--primary); }
+    .badge-status { display: inline-block; padding: 6px 14px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 10px; font-size: 15px; margin-bottom: 12px; border: 1px solid #c8e6c9; }
   </style>
 </head>
 <body>
@@ -175,7 +177,7 @@
         </div>
       </div>
 
-      <!-- КНОПКА ВСЕГДА В НАДОЕ РЯДОМ С НИЖНИМ КРАЕМ -->
+      <!-- КРУПНАЯ ЖЕСТКАЯ НИЖНЯЯ КНОПКА -->
       <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
@@ -183,7 +185,7 @@
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText">📚 Офлайн Справочник</h3>
+        <h3 id="baseTitleText" style="font-size: 20px;">📚 Офлайн Справочник</h3>
         <div></div>
       </div>
       <div class="niche-list">
@@ -214,7 +216,7 @@
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ Назад</button>
-        <h4 id="detailTitle">Загрузка...</h4>
+        <h4 id="detailTitle" style="font-size: 19px;">Загрузка...</h4>
         <div></div>
       </div>
       <div class="detail-body" id="detailContent"></div>
