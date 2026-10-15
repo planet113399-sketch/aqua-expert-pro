@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AquaExpert Pro">
+  <meta name="application-name" content="AquaExpert Pro">
+  
   <title>AquaExpert Pro</title>
+
+  <!-- ИКОНКА ПРИЛОЖЕНИЯ ДЛЯ РАБОЧЕГО СТОЛА СМАРТФОНА -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231b5e20'/><text x='50%' y='65%' font-size='60' text-anchor='middle'>🌱</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231b5e20'/><text x='50%' y='65%' font-size='60' text-anchor='middle'>🌱</text></svg>">
+
   <style>
     :root {
       --primary: #1b5e20;
@@ -163,11 +174,11 @@
 
       <div class="terminal-card">
         <div class="terminal-header">
-          <span id="termTitle">🟢 ТЕРМИНАЛ АГРО-ИИ</span>
-          <span>AquaExpert v2.0</span>
+          <span id="termTitle">🟢 AquaExpert Pro AI</span>
+          <span>v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
-          🌱 <b>Агро-Терминал готов к работе.</b><br><br>Сделайте фото листа для ИИ-диагноза или выберите раздел в Базе Знаний.
+          🌱 <b>AquaExpert Pro is ready.</b><br><br>Сделайте фото листа для ИИ-диагноза или выберите раздел в Базе Знаний.
         </div>
         <div class="terminal-input-bar">
           <input type="text" id="userInput" class="terminal-field" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
@@ -182,7 +193,7 @@
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText" style="font-size: 24px;">📚 Офлайн Справочник</h3>
+        <h3 id="baseTitleText" style="font-size: 24px;">📚 AquaExpert Reference</h3>
         <div></div>
       </div>
       <div class="niche-list">
@@ -303,9 +314,9 @@
         document.getElementById('onlineBtn').innerText = 'Online';
         document.getElementById('labelVoice').innerText = 'VOICE';
         document.getElementById('labelPhoto').innerText = 'PHOTO';
-        document.getElementById('termTitle').innerText = '🟢 AGRO-AI TERMINAL';
+        document.getElementById('termTitle').innerText = '🟢 AquaExpert Pro AI';
         document.getElementById('baseBtnText').innerText = '📚 KNOWLEDGE BASE (OFFLINE)';
-        document.getElementById('baseTitleText').innerText = '📚 Offline Reference';
+        document.getElementById('baseTitleText').innerText = '📚 AquaExpert Reference';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         document.getElementById('detailBackBtn').innerText = '⬅ Back';
         input.placeholder = "Enter question...";
@@ -327,7 +338,7 @@
         document.getElementById('onlineBtn').innerText = 'Онлайн';
         document.getElementById('labelVoice').innerText = 'ГОЛОС';
         document.getElementById('labelPhoto').innerText = 'ФОТО';
-        document.getElementById('termTitle').innerText = '🟢 ТЕРМИНАЛ АГРО-ИИ';
+        document.getElementById('termTitle').innerText = '🟢 AquaExpert Pro AI';
         document.getElementById('baseBtnText').innerText = '📚 БАЗА ЗНАНИЙ (ОФЛАЙН)';
         document.getElementById('baseTitleText').innerText = '📚 Офлайн Справочник';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
