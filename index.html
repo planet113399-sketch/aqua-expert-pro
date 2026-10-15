@@ -10,8 +10,8 @@
       --primary-hover: #2e7d32;
       --bg: #eef2ee;
       --card-bg: #ffffff;
-      --text: #111111;
-      --muted: #444444;
+      --text: #000000;
+      --muted: #333333;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -31,39 +31,39 @@
       background: var(--bg);
       display: flex;
       flex-direction: column;
-      padding: 14px;
+      padding: 12px;
       padding-top: calc(env(safe-area-inset-top, 8px) + 8px);
       padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 12px);
-      gap: 14px;
+      gap: 12px;
     }
 
-    .screen { display: flex; flex-direction: column; height: 100%; gap: 14px; overflow: hidden; }
+    .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; overflow: hidden; }
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ С УВЕЛИЧЕННЫМИ КНОПКАМИ И ОТСТУПАМИ */
+    /* 1. КРУПНАЯ ВЕРХНЯЯ ПАНЕЛЬ */
     .top-bar { 
       background-color: var(--primary); 
-      padding: 12px 16px; 
+      padding: 14px 18px; 
       border-radius: 20px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
       color: white;
       flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
 
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.35); border-radius: 16px; padding: 5px; gap: 6px; }
-    .toggle-btn { padding: 12px 22px; border-radius: 12px; border: none; font-size: 18px; font-weight: bold; color: white; background: transparent; cursor: pointer; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.4); border-radius: 18px; padding: 6px; gap: 8px; }
+    .toggle-btn { padding: 14px 24px; border-radius: 14px; border: none; font-size: 20px; font-weight: 900; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: var(--primary); }
     
-    .btn-lang { padding: 12px 18px; border-radius: 14px; border: none; font-weight: bold; font-size: 18px; color: white; background-color: rgba(255, 255, 255, 0.25); cursor: pointer; }
+    .btn-lang { padding: 14px 20px; border-radius: 16px; border: none; font-weight: 900; font-size: 20px; color: white; background-color: rgba(255, 255, 255, 0.3); cursor: pointer; }
 
-    /* 2. ВЫСОКИЕ, МАССИВНЫЕ И ПРОСТОРНЫЕ КНОПКИ «ГОЛОС» И «ФОТО» */
-    .action-row { display: flex; gap: 14px; flex-shrink: 0; }
+    /* 2. МАССИВНЫЕ ВЫСОКИЕ КНОПКИ ДЕЙСТВИЙ */
+    .action-row { display: flex; gap: 12px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
-      height: 74px; 
+      height: 85px; 
       background-color: var(--primary); 
       border-radius: 22px; 
       border: none; 
@@ -71,75 +71,75 @@
       justify-content: center; 
       align-items: center; 
       gap: 12px; 
-      font-weight: bold; 
-      font-size: 22px; 
+      font-weight: 900; 
+      font-size: 24px; 
       cursor: pointer; 
       color: white; 
-      box-shadow: 0 5px 15px rgba(27, 94, 32, 0.3);
+      box-shadow: 0 6px 16px rgba(27, 94, 32, 0.35);
     }
 
-    /* 3. СЖАТЫЙ ТЕРМИНАЛ С ОЧЕНЬ КРУПНЫМ ШРИФТОМ */
+    /* 3. ТЕРМИНАЛ С ОЧЕНЬ КРУПНЫМ ТЕКСТОМ */
     .terminal-card { 
       flex: 1;
       min-height: 0;
       background: var(--card-bg); 
-      border: 3px solid var(--primary); 
-      border-radius: 22px; 
+      border: 4px solid var(--primary); 
+      border-radius: 24px; 
       display: flex; 
       flex-direction: column; 
       overflow: hidden; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
     
     .terminal-header { 
       background-color: #e8f5e9; 
-      padding: 14px 18px; 
+      padding: 16px 20px; 
       display: flex; 
       justify-content: space-between; 
-      font-size: 17px; 
-      font-weight: bold; 
+      font-size: 20px; 
+      font-weight: 900; 
       color: var(--primary); 
-      border-bottom: 2px solid #c8e6c9; 
+      border-bottom: 3px solid #c8e6c9; 
       flex-shrink: 0;
     }
     
-    .terminal-body { flex: 1; padding: 20px; overflow-y: auto; color: var(--text); font-size: 21px; line-height: 1.6; }
+    .terminal-body { flex: 1; padding: 22px; overflow-y: auto; color: var(--text); font-size: 24px; line-height: 1.6; font-weight: 600; }
 
-    .terminal-input-bar { display: flex; padding: 12px; background: #e8f5e9; border-top: 2px solid #c8e6c9; gap: 10px; flex-shrink: 0; }
-    .terminal-field { flex: 1; padding: 14px 16px; border: 2px solid var(--primary); border-radius: 16px; font-size: 19px; outline: none; background-color: #ffffff; color: #111; font-weight: bold; }
-    .terminal-sub-btn { background-color: var(--primary); color: white; border: none; padding: 0 22px; border-radius: 16px; font-size: 24px; font-weight: bold; cursor: pointer; }
+    .terminal-input-bar { display: flex; padding: 14px; background: #e8f5e9; border-top: 3px solid #c8e6c9; gap: 10px; flex-shrink: 0; }
+    .terminal-field { flex: 1; height: 60px; padding: 12px 18px; border: 3px solid var(--primary); border-radius: 18px; font-size: 22px; outline: none; background-color: #ffffff; color: #000; font-weight: bold; }
+    .terminal-sub-btn { height: 60px; background-color: var(--primary); color: white; border: none; padding: 0 26px; border-radius: 18px; font-size: 28px; font-weight: 900; cursor: pointer; }
 
     #cameraFileInput { display: none; }
 
-    /* 4. КРУПНАЯ ЖЕСТКАЯ НИЖНЯЯ КНОПКА БАЗЫ ЗНАНИЙ */
+    /* 4. ОГРОМНАЯ НИЖНЯЯ КНОПКА */
     .btn-base { 
       width: 100%; 
-      height: 72px;
+      height: 80px;
       background-color: var(--primary); 
       color: white; 
       border: none; 
-      border-radius: 20px; 
-      font-size: 21px; 
-      font-weight: bold; 
+      border-radius: 22px; 
+      font-size: 22px; 
+      font-weight: 900; 
       cursor: pointer; 
-      box-shadow: 0 6px 18px rgba(27, 94, 32, 0.4);
+      box-shadow: 0 8px 20px rgba(27, 94, 32, 0.45);
       flex-shrink: 0;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .base-header { background-color: var(--primary); color: white; padding: 18px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .back-btn { background: rgba(255,255,255,0.25); border: none; color: white; padding: 12px 18px; border-radius: 16px; font-size: 18px; font-weight: bold; cursor: pointer; }
+    .base-header { background-color: var(--primary); color: white; padding: 20px; border-radius: 22px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .back-btn { background: rgba(255,255,255,0.3); border: none; color: white; padding: 14px 22px; border-radius: 18px; font-size: 20px; font-weight: 900; cursor: pointer; }
 
-    .niche-list { display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 20px 22px; border-radius: 20px; border-left: 8px solid var(--primary); box-shadow: 0 3px 10px rgba(0,0,0,0.08); cursor: pointer; }
-    .niche-title { font-size: 22px; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
-    .niche-desc { font-size: 18px; color: var(--muted); }
+    .niche-list { display: flex; flex-direction: column; gap: 16px; overflow-y: auto; flex: 1; }
+    .niche-card { background: white; padding: 22px 24px; border-radius: 22px; border-left: 10px solid var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
+    .niche-title { font-size: 26px; font-weight: 900; color: var(--primary); margin-bottom: 8px; }
+    .niche-desc { font-size: 20px; color: var(--muted); font-weight: 600; }
 
-    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 22px; border-radius: 20px; color: #111; font-size: 20px; line-height: 1.7; }
-    .photo-preview { width: 100%; max-height: 250px; object-fit: cover; border-radius: 18px; margin-bottom: 14px; border: 3px solid var(--primary); }
-    .badge-status { display: inline-block; padding: 8px 16px; background: #e8f5e9; color: var(--primary); font-weight: bold; border-radius: 12px; font-size: 17px; margin-bottom: 14px; border: 1px solid #c8e6c9; }
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 24px; border-radius: 22px; color: #000; font-size: 22px; line-height: 1.7; font-weight: 500; }
+    .photo-preview { width: 100%; max-height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 16px; border: 4px solid var(--primary); }
+    .badge-status { display: inline-block; padding: 10px 18px; background: #e8f5e9; color: var(--primary); font-weight: 900; border-radius: 14px; font-size: 18px; margin-bottom: 16px; border: 2px solid #c8e6c9; }
   </style>
 </head>
 <body>
@@ -182,7 +182,7 @@
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText" style="font-size: 22px;">📚 Офлайн Справочник</h3>
+        <h3 id="baseTitleText" style="font-size: 24px;">📚 Офлайн Справочник</h3>
         <div></div>
       </div>
       <div class="niche-list">
@@ -213,7 +213,7 @@
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ Назад</button>
-        <h4 id="detailTitle" style="font-size: 20px;">Загрузка...</h4>
+        <h4 id="detailTitle" style="font-size: 22px;">Загрузка...</h4>
         <div></div>
       </div>
       <div class="detail-body" id="detailContent"></div>
