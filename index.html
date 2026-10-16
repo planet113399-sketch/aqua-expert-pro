@@ -51,7 +51,7 @@
     .screen { display: flex; flex-direction: column; height: 100%; gap: 10px; overflow: hidden; }
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ - СУПЕР КРУПНАЯ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
     .top-bar { 
       background-color: var(--primary); 
       padding: 12px 16px; 
@@ -70,7 +70,7 @@
     
     .btn-lang { padding: 12px 18px; border-radius: 14px; border: none; font-weight: 900; font-size: 24px; color: white; background-color: rgba(255, 255, 255, 0.3); cursor: pointer; }
 
-    /* 2. КНОПКИ ДЕЙСТВИЙ - МАССИВНЫЕ */
+    /* 2. КНОПКИ ДЕЙСТВИЙ */
     .action-row { display: flex; gap: 10px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
@@ -89,7 +89,7 @@
       box-shadow: 0 6px 16px rgba(27, 94, 32, 0.35);
     }
 
-    /* 3. ТЕРМИНАЛ С ОГРОМНЫМ ТЕКСТОМ */
+    /* 3. ТЕРМИНАЛ */
     .terminal-card { 
       flex: 1;
       min-height: 0;
@@ -119,7 +119,7 @@
       padding: 18px; 
       overflow-y: auto; 
       color: var(--text); 
-      font-size: 30px; /* ГИГАНТСКИЙ ШРИФТ ДЛЯ ОТВЕТА */
+      font-size: 30px; 
       line-height: 1.5; 
       font-weight: 800; 
       display: flex;
@@ -132,7 +132,6 @@
       overflow-y: auto;
     }
 
-    /* ПОЛЕ ВВОДА - ОГРОМНОЕ, ЖИРНОЕ И ВЫСОКОЕ (32px) */
     .terminal-main-input {
       width: 100%;
       height: 75px;
@@ -140,7 +139,7 @@
       border-radius: 18px;
       background: #f1f8e9;
       padding: 12px 18px;
-      font-size: 32px; /* ОГРОМНЫЙ ШРИФТ ВВОДА С КЛАВИАТУРЫ */
+      font-size: 32px; 
       font-weight: 900;
       color: #000000;
       outline: none;
@@ -226,7 +225,7 @@
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText" style="font-size: 26px;">📚 AquaExpert Reference</h3>
+        <h3 id="baseTitleText" style="font-size: 26px;">📚 Офлайн Справочник</h3>
         <div></div>
       </div>
       <div class="niche-list">
@@ -300,6 +299,18 @@
         document.getElementById('backBtnText').innerText = '⬅ Back';
         document.getElementById('detailBackBtn').innerText = '⬅ Back';
         input.placeholder = "✍️ ENTER QUESTION...";
+
+        /* ПЕРЕВОД КАРТОЧЕК БАЗЫ ЗНАНИЙ НА АНГЛИЙСКИЙ */
+        document.getElementById('n1Title').innerText = '💧 1. Hydroponics & Drip Irrigation';
+        document.getElementById('n1Desc').innerText = 'pH/EC tables, flow rates, system cleaning';
+        document.getElementById('n2Title').innerText = '🛸 2. Drones & Agro-Monitoring';
+        document.getElementById('n2Desc').innerText = 'NDVI, NDRE, MSAVI2, ULV rates';
+        document.getElementById('n3Title').innerText = '🌿 3. Eco Agrochemistry';
+        document.getElementById('n3Desc').innerText = 'Bio-protection, Bacillus subtilis, Neem oil';
+        document.getElementById('n4Title').innerText = '🔬 4. Disease Diagnostics';
+        document.getElementById('n4Desc').innerText = 'NPK, Fe, Ca, Zn deficiency atlas';
+        document.getElementById('n5Title').innerText = '🌳 5. Soil Science & Gardening';
+        document.getElementById('n5Desc').innerText = 'Orchards, nuts, vegetables, green manure';
       } else {
         currentLang = 'ru';
         document.getElementById('langBtn').innerText = '🌐 RU';
@@ -313,6 +324,18 @@
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         document.getElementById('detailBackBtn').innerText = '⬅ Назад';
         input.placeholder = "✍️ ВВЕДИТЕ ВОПРОС...";
+
+        /* ПЕРЕВОД КАРТОЧЕК БАЗЫ ЗНАНИЙ НА РУССКИЙ */
+        document.getElementById('n1Title').innerText = '💧 1. Гидропоника и Капельный полив';
+        document.getElementById('n1Desc').innerText = 'Таблицы pH/EC, нормы вылива, чистка систем';
+        document.getElementById('n2Title').innerText = '🛸 2. Дроны и Агро-Мониторинг';
+        document.getElementById('n2Desc').innerText = 'Индексы NDVI, NDRE, MSAVI2, нормы ULV';
+        document.getElementById('n3Title').innerText = '🌿 3. Экологическая Агрохимия';
+        document.getElementById('n3Desc').innerText = 'Био-защита, Bacillus subtilis, масло Нима';
+        document.getElementById('n4Title').innerText = '🔬 4. Определитель Болезней';
+        document.getElementById('n4Desc').innerText = 'Атлас дефицитов питания NPK, Fe, Ca, Zn';
+        document.getElementById('n5Title').innerText = '🌳 5. Почвоведение и Садоводство';
+        document.getElementById('n5Desc').innerText = 'Сады, орехи, овощи, зелень, сидераты';
       }
       setMode(currentMode);
     }
