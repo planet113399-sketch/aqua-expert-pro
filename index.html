@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="AquaExpert Pro">
-  <meta name="application-name" content="AquaExpert Pro">
+  <meta name="apple-mobile-web-app-title" content="AquaExpert Pro AI">
+  <meta name="application-name" content="AquaExpert Pro AI">
   
-  <title>AquaExpert Pro</title>
+  <title>AquaExpert Pro AI</title>
 
-  <!-- ПОДКТЮЧЕНИЕ ТВОЕЙ КАРТИНКИ ИЗ КОРНЕВОЙ ПАПКИ -->
-  <link rel="icon" href="./favicon.ico" type="image/x-icon">
-  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="./favicon.ico">
+  <link rel="icon" href="./store_icon.png" type="image/png">
+  <link rel="shortcut icon" href="./store_icon.png" type="image/png">
+  <link rel="apple-touch-icon" href="./store_icon.png">
 
   <style>
     :root {
@@ -52,7 +51,7 @@
     .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; overflow: hidden; }
     .hidden { display: none !important; }
 
-    /* 1. КРУПНАЯ ВЕРХНЯЯ ПАНЕЛЬ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
     .top-bar { 
       background-color: var(--primary); 
       padding: 14px 18px; 
@@ -71,7 +70,7 @@
     
     .btn-lang { padding: 14px 20px; border-radius: 16px; border: none; font-weight: 900; font-size: 20px; color: white; background-color: rgba(255, 255, 255, 0.3); cursor: pointer; }
 
-    /* 2. МАССИВНЫЕ ВЫСОКИЕ КНОПКИ ДЕЙСТВИЙ */
+    /* 2. КНОПКИ ДЕЙСТВИЙ */
     .action-row { display: flex; gap: 12px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
@@ -90,7 +89,7 @@
       box-shadow: 0 6px 16px rgba(27, 94, 32, 0.35);
     }
 
-    /* 3. ТЕРМИНАЛ С ОЧЕНЬ КРУПНЫМ ТЕКСТОМ */
+    /* 3. ЕДИНЫЙ ТЕРМИНАЛ БЕЗ ВНЕШНИХ РАМОК И ПЛАШЕК */
     .terminal-card { 
       flex: 1;
       min-height: 0;
@@ -115,15 +114,39 @@
       flex-shrink: 0;
     }
     
-    .terminal-body { flex: 1; padding: 22px; overflow-y: auto; color: var(--text); font-size: 24px; line-height: 1.6; font-weight: 600; }
+    .terminal-body { 
+      flex: 1; 
+      padding: 22px; 
+      overflow-y: auto; 
+      color: var(--text); 
+      font-size: 24px; 
+      line-height: 1.6; 
+      font-weight: 600; 
+    }
 
-    .terminal-input-bar { display: flex; padding: 14px; background: #e8f5e9; border-top: 3px solid #c8e6c9; gap: 10px; flex-shrink: 0; }
-    .terminal-field { flex: 1; height: 60px; padding: 12px 18px; border: 3px solid var(--primary); border-radius: 18px; font-size: 22px; outline: none; background-color: #ffffff; color: #000; font-weight: bold; }
-    .terminal-sub-btn { height: 60px; background-color: var(--primary); color: white; border: none; padding: 0 26px; border-radius: 18px; font-size: 28px; font-weight: 900; cursor: pointer; }
+    /* ВСТРОЕННАЯ СТРОКА ВВОДА ВНИЗУ ТЕРМИНАЛА С КРУПНЫМ ПЛЕЙСХОЛДЕРОМ */
+    .terminal-direct-input {
+      border: none;
+      border-top: 3px solid #c8e6c9;
+      background: #f1f8e9;
+      padding: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--primary);
+      outline: none;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .terminal-direct-input::placeholder {
+      color: #2e7d32;
+      opacity: 0.7;
+      font-weight: 800;
+    }
 
     #cameraFileInput { display: none; }
 
-    /* 4. ОГРОМНАЯ НИЖНЯЯ КНОПКА */
+    /* 4. НИЖНЯЯ КНОПКА БАЗЫ ЗНАНИЙ */
     .btn-base { 
       width: 100%; 
       height: 80px;
@@ -150,8 +173,6 @@
     .niche-desc { font-size: 20px; color: var(--muted); font-weight: 600; }
 
     .detail-body { flex: 1; overflow-y: auto; background: white; padding: 24px; border-radius: 22px; color: #000; font-size: 22px; line-height: 1.7; font-weight: 500; }
-    .photo-preview { width: 100%; max-height: 280px; object-fit: cover; border-radius: 20px; margin-bottom: 16px; border: 4px solid var(--primary); }
-    .badge-status { display: inline-block; padding: 10px 18px; background: #e8f5e9; color: var(--primary); font-weight: 900; border-radius: 14px; font-size: 18px; margin-bottom: 16px; border: 2px solid #c8e6c9; }
   </style>
 </head>
 <body>
@@ -179,18 +200,15 @@
           <span>v2.0</span>
         </div>
         <div class="terminal-body" id="terminalOutput">
-          🌱 <b>AquaExpert Pro is ready.</b><br><br>Сделайте фото листа для ИИ-диагноза или выберите раздел в Базе Знаний.
+          🌱 <b>AquaExpert Pro готов.</b><br><br>Сделайте фото листа для ИИ-диагностики или выберите раздел в Базе Знаний.
         </div>
-        <div class="terminal-input-bar">
-          <input type="text" id="userInput" class="terminal-field" placeholder="Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
-          <button class="terminal-sub-btn" onclick="sendQuery()">➔</button>
-        </div>
+        <input type="text" id="userInput" class="terminal-direct-input" placeholder="💬 Введите ваш вопрос..." onkeypress="if(event.key==='Enter') sendQuery();">
       </div>
 
       <button class="btn-base" id="baseBtnText" onclick="showScreen('baseScreen')">📚 БАЗА ЗНАНИЙ (ОФЛАЙН)</button>
     </div>
 
-    <!-- ЭКРАН 2: 5 ОСНОВНЫХ НИШ -->
+    <!-- ЭКРАН 2: БАЗА ЗНАНИЙ -->
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
@@ -236,59 +254,6 @@
     let currentMode = 'online';
     let currentLang = 'ru';
 
-    const localDatabase = {
-      hydroponics: {
-        ru: {
-          title: "💧 1. Гидропоника и Капельный полив",
-          content: "<b>1. Реестр pH, EC и макроэлементов (ppm):</b><br>• <i>Орехоплодные (Фисташка, Миндаль):</i> pH 6.0–6.8 | EC 1.5–2.2 mS/cm | N:140, P:45, K:210, Ca:160 ppm.<br>• <i>Косточковые (Черешня, Персик):</i> pH 6.0–6.5 | EC 1.4–1.8 mS/cm | N:120, P:40, K:180 ppm.<br>• <i>Овощные (Томат, Огурец):</i> pH 5.6–6.3 | EC 1.8–3.2 mS/cm.<br>• <i>Зеленные культуры:</i> pH 5.8–6.4 | EC 1.0–1.6 mS/cm.<br><br><b>2. Обслуживание:</b><br>• Вылив в садах: 40–65 л/дерево в сутки при >+32°C.<br>• Очистка капельниц: 0.2% раствор H₂O₂ под давлением 2.5 бар."
-        },
-        en: {
-          title: "💧 1. Advanced Hydroponics & Drip",
-          content: "<b>1. Standards for pH, EC and Nutrients (ppm):</b><br>• <i>Nuts (Pistachio, Almond):</i> pH 6.0–6.8 | EC 1.5–2.2 mS/cm | N:140, P:45, K:210 ppm.<br>• <i>Stone Fruits (Cherry, Peach):</i> pH 6.0–6.5 | EC 1.4–1.8 mS/cm.<br>• <i>Vegetables (Tomato, Cucumber):</i> pH 5.6–6.3 | EC 1.8–3.2 mS/cm.<br>• <i>Herbs:</i> pH 5.8–6.4 | EC 1.0–1.6 mS/cm.<br><br><b>2. Maintenance:</b><br>• Drip rate: 40–65 L/tree daily at >+32°C.<br>• Line flush: 0.2% H₂O₂ solution at 2.5 bar pressure."
-        }
-      },
-      drones: {
-        ru: {
-          title: "🛸 2. Дроны и Агро-Мониторинг",
-          content: "<b>1. Вегетационные индексы:</b><br>• <i>NDVI (0.7–0.88):</i> Оценка фотосинтеза и биомассы.<br>• <i>NDRE:</i> Выявление раннего дефицита азота на густых кронах.<br>• <i>MSAVI2:</i> Исключает почвенный фон на молодых всходах.<br><br><b>2. Ультрамалообъемное распыление (ULV):</b><br>• Норма вылива: 8–12 л/га.<br>• Капли (VMD): 130–180 мкм."
-        },
-        en: {
-          title: "🛸 2. Drones & Precision Ag",
-          content: "<b>1. Vegetation Indices:</b><br>• <i>NDVI (0.7–0.88):</i> Photosynthesis and biomass assessment.<br>• <i>NDRE:</i> Nitrogen deficit detection in dense canopies.<br>• <i>MSAVI2:</i> Soil background filter for young crops.<br><br><b>2. ULV Spraying Protocol:</b><br>• Rate: 8–12 L/ha.<br>• Droplet size: 130–180 µm."
-        }
-      },
-      agrochemistry: {
-        ru: {
-          title: "🌿 3. Экологическая Агрохимия",
-          content: "<b>1. Регламенты био-защиты (USDA Organic):</b><br>• <i>Bacillus subtilis (26Д):</i> Защита от парши, монилиоза и оидиума (2–3 л/га).<br>• <i>Trichoderma harzianum:</i> Корневые гнили и вертициллез (10–15 кг/га).<br>• <i>Масло Нима (0.8%):</i> Против тли, клещей и трипса.<br><br><b>2. Безопасность:</b> Нулевой период ожидания для зелени и лука."
-        },
-        en: {
-          title: "🌿 3. Ecological Protection",
-          content: "<b>1. Bio-Protection Protocols (USDA Organic):</b><br>• <i>Bacillus subtilis (26D):</i> Scab, Monilinia, Mildew (2–3 L/ha).<br>• <i>Trichoderma harzianum:</i> Root rots and Verticillium (10–15 kg/ha).<br>• <i>Neem Oil (0.8%):</i> Against aphids, mites, and thrips.<br><br><b>2. Safety:</b> Zero-days waiting period before harvest."
-        }
-      },
-      diagnostics: {
-        ru: {
-          title: "🔬 4. Определитель Болезней",
-          content: "<b>1. Атлас визуальной диагностики:</b><br>• <i>Краевой ожог:</i> Дефицит Калия (K) или засоление (EC > 3.2).<br>• <i>Межжилковый хлороз:</i> Дефицит Железа (Fe) при pH > 7.6. Коррекция: Хелат Железа (Fe-EDDHA).<br>• <i>Верхушечная гниль:</i> Блокировка Кальция (Ca). Коррекция: листовой Хелат Кальция.<br>• <i>Растрескивание граната:</i> Перепады полива + дефицит Кальция."
-        },
-        en: {
-          title: "🔬 4. Diagnostics Atlas",
-          content: "<b>1. Differential Visual Diagnostics:</b><br>• <i>Leaf Margin Necrosis:</i> Potassium deficit or EC > 3.2.<br>• <i>Interveinal Chlorosis:</i> Iron (Fe) deficit at pH > 7.6. Action: Fe-EDDHA chelate.<br>• <i>Blossom End Rot:</i> Calcium (Ca) breakdown. Action: Foliar Calcium.<br>• <i>Fruit Cracking:</i> Moisture fluctuation + Calcium deficit."
-        }
-      },
-      soil_gardening: {
-        ru: {
-          title: "🌳 5. Почвоведение и Садоводство",
-          content: "<b>1. Биология почв и Покровные культуры:</b><br>• <i>Гумус и Biochar:</i> Внесение 10–15 т/га увеличивает влагоемкость на 35%.<br>• <i>Расчелачивание (pH > 8.0):</i> Сера элементарная (S⁰) 200–400 кг/га.<br>• <i>Азотофиксация:</i> Бобовые сидераты связывают до 150–180 кг N/га.<br><br><b>2. Климат садов:</b><br>• Фисташка и Миндаль: Chilling Hours 700–1000 ч, GDD 1800–2200°C."
-        },
-        en: {
-          title: "🌳 5. Soil Science & Orchards",
-          content: "<b>1. Soil Biology & Cover Crops:</b><br>• <i>Humus & Biochar:</i> 10–15 t/ha increases water capacity by 35%.<br>• <i>Alkaline Correction (pH > 8.0):</i> Elemental sulfur 200–400 kg/ha.<br>• <i>Nitrogen Fixation:</i> Legume cover crops fix up to 180 kg N/ha.<br><br><b>2. Orchard Climate:</b><br>• Pistachio & Almond: Chilling Hours 700–1000 h, GDD 1800–2200°C."
-        }
-      }
-    };
-
     function showScreen(id) {
       document.getElementById('mainScreen').classList.add('hidden');
       document.getElementById('baseScreen').classList.add('hidden');
@@ -320,18 +285,7 @@
         document.getElementById('baseTitleText').innerText = '📚 AquaExpert Reference';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         document.getElementById('detailBackBtn').innerText = '⬅ Back';
-        input.placeholder = "Enter question...";
-        
-        document.getElementById('n1Title').innerText = '💧 1. Advanced Hydroponics & Drip';
-        document.getElementById('n1Desc').innerText = 'pH/EC tables, flow rates, system flush';
-        document.getElementById('n2Title').innerText = '🛸 2. Drones & Precision Ag';
-        document.getElementById('n2Desc').innerText = 'NDVI, NDRE, MSAVI2 indices, ULV spraying';
-        document.getElementById('n3Title').innerText = '🌿 3. Ecological Protection';
-        document.getElementById('n3Desc').innerText = 'Bio-control, Bacillus subtilis, Neem oil';
-        document.getElementById('n4Title').innerText = '🔬 4. Diagnostics Atlas';
-        document.getElementById('n4Desc').innerText = 'Nutrient deficiencies NPK, Fe, Ca, Zn';
-        document.getElementById('n5Title').innerText = '🌳 5. Soil Science & Orchards';
-        document.getElementById('n5Desc').innerText = 'Orchards, nuts, vegetables, green manure';
+        input.placeholder = "💬 Enter question...";
       } else {
         currentLang = 'ru';
         document.getElementById('langBtn').innerText = '🌐 RU';
@@ -344,82 +298,12 @@
         document.getElementById('baseTitleText').innerText = '📚 Офлайн Справочник';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         document.getElementById('detailBackBtn').innerText = '⬅ Назад';
-        input.placeholder = "Введите ваш вопрос...";
-        
-        document.getElementById('n1Title').innerText = '💧 1. Гидропоника и Капельный полив';
-        document.getElementById('n1Desc').innerText = 'Таблицы pH/EC, нормы вылива, чистка систем';
-        document.getElementById('n2Title').innerText = '🛸 2. Дроны и Агро-Мониторинг';
-        document.getElementById('n2Desc').innerText = 'Индексы NDVI, NDRE, MSAVI2, нормы ULV';
-        document.getElementById('n3Title').innerText = '🌿 3. Экологическая Агрохимия';
-        document.getElementById('n3Desc').innerText = 'Био-защита, Bacillus subtilis, масло Нима';
-        document.getElementById('n4Title').innerText = '🔬 4. Определитель Болезней';
-        document.getElementById('n4Desc').innerText = 'Атлас дефицитов питания NPK, Fe, Ca, Zn';
-        document.getElementById('n5Title').innerText = '🌳 5. Почвоведение и Садоводство';
-        document.getElementById('n5Desc').innerText = 'Сады, орехи, овощи, зелень, сидераты';
+        input.placeholder = "💬 Введите ваш вопрос...";
       }
       setMode(currentMode);
     }
 
     function triggerCamera() { document.getElementById('cameraFileInput').click(); }
-
-    async function handlePhotoUpload(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const output = document.getElementById('terminalOutput');
-      output.innerHTML = '📷 <b>' + (currentLang === 'ru' ? 'Загрузка снимка...' : 'Uploading image...') + '</b><br>⏳ <i>' + (currentLang === 'ru' ? 'ИИ-нейросеть анализирует симптоматику...' : 'Vision AI analyzing symptoms...') + '</i>';
-
-      const imageUrl = URL.createObjectURL(file);
-
-      setTimeout(() => {
-        const titleRu = "🔬 Результат ИИ-Анализа Фото";
-        const titleEn = "🔬 Vision AI Analysis Result";
-        
-        const contentRu = `
-          <img src="${imageUrl}" class="photo-preview" alt="Crop Photo">
-          <div class="badge-status">Статус: Успешно распознано</div>
-          <br><b>Обнаруженный паттерн:</b> Межжилковый хлороз листьев.<br>
-          <b>Причина:</b> Дефицит доступного Железа (Fe) при щелочной почве (pH > 7.6).<br><br>
-          <b>Протокол ухода (USDA Organic):</b><br>
-          • <i>Внесение:</i> Корневой пролив Хелатом Железа (Fe-EDDHA 6%) — 20–30 г / 10 л.<br>
-          • <i>Коррекция:</i> Снижение pH воды до 6.0–6.2 ортофосфорной кислотой.<br>
-          • <i>Био-стимуляция:</i> Опрыскивание L-аминокислотами (20 мл / 10 л).<br><br>
-          <small>💾 <i>Диагноз сохранен в локальную базу знаний.</i></small>
-        `;
-
-        const contentEn = `
-          <img src="${imageUrl}" class="photo-preview" alt="Crop Photo">
-          <div class="badge-status">Status: Successfully Identified</div>
-          <br><b>Identified Pattern:</b> Interveinal Chlorosis.<br>
-          <b>Root Cause:</b> Iron (Fe) uptake deficiency at high soil pH (> 7.6).<br><br>
-          <b>Care Protocol (USDA Organic):</b><br>
-          • <i>Drip:</i> Iron Chelate (Fe-EDDHA 6%) root drench at 20–30 g / 10 L.<br>
-          • <i>pH Stabilization:</i> Adjust irrigation water pH to 6.0–6.2.<br>
-          • <i>Bio-Stimulation:</i> Foliar L-amino acid application (20 mL / 10 L).<br><br>
-          <small>💾 <i>Diagnosis saved to local offline database.</i></small>
-        `;
-
-        output.innerHTML = currentLang === 'ru' ? contentRu : contentEn;
-      }, 1200);
-    }
-
-    async function fetchBackendData(category) {
-      document.getElementById('detailTitle').innerText = currentLang === 'ru' ? "Загрузка..." : "Loading...";
-      document.getElementById('detailContent').innerHTML = "<p>⏳ Loading...</p>";
-      showScreen('detailScreen');
-
-      try {
-        const response = await fetch(`/api/get_knowledge?category=${category}&lang=${currentLang}`);
-        if(!response.ok) throw new Error("Offline mode");
-        const data = await response.json();
-        document.getElementById('detailTitle').innerText = data.title;
-        document.getElementById('detailContent').innerHTML = data.content;
-      } catch (e) {
-        const fallback = localDatabase[category][currentLang];
-        document.getElementById('detailTitle').innerText = fallback.title;
-        document.getElementById('detailContent').innerHTML = fallback.content;
-      }
-    }
 
     function sendQuery() {
       const input = document.getElementById('userInput');
@@ -429,7 +313,7 @@
       }
     }
 
-    function startVoiceInput() { alert(currentLang === 'ru' ? "Голосовой ввод передан в Бэкенд!" : "Voice input passed to Backend!"); }
+    function startVoiceInput() { alert(currentLang === 'ru' ? "Голосовой ввод..." : "Voice input..."); }
   </script>
 </body>
 </html>
