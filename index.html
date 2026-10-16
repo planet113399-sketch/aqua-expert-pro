@@ -22,7 +22,7 @@
       --bg: #eef2ee;
       --card-bg: #ffffff;
       --text: #000000;
-      --muted: #333333;
+      --muted: #222222;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -42,20 +42,20 @@
       background: var(--bg);
       display: flex;
       flex-direction: column;
-      padding: 12px;
-      padding-top: calc(env(safe-area-inset-top, 8px) + 8px);
-      padding-bottom: calc(env(safe-area-inset-bottom, 8px) + 12px);
-      gap: 12px;
+      padding: 10px;
+      padding-top: calc(env(safe-area-inset-top, 6px) + 6px);
+      padding-bottom: calc(env(safe-area-inset-bottom, 6px) + 8px);
+      gap: 10px;
     }
 
-    .screen { display: flex; flex-direction: column; height: 100%; gap: 12px; overflow: hidden; }
+    .screen { display: flex; flex-direction: column; height: 100%; gap: 10px; overflow: hidden; }
     .hidden { display: none !important; }
 
-    /* 1. ВЕРХНЯЯ ПАНЕЛЬ */
+    /* 1. ВЕРХНЯЯ ПАНЕЛЬ - СУПЕР КРУПНАЯ */
     .top-bar { 
       background-color: var(--primary); 
-      padding: 14px 18px; 
-      border-radius: 20px; 
+      padding: 12px 16px; 
+      border-radius: 18px; 
       display: flex; 
       justify-content: space-between; 
       align-items: center; 
@@ -64,68 +64,67 @@
       box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
 
-    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.4); border-radius: 18px; padding: 6px; gap: 8px; }
-    .toggle-btn { padding: 14px 24px; border-radius: 14px; border: none; font-size: 20px; font-weight: 900; color: white; background: transparent; cursor: pointer; }
+    .toggle-container { display: flex; background: rgba(0, 0, 0, 0.4); border-radius: 16px; padding: 4px; gap: 6px; }
+    .toggle-btn { padding: 12px 20px; border-radius: 12px; border: none; font-size: 24px; font-weight: 900; color: white; background: transparent; cursor: pointer; }
     .toggle-btn.active { background: white; color: var(--primary); }
     
-    .btn-lang { padding: 14px 20px; border-radius: 16px; border: none; font-weight: 900; font-size: 20px; color: white; background-color: rgba(255, 255, 255, 0.3); cursor: pointer; }
+    .btn-lang { padding: 12px 18px; border-radius: 14px; border: none; font-weight: 900; font-size: 24px; color: white; background-color: rgba(255, 255, 255, 0.3); cursor: pointer; }
 
-    /* 2. КНОПКИ ДЕЙСТВИЙ */
-    .action-row { display: flex; gap: 12px; flex-shrink: 0; }
+    /* 2. КНОПКИ ДЕЙСТВИЙ - МАССИВНЫЕ */
+    .action-row { display: flex; gap: 10px; flex-shrink: 0; }
     .main-action-btn { 
       flex: 1; 
-      height: 85px; 
+      height: 80px; 
       background-color: var(--primary); 
-      border-radius: 22px; 
+      border-radius: 20px; 
       border: none; 
       display: flex; 
       justify-content: center; 
       align-items: center; 
-      gap: 12px; 
+      gap: 10px; 
       font-weight: 900; 
-      font-size: 24px; 
+      font-size: 28px; 
       cursor: pointer; 
       color: white; 
       box-shadow: 0 6px 16px rgba(27, 94, 32, 0.35);
     }
 
-    /* 3. ПОЛНОСТЬЮ ЕДИНЫЙ МОНОЛИТНЫЙ ТЕРМИНАЛ */
+    /* 3. ТЕРМИНАЛ С ОГРОМНЫМ ТЕКСТОМ */
     .terminal-card { 
       flex: 1;
       min-height: 0;
       background: var(--card-bg); 
-      border: 4px solid var(--primary); 
-      border-radius: 24px; 
+      border: 5px solid var(--primary); 
+      border-radius: 22px; 
       display: flex; 
       flex-direction: column; 
       overflow: hidden; 
-      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
     }
     
     .terminal-header { 
       background-color: #e8f5e9; 
-      padding: 16px 20px; 
+      padding: 14px 18px; 
       display: flex; 
       justify-content: space-between; 
-      font-size: 20px; 
+      font-size: 24px; 
       font-weight: 900; 
       color: var(--primary); 
-      border-bottom: 3px solid #c8e6c9; 
+      border-bottom: 4px solid #c8e6c9; 
       flex-shrink: 0;
     }
     
-    /* ТЕРМИНАЛ-РЕАКТОР: ОТВЕТЫ И ВВОД ПРЯМО ВНУТРИ ОКНА */
     .terminal-body { 
       flex: 1; 
-      padding: 20px; 
+      padding: 18px; 
       overflow-y: auto; 
       color: var(--text); 
-      font-size: 22px; 
-      line-height: 1.6; 
-      font-weight: 600; 
+      font-size: 30px; /* ГИГАНТСКИЙ ШРИФТ ДЛЯ ОТВЕТА */
+      line-height: 1.5; 
+      font-weight: 800; 
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
     }
 
     .output-text {
@@ -133,25 +132,26 @@
       overflow-y: auto;
     }
 
-    /* ЕДИНЫЙ КРУПНЫЙ ВВОД В ЦЕНТРЕ/ВНУТРИ ТЕРМИНАЛА БЕЗ ОТДЕЛЬНЫХ СТРОК ИЛИ ПОЛОСОК */
+    /* ПОЛЕ ВВОДА - ОГРОМНОЕ, ЖИРНОЕ И ВЫСОКОЕ (32px) */
     .terminal-main-input {
       width: 100%;
-      border: 2px dashed var(--primary);
-      border-radius: 16px;
+      height: 75px;
+      border: 4px solid var(--primary);
+      border-radius: 18px;
       background: #f1f8e9;
-      padding: 18px;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--primary);
+      padding: 12px 18px;
+      font-size: 32px; /* ОГРОМНЫЙ ШРИФТ ВВОДА С КЛАВИАТУРЫ */
+      font-weight: 900;
+      color: #000000;
       outline: none;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
     }
 
     .terminal-main-input::placeholder {
-      color: #2e7d32;
+      color: #1b5e20;
       opacity: 0.85;
-      font-weight: 800;
-      text-align: center;
+      font-weight: 900;
+      font-size: 28px;
     }
 
     #cameraFileInput { display: none; }
@@ -159,12 +159,12 @@
     /* 4. НИЖНЯЯ КНОПКА БАЗЫ ЗНАНИЙ */
     .btn-base { 
       width: 100%; 
-      height: 80px;
+      height: 85px;
       background-color: var(--primary); 
       color: white; 
       border: none; 
-      border-radius: 22px; 
-      font-size: 22px; 
+      border-radius: 20px; 
+      font-size: 28px; 
       font-weight: 900; 
       cursor: pointer; 
       box-shadow: 0 8px 20px rgba(27, 94, 32, 0.45);
@@ -174,15 +174,15 @@
       align-items: center;
     }
 
-    .base-header { background-color: var(--primary); color: white; padding: 20px; border-radius: 22px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-    .back-btn { background: rgba(255,255,255,0.3); border: none; color: white; padding: 14px 22px; border-radius: 18px; font-size: 20px; font-weight: 900; cursor: pointer; }
+    .base-header { background-color: var(--primary); color: white; padding: 18px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .back-btn { background: rgba(255,255,255,0.3); border: none; color: white; padding: 12px 20px; border-radius: 16px; font-size: 24px; font-weight: 900; cursor: pointer; }
 
-    .niche-list { display: flex; flex-direction: column; gap: 16px; overflow-y: auto; flex: 1; }
-    .niche-card { background: white; padding: 22px 24px; border-radius: 22px; border-left: 10px solid var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
-    .niche-title { font-size: 26px; font-weight: 900; color: var(--primary); margin-bottom: 8px; }
-    .niche-desc { font-size: 20px; color: var(--muted); font-weight: 600; }
+    .niche-list { display: flex; flex-direction: column; gap: 14px; overflow-y: auto; flex: 1; }
+    .niche-card { background: white; padding: 20px; border-radius: 20px; border-left: 12px solid var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.1); cursor: pointer; }
+    .niche-title { font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 6px; }
+    .niche-desc { font-size: 22px; color: var(--muted); font-weight: 700; }
 
-    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 24px; border-radius: 22px; color: #000; font-size: 22px; line-height: 1.7; font-weight: 500; }
+    .detail-body { flex: 1; overflow-y: auto; background: white; padding: 22px; border-radius: 20px; color: #000; font-size: 26px; line-height: 1.6; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -210,13 +210,12 @@
           <span>v2.0</span>
         </div>
         
-        <!-- ЕДИНАЯ ОБЛАСТЬ ТЕРМИНАЛА -->
         <div class="terminal-body">
           <div class="output-text" id="terminalOutput">
-            🌱 <b>AquaExpert Pro готов к работе.</b><br><br>Сделайте фото растения или введите ваш агрономический вопрос ниже.
+            🌱 <b>AquaExpert Pro готов.</b><br><br>Сделайте фото листа или введите вопрос ниже.
           </div>
           
-          <input type="text" id="userInput" class="terminal-main-input" placeholder="✍️ НАЖМИТЕ СЮДА И ВВЕДИТЕ ВОПРОС..." onkeypress="if(event.key==='Enter') sendQuery();">
+          <input type="text" id="userInput" class="terminal-main-input" placeholder="✍️ ВВЕДИТЕ ВОПРОС..." onkeypress="if(event.key==='Enter') sendQuery();">
         </div>
       </div>
 
@@ -227,7 +226,7 @@
     <div id="baseScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="backBtnText" onclick="showScreen('mainScreen')">⬅ Назад</button>
-        <h3 id="baseTitleText" style="font-size: 24px;">📚 AquaExpert Reference</h3>
+        <h3 id="baseTitleText" style="font-size: 26px;">📚 AquaExpert Reference</h3>
         <div></div>
       </div>
       <div class="niche-list">
@@ -258,7 +257,7 @@
     <div id="detailScreen" class="screen hidden">
       <div class="base-header">
         <button class="back-btn" id="detailBackBtn" onclick="showScreen('baseScreen')">⬅ Назад</button>
-        <h4 id="detailTitle" style="font-size: 22px;">Загрузка...</h4>
+        <h4 id="detailTitle" style="font-size: 24px;">Загрузка...</h4>
         <div></div>
       </div>
       <div class="detail-body" id="detailContent"></div>
@@ -300,7 +299,7 @@
         document.getElementById('baseTitleText').innerText = '📚 AquaExpert Reference';
         document.getElementById('backBtnText').innerText = '⬅ Back';
         document.getElementById('detailBackBtn').innerText = '⬅ Back';
-        input.placeholder = "✍️ CLICK HERE AND ENTER QUESTION...";
+        input.placeholder = "✍️ ENTER QUESTION...";
       } else {
         currentLang = 'ru';
         document.getElementById('langBtn').innerText = '🌐 RU';
@@ -313,7 +312,7 @@
         document.getElementById('baseTitleText').innerText = '📚 Офлайн Справочник';
         document.getElementById('backBtnText').innerText = '⬅ Назад';
         document.getElementById('detailBackBtn').innerText = '⬅ Назад';
-        input.placeholder = "✍️ НАЖМИТЕ СЮДА И ВВЕДИТЕ ВОПРОС...";
+        input.placeholder = "✍️ ВВЕДИТЕ ВОПРОС...";
       }
       setMode(currentMode);
     }
